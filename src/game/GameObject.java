@@ -1,4 +1,4 @@
-package engines;
+package game;
 
 public class GameObject {
     int x;
