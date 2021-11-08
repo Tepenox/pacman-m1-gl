@@ -1,5 +1,5 @@
 package game.character.Ghosts;
 
-public class Shadow {
+public class Blinky {
 //    le fantôme rouge
 }

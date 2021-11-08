@@ -1,5 +1,5 @@
 package game.character.Ghosts;
 
-public class Bashful {
+public class Inky {
 //    le fantôme bleu
 }

@@ -1,5 +1,5 @@
 package game.character.Ghosts;
 
-public class Pokey {
+public class Clyde {
 //    le fantôme orange.
 }

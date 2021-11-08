@@ -1,4 +1,4 @@
 package game.character.Ghosts;
 
-public class Ghost {
+public abstract class Ghost {
 }
