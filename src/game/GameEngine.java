@@ -2,6 +2,7 @@ package game;
 
 import engines.CoreKernel;
 import game.utility.GameState;
+import game.utility.Vector2;
 
 import javax.swing.*;
 
