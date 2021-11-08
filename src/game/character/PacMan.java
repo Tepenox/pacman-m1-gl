@@ -1,5 +1,8 @@
 package game.character;
 
+import game.GameObject;
+import game.utility.Vector2;
+
 import java.awt.*;
 
 public class PacMan extends Character{
@@ -8,9 +11,5 @@ public class PacMan extends Character{
         super(appearence);
     }
 
-    @Override
-    public void eat(Character character) {
-        //TODO
-    }
 
 }

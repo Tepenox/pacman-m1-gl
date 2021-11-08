@@ -1,4 +1,4 @@
-package game.object.fruits;
+package game.object;
 
 public class Wall {
 }

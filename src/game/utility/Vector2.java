@@ -8,4 +8,15 @@ public class Vector2 {
         this.x = x;
         this.y = y;
     }
+
+    public Vector2 multiply(int by){
+        this.x *= by;
+        this.y *= by;
+        return this;
+    }
+
+    public static Vector2 add(Vector2 va, Vector2 vb){
+        return new Vector2(va.x+vb.x, va.y+vb.y);
+    }
+
 }
