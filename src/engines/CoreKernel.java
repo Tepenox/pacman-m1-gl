@@ -1,5 +1,7 @@
 package engines;
 
+import game.utility.Vector2;
+
 import javax.swing.*;
 
 public class CoreKernel {
@@ -8,5 +10,9 @@ public class CoreKernel {
 
     public static JFrame createFrame(int width, int height,String title){
         return GraphicEngine.createFrame(width, height,title);
+    }
+
+    public static double calculateDist(Vector2 from, Vector2 to){
+        return PhysicEngine.calculateDist(from,to);
     }
 }
