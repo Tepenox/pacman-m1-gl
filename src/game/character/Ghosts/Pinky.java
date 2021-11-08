@@ -1,5 +1,18 @@
 package game.character.Ghosts;
 
-public class Pinky {
-//    le fantôme rose
+import game.character.PacMan;
+import game.levels.Level;
+import game.utility.Vector2;
+
+import java.awt.*;
+
+public class Pinky extends Ghost {
+    public Pinky(Image sprite, Vector2 position) {
+        super(sprite, position);
+    }
+
+    @Override
+    public Vector2 calculateTarget(PacMan pacman, Level level){
+        return Vector2.add(pacman.getPosition(),pacman.getDirection().multiply(4));
+    }
 }
