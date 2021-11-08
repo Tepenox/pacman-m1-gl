@@ -14,7 +14,7 @@ public class Clyde extends Ghost{                       //le fantôme orange.
     }
 
     @Override
-    public Vector2 calculateTarget(PacMan pacman, Level level){
+    public Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos){
         double distanceToChange = 8;
         if(GameEngine.calculateDist(this.getPosition(),pacman.getPosition()) < distanceToChange){
             return level.getSide(GhostName.CLYDE);

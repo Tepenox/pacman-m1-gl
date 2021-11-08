@@ -19,4 +19,8 @@ public class Vector2 {
         return new Vector2(va.x+vb.x, va.y+vb.y);
     }
 
+    @Override
+    public String toString() {
+        return "Vector2{" +x +"," + y +'}';
+    }
 }

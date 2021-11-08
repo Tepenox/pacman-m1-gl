@@ -24,6 +24,6 @@ public abstract class Ghost extends Character {
         this.target = newVal;
     }
 
-    public abstract Vector2 calculateTarget(PacMan pacman, Level level);
+    public abstract Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos);
 
 }
