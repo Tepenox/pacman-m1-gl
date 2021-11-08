@@ -47,11 +47,12 @@ public abstract class Character {
     public void moove(Direction direction){
         switch(direction){
             case UP -> System.out.println();
-            case DOWN -> System.out.println();
+            case DOWN -> System.out.println(); // TODO
             case LEFT -> System.out.println();
             case RIGHT -> System.out.println();
         }
     }
 
+    public abstract void eat(Character character);
 
 }
