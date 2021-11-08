@@ -1,4 +1,14 @@
 package game.character;
 
-public class PacMan {
+import java.awt.*;
+
+public class PacMan extends Character{
+
+
+    public PacMan(Image appearence) {
+        super(appearence);
+    }
+
+
+
 }
