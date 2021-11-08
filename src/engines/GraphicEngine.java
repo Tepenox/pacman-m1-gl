@@ -1,6 +1,9 @@
 package engines;
 
+import game.utility.Vector2;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class GraphicEngine {
 
@@ -16,5 +19,8 @@ public class GraphicEngine {
         return jFrame;
     }
 
+    protected static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, Vector2 pos) {
+        g2d.drawImage(img, pos.x, pos.y, jPanel);
+    }
 
 }

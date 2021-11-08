@@ -43,4 +43,8 @@ public class GameEngine {
     public static void main(String[] args) {
 
     }
+
+    public static double calculateDist(Vector2 from, Vector2 to) {
+        return CoreKernel.calculateDist(from, to);
+    }
 }
