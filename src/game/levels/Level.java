@@ -53,6 +53,10 @@ public class Level {
         br.close();
     }
 
+    public int[][] getMazeArray() {
+        return mazeArray;
+    }
+
     public Vector2 getSide(GhostName ghostName){
         return switch (ghostName) {
             case BLINKY -> blinkySide;

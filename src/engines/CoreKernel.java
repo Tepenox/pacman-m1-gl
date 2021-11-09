@@ -27,6 +27,14 @@ public class CoreKernel {
         GraphicEngine.drawImage(jPanel, g2d, img, pos);
     }
 
+    public static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
+        GraphicEngine.fillRect(g2d, x, y, widthAndHeight, color);
+    }
+
+    public static void fillOval(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
+        GraphicEngine.fillOval(g2d, x, y, widthAndHeight, color);
+    }
+
     //==================================================Physics======================================
 
     public static double calculateDist(Vector2 from, Vector2 to){

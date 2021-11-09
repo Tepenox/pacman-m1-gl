@@ -31,4 +31,14 @@ public class GraphicEngine {
         g2d.drawImage(img, pos.x, pos.y, jPanel);
     }
 
+    protected static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
+        g2d.setColor(color);
+        g2d.fillRect(x, y, widthAndHeight, widthAndHeight);
+    }
+
+    protected static void fillOval(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
+        g2d.setColor(color);
+        g2d.fillOval(x, y, widthAndHeight, widthAndHeight);
+    }
+
 }
