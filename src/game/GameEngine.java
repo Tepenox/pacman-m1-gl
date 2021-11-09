@@ -2,11 +2,13 @@ package game;
 
 import engines.CoreKernel;
 import engines.GraphicEngine;
+import game.levels.Level;
 import game.utility.GameState;
 import game.utility.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class GameEngine {
     public GameEngine(String gameTitle, int width, int height,int speed,int unitSize) {
         this.gamePanel = new Panel();
         this.frame = CoreKernel.createFrame(gameTitle);
+        CoreKernel.setSize(this.frame, width, height);
         this.screenWidth = width;
         this.heightWidth = height;
         this.unitSize = unitSize;
@@ -43,6 +46,12 @@ public class GameEngine {
 
     public static void main(String[] args) {
 
+        try {
+            Level level = new Level(1);
+            Level level2 = new Level(2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void setSize(JFrame jFrame, int width, int height){
