@@ -1,6 +1,7 @@
 package game;
 
 import engines.CoreKernel;
+import engines.GraphicEngine;
 import game.utility.GameState;
 import game.utility.Vector2;
 
@@ -42,6 +43,18 @@ public class GameEngine {
 
     public static void main(String[] args) {
 
+    }
+
+    public static void setSize(JFrame jFrame, int width, int height){
+        CoreKernel.setSize(jFrame, width, height);
+    }
+
+    public static void setSize(JPanel jPanel, int width, int height){
+        CoreKernel.setSize(jPanel, width, height);
+    }
+
+    public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, Vector2 pos) {
+        CoreKernel.drawImage(jPanel, g2d, img, pos);
     }
 
     public static double calculateDist(Vector2 from, Vector2 to) {

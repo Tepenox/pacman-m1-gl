@@ -19,6 +19,14 @@ public class GraphicEngine {
         return jFrame;
     }
 
+    protected static void setSize(JFrame jFrame, int width, int height){
+        jFrame.setSize(width, height);
+    }
+
+    protected static void setSize(JPanel jPanel, int width, int height){
+        jPanel.setSize(width, height);
+    }
+
     protected static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, Vector2 pos) {
         g2d.drawImage(img, pos.x, pos.y, jPanel);
     }
