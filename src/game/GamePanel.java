@@ -12,9 +12,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     protected final Level level;
     protected final int unitSize;
+    private final int widthOffset;
+    private final int heightOffset;
 
     public GamePanel(Level level, int width, int height, int unitSize){
         this.level = level;
+        this.widthOffset = (width - level.getMazeArray().length*unitSize)/2;
+        this.heightOffset = (width - level.getMazeArray()[0].length*unitSize)/2;
         GameEngine.setSize(this,width,height);
         this.unitSize = unitSize;
     }
@@ -32,10 +36,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void drawCase(Graphics g, int j, int i, int value) {
         if(value == 0)
-            GameEngine.fillRect((Graphics2D) g,i*24,j*24,24,Color.blue);
+            GameEngine.fillRect((Graphics2D) g,this.widthOffset+i*24,this.heightOffset+j*24,24,Color.blue);
         else if(value == 1)
-            GameEngine.fillOval((Graphics2D) g,i*24,j*24,24,Color.white);
-        else GameEngine.fillRect((Graphics2D) g,i*24,j*24,24,Color.black);
+            GameEngine.fillOval((Graphics2D) g,this.widthOffset+i*24,this.heightOffset+j*24,24,Color.white);
+        else GameEngine.fillRect((Graphics2D) g,this.widthOffset+i*24,this.heightOffset+j*24,24,Color.black);
     }
 
     @Override
