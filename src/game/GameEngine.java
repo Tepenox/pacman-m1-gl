@@ -41,20 +41,21 @@ public class GameEngine {
     }
 
     public static void main(String[] args){
-        GameEngine gameEngine = new GameEngine("Pacman",480,320,6,24);
+        GameEngine gameEngine = new GameEngine("Pacman",1024,1024,6,24);
         try {
-            gameEngine.createLevel(1);
+            gameEngine.createLevel(3);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void createLevel(int level) throws IOException {
-        Level level1 = new Level(level);
-        this.gamePanel = new GamePanel(level1,this.screenWidth,this.heightWidth-20,this.unitSize);
+    private void createLevel(int lvlNumber) throws IOException {
+        Level level = new Level(lvlNumber);
+        this.gamePanel = new GamePanel(level,this.screenWidth,this.heightWidth-20,this.unitSize);
         this.gamePanel.setPreferredSize(new Dimension(screenWidth, heightWidth));
-        this.gamePanel.setBackground(Color.gray);
+        this.gamePanel.setBackground(Color.black);
         this.gamePanel.setFocusable(true);
+        this.frame.setLocationRelativeTo(null);
         this.frame.add(gamePanel);
     }
 
@@ -75,7 +76,7 @@ public class GameEngine {
     }
 
     public static void fillOval(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
-        CoreKernel.fillOval(g2d, x, y, widthAndHeight, color);
+        CoreKernel.fillOval(g2d, x+10, y+10, 5, color);
     }
 
     public static double calculateDist(Vector2 from, Vector2 to) {

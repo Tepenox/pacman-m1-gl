@@ -25,11 +25,17 @@ public class GamePanel extends JPanel implements ActionListener {
         int[][] maze = level.getMazeArray();
         for (int j = 0; j < maze.length; j++) {
             for (int i = 0; i < maze[0].length; i++) {
-                if(maze[j][i]==0)
-                    GameEngine.fillRect((Graphics2D) g,i*24,j*24,24,Color.blue);
-                else GameEngine.fillOval((Graphics2D) g,i*24,j*24,24,Color.white);
+                drawCase(g,j,i,maze[j][i]);
             }
         }
+    }
+
+    private void drawCase(Graphics g, int j, int i, int value) {
+        if(value == 0)
+            GameEngine.fillRect((Graphics2D) g,i*24,j*24,24,Color.blue);
+        else if(value == 1)
+            GameEngine.fillOval((Graphics2D) g,i*24,j*24,24,Color.white);
+        else GameEngine.fillRect((Graphics2D) g,i*24,j*24,24,Color.black);
     }
 
     @Override

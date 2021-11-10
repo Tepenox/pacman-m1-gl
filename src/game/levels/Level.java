@@ -45,8 +45,11 @@ public class Level {
             }
             if(foundLevel && mazeLine < this.mazeArray.length){
                 String[] parts = line.split(" ");
-                for (int i = 0; i < parts.length; i++)
+                for (int i = 0; i < parts.length; i++) {
+                    if (parts[i].equals("-"))
+                        parts[i] = "-1";
                     this.mazeArray[mazeLine][i] = Integer.parseInt(parts[i]);
+                }
                 mazeLine ++;
             }
         }
