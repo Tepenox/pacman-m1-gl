@@ -28,8 +28,8 @@ public class GameEngine {
 
     public GameEngine(String gameTitle, int width, int height,int speed,int unitSize) {
         this.gamePanel = null;
-        this.frame = CoreKernel.createFrame(gameTitle);
-        CoreKernel.setSize(this.frame, width, height);
+        this.frame = Engines.createFrame(gameTitle);
+        Engines.setSize(this.frame, width, height);
         this.screenWidth = width;
         this.heightWidth = height;
         this.unitSize = unitSize;
@@ -59,27 +59,4 @@ public class GameEngine {
         this.frame.add(gamePanel);
     }
 
-    public static void setSize(JFrame jFrame, int width, int height){
-        CoreKernel.setSize(jFrame, width, height);
-    }
-
-    public static void setSize(JPanel jPanel, int width, int height){
-        CoreKernel.setSize(jPanel, width, height);
-    }
-
-    public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, Vector2 pos) {
-        CoreKernel.drawImage(jPanel, g2d, img, pos);
-    }
-
-    public static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
-        CoreKernel.fillRect(g2d, x, y, widthAndHeight, color);
-    }
-
-    public static void fillOval(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
-        CoreKernel.fillOval(g2d, x+10, y+10, 5, color);
-    }
-
-    public static double calculateDist(Vector2 from, Vector2 to) {
-        return CoreKernel.calculateDist(from, to);
-    }
 }
