@@ -19,6 +19,13 @@ public class Vector2 {
         return new Vector2(va.x+vb.x, va.y+vb.y);
     }
 
+    public void addToX(int i){
+        this.x+= i;
+    }
+    public void addToY(int i){
+        this.y+= i;
+    }
+
     @Override
     public String toString() {
         return "Vector2{" +x +"," + y +'}';

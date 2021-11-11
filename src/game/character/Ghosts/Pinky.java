@@ -13,6 +13,6 @@ public class Pinky extends Ghost {
 
     @Override
     public Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos){
-        return Vector2.add(pacman.getPosition(),pacman.getDirection().multiply(4));
+        return Vector2.add(pacman.getPosition(),pacman.getDirectionAsVector().multiply(4));
     }
 }

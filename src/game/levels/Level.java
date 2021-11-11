@@ -56,7 +56,7 @@ public class Level {
         br.close();
     }
 
-    public int[][] getMazeArray() {
+    public int[][] getLevelArray() {
         return mazeArray;
     }
 

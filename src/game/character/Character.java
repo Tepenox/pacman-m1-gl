@@ -1,33 +1,37 @@
 package game.character;
 
 import game.GameObject;
+import game.utility.Direction;
 import game.utility.Vector2;
 import java.awt.*;
 
 
 public abstract class Character {
 
-    private final int speed = 0;
     private Image sprite;
-    private Vector2 direction;
+    private Direction direction;
     private Vector2 position;
+    private int speed = 1;
 
-    public Character(Image sprite, Vector2 position ) {
+
+    public Character(Image sprite, Vector2 position) {
+        this.direction = Direction.NEUTRAL;
         this.sprite = sprite;
         this.position = position;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
 
     public Image getSprite() {
         return sprite;
     }
 
-    public Vector2 getDirection() {
+    public Direction getDirection() {
         return direction;
     }
+
+    public Vector2 getDirectionAsVector(){
+        return new Vector2(0,0);// todo implement cases
+}
 
     public Vector2 getPosition() {
         return position;
@@ -37,7 +41,7 @@ public abstract class Character {
         this.sprite = sprite;
     }
 
-    public void setDirection(Vector2 direction) {
+    public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
@@ -47,6 +51,14 @@ public abstract class Character {
 
     public void move(Vector2 direction){
 
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public abstract void eat(GameObject character);

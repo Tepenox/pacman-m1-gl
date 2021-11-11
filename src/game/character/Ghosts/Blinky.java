@@ -1,9 +1,7 @@
 package game.character.Ghosts;
 
-import game.GameEngine;
 import game.character.PacMan;
 import game.levels.Level;
-import game.utility.GhostName;
 import game.utility.Vector2;
 
 import java.awt.*;

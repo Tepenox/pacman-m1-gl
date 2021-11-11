@@ -15,7 +15,7 @@ public class Inky extends Ghost {
 
     @Override
     public Vector2 calculateTarget(PacMan pacman, Level level, Vector2 blinkyPos){
-        Vector2 point = Vector2.add(pacman.getPosition(),pacman.getDirection().multiply(2));   //2 case ahead of pacman
+        Vector2 point = Vector2.add(pacman.getPosition(),pacman.getDirectionAsVector().multiply(2));   //2 case ahead of pacman
         Vector2 pointToBlinky = new Vector2(
                 blinkyPos.x-point.x,
                 blinkyPos.y-point.y);                                                       //get Vector from point to blinky
