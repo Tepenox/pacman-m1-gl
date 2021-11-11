@@ -1,21 +1,22 @@
 package game.object;
 
+import game.GameObject;
 import game.utility.Vector2;
 
 import java.awt.*;
 
-public class SuperPacGomme {
+public class SuperPacGomme extends GameObject {
 
-    private Vector2 position;
+    public static final int ID = 3;
     private Image sprite;
 
     public SuperPacGomme(Vector2 position, Image sprite){
-        this.position = position;
+        super(position);
         this.sprite = sprite;
     }
 
     public Vector2 getPosition(){
-        return position;
+        return this.position;
     }
 
 }

@@ -1,18 +1,20 @@
 package game.object;
 
+import game.GameObject;
 import game.utility.Vector2;
 
 import java.awt.*;
 
-public class PacGomme {
+public class PacGomme extends GameObject {
+    public static final int ID = 2;
     private int points;
     private Image sprite;
     private Vector2 position;
 
     public PacGomme (int points, Image sprite, Vector2 position){
+        super(position);
         this.points = points;
         this.sprite = sprite;
-        this.position = position;
     }
 
     public int getPoints(){

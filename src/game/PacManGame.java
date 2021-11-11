@@ -2,6 +2,8 @@ package game;
 
 import game.character.Character;
 import game.character.PacMan;
+import game.object.PacGomme;
+import game.object.SuperPacGomme;
 import game.object.Wall;
 import game.utility.Direction;
 import game.utility.GameState;
@@ -21,7 +23,6 @@ public class PacManGame extends JPanel implements ActionListener {
     final int screenWidth;
     final int screenHeight;
     final int unitSize;
-    final int gameUnits;
     final int delay;
     final int[][] gameSpace;
     List<GameObject> gameObjects;
@@ -34,45 +35,41 @@ public class PacManGame extends JPanel implements ActionListener {
         this.screenWidth = width;
         this.screenHeight = height;
         this.unitSize = unitSize;
-        this.gameUnits = (screenWidth * screenHeight) / (this.unitSize * this.unitSize);
+//        this.gameUnits = (screenWidth * screenHeight) / (this.unitSize * this.unitSize);
         this.delay = delay;
+        System.out.println(screenHeight / this.unitSize);
+        System.out.println(screenWidth / this.unitSize);
         this.gameObjects = new ArrayList<>();
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
-        this.pacMan = new PacMan(null, new Vector2(14 * unitSize, 20 * unitSize));
+        this.pacMan = new PacMan(null, new Vector2(10 * unitSize, 15 * unitSize));
         this.gameSpace = new int[][]{
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1},
+                {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
+                {1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 1},
+                {1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1},
+                {1, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1},
+                {1, 1, 2, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 2, 1, 1},
+                {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1},
+                {1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+
         };
-        this.pacMan.setDirection(Direction.UP);
+        this.pacMan.setDirection(Direction.NEUTRAL);
 //        this.addKeyListener(new MyKeyAdapter());
         startGame();
 
@@ -94,7 +91,7 @@ public class PacManGame extends JPanel implements ActionListener {
 
     private void moveCharacterByOneStep(Character character, Direction direction) {
 //        this.gameSpace[character.getPosition().x/unitSize][character.getPosition().y/unitSize] = 0;
-        int moveByCases = this.unitSize * character.getSpeed();
+        int moveByCases = (this.unitSize) * character.getSpeed();
         character.setDirection(direction);
         switch (direction) {
             case UP:
@@ -142,20 +139,39 @@ public class PacManGame extends JPanel implements ActionListener {
     }
 
     private void checkPacManCollisions() {
-        int positionX = this.pacMan.getPosition().x/unitSize ;
-        int positionY = this.pacMan.getPosition().y /unitSize;
+        int positionX = this.pacMan.getPosition().x / unitSize;
+        int positionY = this.pacMan.getPosition().y / unitSize;
         Direction direction = this.pacMan.getDirection();
 //        checking collisions with wall
-        try{
-            System.out.println(direction);
-            if (direction.equals(Direction.RIGHT) && this.gameSpace[positionX + 1][positionY] == Wall.ID
-                    || direction.equals(Direction.LEFT) && this.gameSpace[positionX - 1][positionY] == Wall.ID
-                    || direction.equals(Direction.DOWN) && this.gameSpace[positionX][positionY + 1] == Wall.ID
-                    || direction.equals(Direction.UP) && this.gameSpace[positionX][positionY - 1] == Wall.ID) {
+        try {
+//            if (positionX == 0 && pacMan.getDirection().equals(Direction.LEFT)) {
+//                pacMan.setPosition(new Vector2((this.gameSpace[0].length - 1) *unitSize ,this.pacMan.getPosition().y));
+//            }else if (positionX == (this.gameSpace[0].length - 1) *unitSize  && pacMan.getDirection().equals(Direction.RIGHT)){
+//                pacMan.setPosition(new Vector2(0 ,this.pacMan.getPosition().y));
+//
+//            }
+
+            if (this.gameSpace[positionY][positionX] == PacGomme.ID){
+                this.gameSpace[positionY][positionX] = 0;
+                System.out.println("you eat pacgomme");
+
+            }
+            if (this.gameSpace[positionY][positionX] == SuperPacGomme.ID){
+                this.gameSpace[positionY][positionX] = 0;
+                System.out.println("you eat super pacgomme");
+
+            }
+            if (direction.equals(Direction.DOWN) && this.gameSpace[positionY + 1][positionX] == Wall.ID
+                    || direction.equals(Direction.UP) && this.gameSpace[positionY - 1][positionX] == Wall.ID
+                    || direction.equals(Direction.LEFT) && this.gameSpace[positionY][positionX - 1] == Wall.ID
+                    || direction.equals(Direction.RIGHT) && this.gameSpace[positionY][positionX + 1] == Wall.ID) {
                 stopPacManMovement();
             }
 
-        }catch (ArrayIndexOutOfBoundsException e){
+
+
+
+        } catch (ArrayIndexOutOfBoundsException e) {
             //do nothing
         }
 
@@ -173,7 +189,15 @@ public class PacManGame extends JPanel implements ActionListener {
                 for (int j = 0; j < this.gameSpace[0].length; j++) {
                     if (gameSpace[i][j] == Wall.ID) {
                         graphics.setColor(Color.BLUE);
-                        graphics.fillRect(i * unitSize, j * unitSize, this.unitSize, this.unitSize);
+                        graphics.fillRect(j * unitSize, i * unitSize, this.unitSize, this.unitSize);
+                    }
+                    if (gameSpace[i][j] == PacGomme.ID) {
+                        graphics.setColor(Color.RED);
+                        graphics.fillRect(j * unitSize + unitSize/2 - 3, i * unitSize + unitSize/2 -3, this.unitSize /6, this.unitSize /6);
+                    }
+                    if (gameSpace[i][j] == SuperPacGomme.ID) {
+                        graphics.setColor(Color.white);
+                        graphics.fillOval(j * unitSize + unitSize /3 -3 , i * unitSize + unitSize /3 -3, this.unitSize -unitSize /2, this.unitSize - unitSize /2);
                     }
                 }
         }
@@ -196,6 +220,7 @@ public class PacManGame extends JPanel implements ActionListener {
         super.paintComponent(graphics);
         draw(graphics);
     }
+
 
     class MyKeyAdapter extends KeyAdapter {
         @Override
