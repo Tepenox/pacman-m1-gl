@@ -38,10 +38,12 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
     public static int unitToPixel = 30;
     private static int gameDelay;
     private static int gameScore;
+    private static Timer timer;
     private static List<GameObject> GamegameObjects;
     private static GameState GamegameState = GameState.PAUSED;
     public static PacMan thePacMan = new PacMan(null, new Vector2(10 * unitToPixel, 15 * unitToPixel));
     public static Level lvl = new Level(1);
+    public static GamePanel gamePanel;
 
     public PacManGame(int width, int height, int delay, int unitSize) {
 //        Engines.createFrame(gameTitle);
@@ -99,7 +101,15 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
         GamegameObjects = new ArrayList<>();
         GamePanel gp = new GamePanel(new Level(1));
         thePacMan.setDirection(Direction.NEUTRAL);
+        gamePanel = gp;
+        startTheGame();
         return gp;
+    }
+
+    public static void startTheGame() {
+        PacManGame.GamegameState = GameState.RUNNING;
+        PacManGame.timer = new Timer(PacManGame.gameDelay,gamePanel);
+        timer.start();
     }
 
     public void startGame() {
@@ -111,7 +121,7 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
     public void gameOver() {
     }
 
-
+    //refractor lvl.get...
     public int getPacGommeCounter() {
         int count = 0;
         for (int i = 0; i < this.gameSpace.length; i++)
@@ -123,12 +133,24 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
         return count;
     }
 
+    public static boolean hasEatenAllThePacGomme(){
+        return lvl.getPacGommeCount() == 0;
+    }
+
     public boolean hasEatenAllPacGomme() {
         return pacGommeCount == 0;
     }
 
+    public static void moveThePacman(){
+        moveTheCharacterByOneStep(PacManGame.thePacMan, PacManGame.thePacMan.getDirection());
+    }
+
     public void movePacman() {
         moveCharacterByOneStep(this.pacMan, pacMan.getDirection());
+    }
+
+    private static void moveTheCharacterByOneStep(Character character, Direction direction){
+        //TODO
     }
 
     private void moveCharacterByOneStep(Character character, Direction direction) {
