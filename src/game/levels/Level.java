@@ -16,8 +16,10 @@ public class Level {
 
     private int[][] mazeArray;
 
-    public Level(int level) throws IOException {
-        fillMaze(level);
+    public Level(int level){
+        try {fillMaze(level);} catch (IOException e) {
+            System.out.println("fileNotFound");
+        }
         this.blinkySide = new Vector2(mazeArray[0].length,mazeArray.length);
         this.pinkySide = new Vector2(0,mazeArray.length);
         this.inkySide = new Vector2(mazeArray[0].length,0);

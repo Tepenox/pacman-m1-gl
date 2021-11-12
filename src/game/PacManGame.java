@@ -2,6 +2,7 @@ package game;
 
 import game.character.Character;
 import game.character.PacMan;
+import game.levels.Level;
 import game.object.PacGomme;
 import game.object.SuperPacGomme;
 import game.object.Wall;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PacManGame extends JPanel implements ActionListener {
+public class PacManGame extends JPanel implements ActionListener {//Must be static
     final int screenWidth;
     final int screenHeight;
     final int unitSize;
@@ -30,6 +31,17 @@ public class PacManGame extends JPanel implements ActionListener {
     List<GameObject> gameObjects;
     PacMan pacMan;
     GameState gameState = GameState.PAUSED;
+
+    //=========Refractor
+    public static int width = 630;
+    public static int height = 700;
+    public static int unitToPixel = 30;
+    private static int gameDelay;
+    private static int gameScore;
+    private static List<GameObject> GamegameObjects;
+    private static GameState GamegameState = GameState.PAUSED;
+    public static PacMan thePacMan = new PacMan(null, new Vector2(10 * unitToPixel, 15 * unitToPixel));
+    public static Level lvl = new Level(1);
 
     public PacManGame(int width, int height, int delay, int unitSize) {
 //        Engines.createFrame(gameTitle);
@@ -76,8 +88,18 @@ public class PacManGame extends JPanel implements ActionListener {
         this.pacMan.setDirection(Direction.NEUTRAL);
 //        this.addKeyListener(new MyKeyAdapter());
         startGame();
+    }
 
-
+    public static GamePanel createGame(int w, int h, int d, int u){
+        width = w;
+        height = h;
+        gameDelay = d;
+        unitToPixel = u;
+        gameScore = 0;
+        GamegameObjects = new ArrayList<>();
+        GamePanel gp = new GamePanel(new Level(1));
+        thePacMan.setDirection(Direction.NEUTRAL);
+        return gp;
     }
 
     public void startGame() {
@@ -152,6 +174,16 @@ public class PacManGame extends JPanel implements ActionListener {
             movePacman();
         }
         repaint();
+    }
+
+    //refractor
+    public static void actionPerformed(){
+        System.out.println("performing action");
+        /*
+        if (this.gameState.equals(GameState.RUNNING)) {
+            checkCollisions();
+            movePacman();
+        }*/
     }
 
     private void checkCollisions() {

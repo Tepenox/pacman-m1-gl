@@ -31,7 +31,8 @@ public class GameFrame extends JFrame {
     }
 //
 public static void main(String[] args) {
-    new GameFrame(new PacManGame(630,700,75,30));
+        new GameFrame(PacManGame.createGame(840,930,75,30));
+    //new GameFrame(new PacManGame(630,700,75,30));
 }
 //    @Override
 //    protected void paintComponent(Graphics g) {
