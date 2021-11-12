@@ -13,6 +13,15 @@ public class Level {
     private final Vector2 pinkySide;      //top-left of maze
     private final Vector2 inkySide;       //bottom-right of maze
     private final Vector2 clydeSide;      //bottom-left of maze
+    private int pacGommeCount = 0;
+
+    public int getPacGommeCount(){
+        return pacGommeCount;
+    }
+
+    public void setPacGommeCount(int count){
+        this.pacGommeCount = count;
+    }
 
     private int[][] mazeArray;
 
@@ -51,6 +60,9 @@ public class Level {
                     if (parts[i].equals("-"))
                         parts[i] = "-1";
                     this.mazeArray[mazeLine][i] = Integer.parseInt(parts[i]);
+                    if(parts[i].equals("2") ){
+                        pacGommeCount++;
+                    }
                 }
                 mazeLine ++;
             }
@@ -69,6 +81,11 @@ public class Level {
             case INKY -> inkySide;
             case CLYDE -> clydeSide;
         };
+    }
+
+    public static void main (String args[]){
+        Level level1 = new Level(1);
+        System.out.println(level1.getPacGommeCount());
     }
 
 }
