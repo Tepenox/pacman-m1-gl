@@ -24,6 +24,8 @@ public class PacManGame extends JPanel implements ActionListener {
     final int screenHeight;
     final int unitSize;
     final int delay;
+    private int score;
+    private int pacGommeCount;
     final int[][] gameSpace;
     List<GameObject> gameObjects;
     PacMan pacMan;
@@ -69,6 +71,8 @@ public class PacManGame extends JPanel implements ActionListener {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 
         };
+        this.pacGommeCount = getPacGommeCounter();
+        this.score = 0;
         this.pacMan.setDirection(Direction.NEUTRAL);
 //        this.addKeyListener(new MyKeyAdapter());
         startGame();
@@ -83,6 +87,22 @@ public class PacManGame extends JPanel implements ActionListener {
     }
 
     public void gameOver() {
+    }
+
+
+    public int getPacGommeCounter() {
+        int count = 0;
+        for (int i = 0; i < this.gameSpace.length; i++)
+            for (int j = 0; j < this.gameSpace[0].length; j++) {
+                if (gameSpace[i][j] == PacGomme.ID) {
+                    count++;
+                }
+            }
+        return count;
+    }
+
+    public boolean hasEatenAllPacGomme() {
+        return pacGommeCount == 0;
     }
 
     public void movePacman() {
@@ -152,7 +172,12 @@ public class PacManGame extends JPanel implements ActionListener {
 
             if (this.gameSpace[positionY][positionX] == PacGomme.ID) {
                 this.gameSpace[positionY][positionX] = 0;
-                System.out.println("you eat pacgomme");
+                this.score++;
+                this.pacGommeCount--;
+                if (hasEatenAllPacGomme()) {
+                    System.out.println("YOU WON THE LEVEL ");
+                }
+                System.out.println("SCORE: " + score);
 
             }
             if (this.gameSpace[positionY][positionX] == SuperPacGomme.ID) {
@@ -166,7 +191,6 @@ public class PacManGame extends JPanel implements ActionListener {
                     || direction.equals(Direction.RIGHT) && this.gameSpace[positionY][positionX + 1] == Wall.ID) {
                 stopPacManMovement();
             }
-
 
         } catch (ArrayIndexOutOfBoundsException e) {
             //do nothing
