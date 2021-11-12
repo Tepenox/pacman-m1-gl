@@ -150,7 +150,25 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
     }
 
     private static void moveTheCharacterByOneStep(Character character, Direction direction){
-        //TODO
+        int moveByCases = (PacManGame.unitToPixel) * character.getSpeed();
+        character.setDirection(direction);
+        switch (direction) {
+            case UP:
+                character.getPosition().addToY(-moveByCases);
+                break;
+            case DOWN:
+                character.getPosition().addToY(+moveByCases);
+                break;
+            case LEFT:
+                character.getPosition().addToX(-moveByCases);
+                break;
+            case RIGHT:
+                character.getPosition().addToX(+moveByCases);
+                break;
+            case NEUTRAL:
+                //do nothing
+                break;
+        }
     }
 
     private void moveCharacterByOneStep(Character character, Direction direction) {
@@ -201,11 +219,54 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
     //refractor
     public static void actionPerformed(){
         System.out.println("performing action");
-        /*
-        if (this.gameState.equals(GameState.RUNNING)) {
-            checkCollisions();
-            movePacman();
-        }*/
+
+        if (GamegameState.equals(GameState.RUNNING)) {
+            checkCollision();
+            moveThePacman();
+        }
+    }
+
+    private static void checkPacmanCollisions() {
+        int positionX = PacManGame.thePacMan.getPosition().x / PacManGame.unitToPixel;
+        int positionY = PacManGame.thePacMan.getPosition().y / PacManGame.unitToPixel;
+        Direction direction = PacManGame.thePacMan.getDirection();
+//        checking collisions with wall
+        try {
+            if (positionX == 0 && thePacMan.getDirection().equals(Direction.LEFT)) {
+                thePacMan.setPosition(new Vector2((PacManGame.lvl.getLevelArray().length - 1) * unitToPixel, thePacMan.getPosition().y));
+            } else if (positionX == (PacManGame.lvl.getLevelArray().length - 1) && thePacMan.getDirection().equals(Direction.RIGHT)) {
+                thePacMan.setPosition(new Vector2(0, thePacMan.getPosition().y));
+            }
+
+            if (PacManGame.lvl.getLevelArray()[positionY][positionX] == PacGomme.ID) {
+                PacManGame.lvl.getLevelArray()[positionY][positionX] = 0;
+                gameScore++;
+                lvl.setPacGommeCount(lvl.getPacGommeCount()-1);
+                if (PacManGame.hasEatenAllThePacGomme()) {
+                    System.out.println("YOU WON THE LEVEL ");
+                }
+                System.out.println("SCORE: " + gameScore);
+
+            }
+            if (PacManGame.lvl.getLevelArray()[positionY][positionX] == SuperPacGomme.ID) {
+                PacManGame.lvl.getLevelArray()[positionY][positionX] = 0;
+                System.out.println("you eat super pacgomme");
+
+            }
+            if (direction.equals(Direction.DOWN) && PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID
+                    || direction.equals(Direction.UP) && PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID
+                    || direction.equals(Direction.LEFT) && PacManGame.lvl.getLevelArray()[positionY][positionX - 1] == Wall.ID
+                    || direction.equals(Direction.RIGHT) && PacManGame.lvl.getLevelArray()[positionY][positionX + 1] == Wall.ID) {
+                PacManGame.stopPacmanMovement();
+            }
+
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //do nothing
+        }
+
+    }
+    private static void checkCollision() {
+        checkPacmanCollisions();
     }
 
     private void checkCollisions() {
@@ -250,6 +311,11 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
             //do nothing
         }
 
+    }
+
+    private static void stopPacmanMovement() {
+        //si on a des animation on peut les arreter ici
+        thePacMan.setDirection(Direction.NEUTRAL);
     }
 
     private void stopPacManMovement() {
