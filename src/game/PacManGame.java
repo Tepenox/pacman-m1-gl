@@ -41,7 +41,7 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
     private static Timer timer;
     private static List<GameObject> GamegameObjects;
     private static GameState GamegameState = GameState.PAUSED;
-    public static PacMan thePacMan = new PacMan(null, new Vector2(10 * unitToPixel, 15 * unitToPixel));
+    public static PacMan thePacMan;
     public static Level lvl = new Level(1);
     public static GamePanel gamePanel;
 
@@ -99,7 +99,8 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
         unitToPixel = u;
         gameScore = 0;
         GamegameObjects = new ArrayList<>();
-        GamePanel gp = new GamePanel(new Level(1));
+        thePacMan = new PacMan(null, new Vector2(14 * unitToPixel, 23 * unitToPixel));
+        GamePanel gp = new GamePanel();
         thePacMan.setDirection(Direction.NEUTRAL);
         gamePanel = gp;
         startTheGame();
@@ -218,8 +219,6 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
 
     //refractor
     public static void actionPerformed(){
-        System.out.println("performing action");
-
         if (GamegameState.equals(GameState.RUNNING)) {
             checkCollision();
             moveThePacman();
@@ -246,7 +245,6 @@ public class PacManGame extends JPanel implements ActionListener {//Must be stat
                     System.out.println("YOU WON THE LEVEL ");
                 }
                 System.out.println("SCORE: " + gameScore);
-
             }
             if (PacManGame.lvl.getLevelArray()[positionY][positionX] == SuperPacGomme.ID) {
                 PacManGame.lvl.getLevelArray()[positionY][positionX] = 0;

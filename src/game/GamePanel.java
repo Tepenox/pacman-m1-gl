@@ -15,10 +15,7 @@ import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    private Level lvl;
-
-    public GamePanel(Level lvl) {
-        this.lvl = lvl;
+    public GamePanel() {
         this.setPreferredSize(new Dimension(PacManGame.width, PacManGame.height));
         this.setBackground(Color.black);
         this.setFocusable(true);
@@ -39,7 +36,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics graphics) {
         int unitSize = PacManGame.unitToPixel;
-        int[][] maze = lvl.getLevelArray();
+        int[][] maze = PacManGame.lvl.getLevelArray();
         drawGrid(graphics);
         for (int i = 0; i < maze.length; i++)
             for (int j = 0; j < maze[0].length; j++) {
