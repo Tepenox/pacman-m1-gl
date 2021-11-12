@@ -55,7 +55,7 @@ public class PacManGame extends JPanel implements ActionListener {
                 {1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1},
                 {1, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 1},
                 {1, 0, 0, 0, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 0, 0, 0, 1},
-                {1, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 1},
+                {0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0},
                 {1, 0, 0, 0, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 0, 0, 0, 1},
                 {1, 0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, 1},
                 {1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1},
@@ -144,19 +144,18 @@ public class PacManGame extends JPanel implements ActionListener {
         Direction direction = this.pacMan.getDirection();
 //        checking collisions with wall
         try {
-//            if (positionX == 0 && pacMan.getDirection().equals(Direction.LEFT)) {
-//                pacMan.setPosition(new Vector2((this.gameSpace[0].length - 1) *unitSize ,this.pacMan.getPosition().y));
-//            }else if (positionX == (this.gameSpace[0].length - 1) *unitSize  && pacMan.getDirection().equals(Direction.RIGHT)){
-//                pacMan.setPosition(new Vector2(0 ,this.pacMan.getPosition().y));
-//
-//            }
+            if (positionX == 0 && pacMan.getDirection().equals(Direction.LEFT)) {
+                pacMan.setPosition(new Vector2((this.gameSpace[0].length - 1) * unitSize, this.pacMan.getPosition().y));
+            } else if (positionX == (this.gameSpace[0].length - 1) && pacMan.getDirection().equals(Direction.RIGHT)) {
+                pacMan.setPosition(new Vector2(0, this.pacMan.getPosition().y));
+            }
 
-            if (this.gameSpace[positionY][positionX] == PacGomme.ID){
+            if (this.gameSpace[positionY][positionX] == PacGomme.ID) {
                 this.gameSpace[positionY][positionX] = 0;
                 System.out.println("you eat pacgomme");
 
             }
-            if (this.gameSpace[positionY][positionX] == SuperPacGomme.ID){
+            if (this.gameSpace[positionY][positionX] == SuperPacGomme.ID) {
                 this.gameSpace[positionY][positionX] = 0;
                 System.out.println("you eat super pacgomme");
 
@@ -167,8 +166,6 @@ public class PacManGame extends JPanel implements ActionListener {
                     || direction.equals(Direction.RIGHT) && this.gameSpace[positionY][positionX + 1] == Wall.ID) {
                 stopPacManMovement();
             }
-
-
 
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -193,11 +190,11 @@ public class PacManGame extends JPanel implements ActionListener {
                     }
                     if (gameSpace[i][j] == PacGomme.ID) {
                         graphics.setColor(Color.RED);
-                        graphics.fillRect(j * unitSize + unitSize/2 - 3, i * unitSize + unitSize/2 -3, this.unitSize /6, this.unitSize /6);
+                        graphics.fillRect(j * unitSize + unitSize / 2 - 3, i * unitSize + unitSize / 2 - 3, this.unitSize / 6, this.unitSize / 6);
                     }
                     if (gameSpace[i][j] == SuperPacGomme.ID) {
                         graphics.setColor(Color.white);
-                        graphics.fillOval(j * unitSize + unitSize /3 -3 , i * unitSize + unitSize /3 -3, this.unitSize -unitSize /2, this.unitSize - unitSize /2);
+                        graphics.fillOval(j * unitSize + unitSize / 3 - 3, i * unitSize + unitSize / 3 - 3, this.unitSize - unitSize / 2, this.unitSize - unitSize / 2);
                     }
                 }
         }
