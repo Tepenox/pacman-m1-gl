@@ -1,6 +1,5 @@
 package game;
 
-import game.levels.Level;
 import game.object.PacGomme;
 import game.object.SuperPacGomme;
 import game.object.Wall;
@@ -16,7 +15,7 @@ import java.awt.event.KeyEvent;
 public class GamePanel extends JPanel implements ActionListener {
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(PacManGame.width, PacManGame.height));
+        this.setPreferredSize(new Dimension(PacManGame.screenWidth, PacManGame.screenHeight));
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
@@ -35,7 +34,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics graphics) {
-        int unitSize = PacManGame.unitToPixel;
+        int unitSize = PacManGame.gameUnit;
         int[][] maze = PacManGame.lvl.getLevelArray();
         drawGrid(graphics);
         for (int i = 0; i < maze.length; i++)
@@ -55,13 +54,13 @@ public class GamePanel extends JPanel implements ActionListener {
             }
 
         graphics.setColor(Color.yellow);
-        graphics.fillOval(PacManGame.thePacMan.getPosition().x, PacManGame.thePacMan.getPosition().y, unitSize, unitSize);
+        graphics.fillOval(PacManGame.pacMan.getPosition().x, PacManGame.pacMan.getPosition().y, unitSize, unitSize);
     }
 
     public void drawGrid(Graphics graphics) {
-        int screenWidth = PacManGame.width;
-        int screenHeight = PacManGame.height;
-        int unitSize = PacManGame.unitToPixel;
+        int screenWidth = PacManGame.screenWidth;
+        int screenHeight = PacManGame.screenHeight;
+        int unitSize = PacManGame.gameUnit;
         for (int i = 0; i < screenHeight / unitSize; i++) {
             graphics.drawLine(i * unitSize, 0, i * unitSize, screenHeight);
             graphics.drawLine(0, i * unitSize, screenWidth, i * unitSize);
@@ -74,16 +73,16 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    PacManGame.thePacMan.setDirection(Direction.LEFT);
+                    PacManGame.pacMan.setDirection(Direction.LEFT);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    PacManGame.thePacMan.setDirection(Direction.RIGHT);
+                    PacManGame.pacMan.setDirection(Direction.RIGHT);
                     break;
                 case KeyEvent.VK_UP:
-                    PacManGame.thePacMan.setDirection(Direction.UP);
+                    PacManGame.pacMan.setDirection(Direction.UP);
                     break;
                 case KeyEvent.VK_DOWN:
-                    PacManGame.thePacMan.setDirection(Direction.DOWN);
+                    PacManGame.pacMan.setDirection(Direction.DOWN);
                     break;
             }
         }
