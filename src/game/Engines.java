@@ -1,6 +1,7 @@
 package game;
 
 import engines.CoreKernel;
+import engines.GraphicEngine;
 import game.utility.Vector2;
 
 import javax.swing.*;
@@ -16,8 +17,8 @@ public class Engines {
         CoreKernel.setSize(jPanel, width, height);
     }
 
-    public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, Vector2 pos) {
-        CoreKernel.drawImage(jPanel, g2d, img, pos);
+    public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, int x, int y,int widthAndHeight) {
+        CoreKernel.drawImage(jPanel, g2d, img, x,y,widthAndHeight);
     }
 
     public static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
@@ -25,14 +26,18 @@ public class Engines {
     }
 
     public static void fillOval(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
-        CoreKernel.fillOval(g2d, x+10, y+10, 5, color);
+        CoreKernel.fillOval(g2d, x-widthAndHeight/2, y-widthAndHeight/2, widthAndHeight, color);
+    }
+
+    public static void drawLine(Graphics2D g2d, int x1, int y1, int x2, int y2){
+        CoreKernel.drawLine(g2d,x1, y1, x2, y2);
     }
 
     public static double calculateDist(Vector2 from, Vector2 to) {
         return CoreKernel.calculateDist(from, to);
     }
 
-    public static JFrame createFrame(String gameTitle) {
-        return CoreKernel.createFrame(gameTitle);
+    public static JFrame createFrame(JFrame frame, String gameTitle) {
+        return CoreKernel.createFrame(frame, gameTitle);
     }
 }

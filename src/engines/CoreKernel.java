@@ -11,8 +11,8 @@ public class CoreKernel {
 
     //==================================================Graphic======================================
 
-    public static JFrame createFrame(String title){
-        return GraphicEngine.createFrame(title);
+    public static JFrame createFrame(JFrame frame, String title){
+        return GraphicEngine.createFrame(frame, title);
     }
 
     public static void setSize(JFrame jFrame, int width, int height){
@@ -23,8 +23,8 @@ public class CoreKernel {
         GraphicEngine.setSize(jPanel, width, height);
     }
 
-    public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, Vector2 pos) {
-        GraphicEngine.drawImage(jPanel, g2d, img, pos);
+    public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, int x, int y,int widthAndHeight) {
+        GraphicEngine.drawImage(jPanel, g2d, img, x, y,widthAndHeight);
     }
 
     public static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
@@ -33,6 +33,10 @@ public class CoreKernel {
 
     public static void fillOval(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
         GraphicEngine.fillOval(g2d, x, y, widthAndHeight, color);
+    }
+
+    public static void drawLine(Graphics2D g2d, int x1, int y1, int x2, int y2){
+        GraphicEngine.drawLine(g2d,x1, y1, x2, y2);
     }
 
     //==================================================Physics======================================

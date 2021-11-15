@@ -39,22 +39,14 @@ public class GamePanel extends JPanel implements ActionListener {
         drawGrid(graphics);
         for (int i = 0; i < maze.length; i++)
             for (int j = 0; j < maze[0].length; j++) {
-                if (maze[i][j] == Wall.ID) {
-                    graphics.setColor(Color.BLUE);
-                    graphics.fillRect(j * unitSize, i * unitSize, unitSize, unitSize);
-                }
-                if (maze[i][j] == PacGomme.ID) {
-                    graphics.setColor(Color.RED);
-                    graphics.fillRect(j * unitSize + unitSize / 2 - 3, i * unitSize + unitSize / 2 - 3, unitSize / 6, unitSize / 6);
-                }
-                if (maze[i][j] == SuperPacGomme.ID) {
-                    graphics.setColor(Color.white);
-                    graphics.fillOval(j * unitSize + unitSize / 3 - 3, i * unitSize + unitSize / 3 - 3, unitSize - unitSize / 2, unitSize - unitSize / 2);
-                }
+                if (maze[i][j] == Wall.ID)
+                    Engines.fillRect((Graphics2D) graphics,j*unitSize,i*unitSize,unitSize,Color.BLUE);
+                if (maze[i][j] == PacGomme.ID)
+                    Engines.fillOval((Graphics2D) graphics,j*unitSize+(unitSize/2),i*unitSize+(unitSize/2),unitSize/6,Color.WHITE);
+                if (maze[i][j] == SuperPacGomme.ID)
+                    Engines.fillOval((Graphics2D) graphics,j*unitSize+(unitSize/2),i*unitSize+(unitSize/2),unitSize/2,Color.WHITE);
             }
-
-        graphics.setColor(Color.yellow);
-        graphics.fillOval(PacManGame.pacMan.getPosition().x, PacManGame.pacMan.getPosition().y, unitSize, unitSize);
+        Engines.drawImage(this,(Graphics2D) graphics,PacManGame.pacMan.getSprite(),PacManGame.pacMan.getPosition().x, PacManGame.pacMan.getPosition().y,unitSize);
     }
 
     public void drawGrid(Graphics graphics) {
@@ -62,9 +54,8 @@ public class GamePanel extends JPanel implements ActionListener {
         int screenHeight = PacManGame.screenHeight;
         int unitSize = PacManGame.gameUnit;
         for (int i = 0; i < screenHeight / unitSize; i++) {
-            graphics.drawLine(i * unitSize, 0, i * unitSize, screenHeight);
-            graphics.drawLine(0, i * unitSize, screenWidth, i * unitSize);
-
+            Engines.drawLine((Graphics2D) graphics, i * unitSize,0,i * unitSize, screenHeight);
+            Engines.drawLine((Graphics2D) graphics, 0,i * unitSize,screenWidth, i * unitSize);
         }
     }
 

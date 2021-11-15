@@ -8,15 +8,14 @@ import java.awt.*;
 public class GraphicEngine {
 
 
-    protected static JFrame createFrame(String title){
-        JFrame jFrame = new JFrame();
-        jFrame.setTitle(title);
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
-        jFrame.pack();
-        jFrame.setVisible(true);
-        jFrame.setLocationRelativeTo(null);
-        return jFrame;
+    protected static JFrame createFrame(JFrame frame, String title){
+        frame.setTitle(title);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        return frame;
     }
 
     protected static void setSize(JFrame jFrame, int width, int height){
@@ -27,8 +26,8 @@ public class GraphicEngine {
         jPanel.setSize(width, height);
     }
 
-    protected static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, Vector2 pos) {
-        g2d.drawImage(img, pos.x, pos.y, jPanel);
+    protected static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, int x, int y,int widthAndHeight) {
+        g2d.drawImage(img, x, y,widthAndHeight,widthAndHeight, jPanel);
     }
 
     protected static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
@@ -39,6 +38,10 @@ public class GraphicEngine {
     protected static void fillOval(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
         g2d.setColor(color);
         g2d.fillOval(x, y, widthAndHeight, widthAndHeight);
+    }
+
+    protected static void drawLine(Graphics2D g2d, int x1, int y1, int x2, int y2){
+        g2d.drawLine(x1, y1, x2, y2);
     }
 
 }

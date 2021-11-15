@@ -11,6 +11,7 @@ import game.utility.GameState;
 import game.utility.Vector2;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class PacManGame{
         gameUnit = u;
         score = 0;
         gameObjects = new ArrayList<>();
-        pacMan = new PacMan(null, new Vector2(14 * gameUnit, 23 * gameUnit));
+        pacMan = new PacMan(new ImageIcon("src/game/resources/img.png").getImage(), new Vector2(14 * gameUnit, 23 * gameUnit));
         GamePanel gp = new GamePanel();
         pacMan.setDirection(Direction.NEUTRAL);
         gamePanel = gp;
@@ -105,10 +106,10 @@ public class PacManGame{
                 PacManGame.lvl.getLevelArray()[positionY][positionX] = 0;
                 score++;
                 lvl.setPacGommeCount(lvl.getPacGommeCount()-1);
+                System.out.println("SCORE: " + score);
                 if (PacManGame.hasEatenAllThePacGomme()) {
                     System.out.println("YOU WON THE LEVEL ");
                 }
-                System.out.println("SCORE: " + score);
             }
             if (PacManGame.lvl.getLevelArray()[positionY][positionX] == SuperPacGomme.ID) {
                 PacManGame.lvl.getLevelArray()[positionY][positionX] = 0;
