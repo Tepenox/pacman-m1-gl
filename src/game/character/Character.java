@@ -16,8 +16,8 @@ public abstract class Character extends GameObject{
     public Map<Direction , Image> sprites;
 
 
-    public Character(Image sprite, Vector2 position) {
-        super(position);
+    public Character(int id,Image sprite, Vector2 position,Map<Direction,Image> sprites) {
+        super(id,position);
         this.direction = Direction.NEUTRAL;
         this.sprite = sprite;
         this.position = position;
@@ -47,6 +47,7 @@ public abstract class Character extends GameObject{
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+        this.sprite = sprites.get(direction);
     }
 
     public void setPosition(Vector2 position) {

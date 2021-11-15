@@ -1,18 +1,24 @@
 package game.levels;
 
-import game.utility.GhostName;
+import game.utility.CharacterName;
 import game.utility.Vector2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 
 public class Level {
     private final Vector2 blinkySide;     //top-right of maze
     private final Vector2 pinkySide;      //top-left of maze
     private final Vector2 inkySide;       //bottom-right of maze
     private final Vector2 clydeSide;      //bottom-left of maze
+
+    private Vector2 blinkySpawn = null;
+    private Vector2 pinkySpawn = null;
+    private Vector2 inkySpawn = null;
+    private Vector2 clydeSpawn = null;
+    private Vector2 pacManSpawn = null;
+
     private int pacGommeCount = 0;
     private int[][] mazeArray;
 
@@ -51,6 +57,7 @@ public class Level {
                     if (parts[i].equals("-"))
                         parts[i] = "-1";
                     this.mazeArray[mazeLine][i] = Integer.parseInt(parts[i]);
+                    initiateVar(parts[i],i,mazeLine);
                     if(parts[i].equals("2") ){
                         pacGommeCount++;
                     }
@@ -61,16 +68,39 @@ public class Level {
         br.close();
     }
 
+    private void initiateVar(String value,int x,int y){
+        switch (value) {
+            case "2" -> pacGommeCount++;
+            case "5" -> pacManSpawn = new Vector2(x, y);
+            case "6" -> blinkySpawn = new Vector2(x, y);
+            case "7" -> clydeSpawn = new Vector2(x, y);
+            case "8" -> inkySpawn = new Vector2(x, y);
+            case "9" -> pinkySpawn = new Vector2(x, y);
+        }
+
+    }
+
     public int[][] getLevelArray() {
         return mazeArray;
     }
 
-    public Vector2 getSide(GhostName ghostName){
+    public Vector2 getSide(CharacterName ghostName){
         return switch (ghostName) {
             case BLINKY -> blinkySide;
             case PINKY -> pinkySide;
             case INKY -> inkySide;
             case CLYDE -> clydeSide;
+            default -> null;
+        };
+    }
+
+    public Vector2 getSpawn(CharacterName name){
+        return switch (name) {
+            case BLINKY -> blinkySpawn;
+            case PINKY -> pinkySpawn;
+            case INKY -> inkySpawn;
+            case CLYDE -> clydeSpawn;
+            case PACMAN -> pacManSpawn;
         };
     }
 
