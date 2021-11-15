@@ -14,15 +14,6 @@ public class Level {
     private final Vector2 inkySide;       //bottom-right of maze
     private final Vector2 clydeSide;      //bottom-left of maze
     private int pacGommeCount = 0;
-
-    public int getPacGommeCount(){
-        return pacGommeCount;
-    }
-
-    public void setPacGommeCount(int count){
-        this.pacGommeCount = count;
-    }
-
     private int[][] mazeArray;
 
     public Level(int level){
@@ -83,11 +74,15 @@ public class Level {
         };
     }
 
-    public static void main (String args[]){
-        Level level1 = new Level(1);
-        System.out.println(level1.getPacGommeCount());
+    public int getPacGommeCount(){
+        return pacGommeCount;
     }
 
+    public void removePacGomme(int x, int y, int value){
+        this.pacGommeCount--;
+        mazeArray[y][x] = value;
+
+    }
 
 
 }

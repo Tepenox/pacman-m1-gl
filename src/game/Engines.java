@@ -2,6 +2,7 @@ package game;
 
 import engines.CoreKernel;
 import engines.GraphicEngine;
+import engines.PhysicEngine;
 import game.utility.Vector2;
 
 import javax.swing.*;
@@ -35,6 +36,10 @@ public class Engines {
 
     public static double calculateDist(Vector2 from, Vector2 to) {
         return CoreKernel.calculateDist(from, to);
+    }
+
+    public static boolean checkCollision(int x1, int y1, int x2, int y2, int hitBoxSize1, int hitBoxSize2){
+        return CoreKernel.checkCollision(x1, y1, x2, y2, hitBoxSize1, hitBoxSize2);
     }
 
     public static JFrame createFrame(JFrame frame, String gameTitle) {

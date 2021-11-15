@@ -11,7 +11,6 @@ import game.utility.GameState;
 import game.utility.Vector2;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,35 +95,52 @@ public class PacManGame{
         Direction direction = PacManGame.pacMan.getDirection();
 //        checking collisions with wall
         try {
-            if (positionX == 0 && pacMan.getDirection().equals(Direction.LEFT)) {
-                pacMan.setPosition(new Vector2((PacManGame.lvl.getLevelArray().length - 1) * gameUnit, pacMan.getPosition().y));
-            } else if (positionX == (PacManGame.lvl.getLevelArray().length - 1) && pacMan.getDirection().equals(Direction.RIGHT)) {
-                pacMan.setPosition(new Vector2(0, pacMan.getPosition().y));
-            }
-
-            if (PacManGame.lvl.getLevelArray()[positionY][positionX] == PacGomme.ID) {
-                PacManGame.lvl.getLevelArray()[positionY][positionX] = 0;
-                score++;
-                lvl.setPacGommeCount(lvl.getPacGommeCount()-1);
-                System.out.println("SCORE: " + score);
-                if (PacManGame.hasEatenAllThePacGomme()) {
-                    System.out.println("YOU WON THE LEVEL ");
-                }
-            }
-            if (PacManGame.lvl.getLevelArray()[positionY][positionX] == SuperPacGomme.ID) {
-                PacManGame.lvl.getLevelArray()[positionY][positionX] = 0;
-                System.out.println("you eat super pacgomme");
-
-            }
-            if (direction.equals(Direction.DOWN) && PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID
-                    || direction.equals(Direction.UP) && PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID
-                    || direction.equals(Direction.LEFT) && PacManGame.lvl.getLevelArray()[positionY][positionX - 1] == Wall.ID
-                    || direction.equals(Direction.RIGHT) && PacManGame.lvl.getLevelArray()[positionY][positionX + 1] == Wall.ID) {
-                PacManGame.stopPacmanMovement();
-            }
-
+            checkTeleportOtherSide(positionX);
+            checkEating(PacGomme.ID,PacGomme.point,positionX,positionY);
+            checkEating(SuperPacGomme.ID,SuperPacGomme.point,positionX,positionY);
+            checkWall(direction,positionX,positionY);
         } catch (ArrayIndexOutOfBoundsException e) {
             //do nothing
+        }
+    }
+
+    private static void checkEating(int ID, int point,int x, int y) {
+        if(PacManGame.lvl.getLevelArray()[y][x] == ID){
+            score += point;
+            if(ID==3 || ID==2)
+                lvl.removePacGomme(x,y,0);
+            System.out.println("SCORE: "+score);
+            if (PacManGame.hasEatenAllThePacGomme())
+                System.out.println("YOU WON THE LEVEL ");
+        }
+    }
+
+    private static void checkTeleportOtherSide(int posX) {//TODO : make generic (with y axis teleport)
+        if (posX == 0 && pacMan.getDirection().equals(Direction.LEFT)) {//Todo : make a getter x and y in level
+            pacMan.setPosition(new Vector2((PacManGame.lvl.getLevelArray()[0].length - 1) * gameUnit, pacMan.getPosition().y));
+        } else if (posX == (PacManGame.lvl.getLevelArray()[0].length - 1) && pacMan.getDirection().equals(Direction.RIGHT)) {
+            pacMan.setPosition(new Vector2(0, pacMan.getPosition().y));
+        }
+    }
+
+    private static void checkWall(Direction direction, int positionX, int positionY) {//TODO : when implementing smooth movement use Engines.checkCollision()
+        switch (direction){
+            case DOWN :
+                if(PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID)
+                    PacManGame.stopPacmanMovement();
+                break;
+            case UP :
+                if(PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID)
+                    PacManGame.stopPacmanMovement();
+                break;
+            case LEFT :
+                if(PacManGame.lvl.getLevelArray()[positionY][positionX-1] == Wall.ID)
+                    PacManGame.stopPacmanMovement();
+                break;
+            case RIGHT :
+                if(PacManGame.lvl.getLevelArray()[positionY][positionX+1] == Wall.ID)
+                    PacManGame.stopPacmanMovement();
+                break;
         }
     }
 

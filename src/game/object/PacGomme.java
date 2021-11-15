@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class PacGomme extends GameObject {
     public static final int ID = 2;
+    public static final int point = 10;
     private int points;
     private Image sprite;
     private Vector2 position;

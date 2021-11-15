@@ -44,4 +44,8 @@ public class CoreKernel {
     public static double calculateDist(Vector2 from, Vector2 to){
         return PhysicEngine.calculateDist(from,to);
     }
+
+    public static boolean checkCollision(int x1, int y1, int x2, int y2, int hitBoxSize1, int hitBoxSize2){
+        return PhysicEngine.checkCollision(x1, y1, x2, y2, hitBoxSize1, hitBoxSize2);
+    }
 }
