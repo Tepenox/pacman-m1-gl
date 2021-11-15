@@ -1,6 +1,7 @@
 package game;
 
 import game.character.Character;
+import game.character.Ghosts.*;
 import game.character.PacMan;
 import game.levels.Level;
 import game.object.PacGomme;
@@ -18,14 +19,16 @@ public class PacManGame{
     public static int screenWidth;
     public static int screenHeight;
     public static int gameUnit;
-    private static int gameDelay;
-    private static int score;
-    private static Timer timer;
-    private static List<GameObject> gameObjects;
-    private static GameState gameState = GameState.PAUSED;
+    public static int gameDelay;
+    public static int score;
+    public static Timer timer;
+    public static List<Ghost> ghosts;
+    public static List<GameObject> gameObjects;
+    public static GameState gameState = GameState.PAUSED;
     public static PacMan pacMan;
     public static Level lvl = new Level(1);
     public static GamePanel gamePanel;
+
 
     public static GamePanel createGame(int w, int h, int d, int u){
         screenWidth = w;
@@ -34,10 +37,15 @@ public class PacManGame{
         gameUnit = u;
         score = 0;
         gameObjects = new ArrayList<>();
-        pacMan = new PacMan(new ImageIcon("src/game/resources/img.png").getImage(), new Vector2(14 * gameUnit, 23 * gameUnit));
+        pacMan = new PacMan(new ImageIcon("src/game/resources/PacMan/neutralPacMan.png").getImage(), lvl.getSpawn(CharacterName.PACMAN).multiply(gameUnit));//todo refactor
         GamePanel gp = new GamePanel();
         pacMan.setDirection(Direction.NEUTRAL);
         gamePanel = gp;
+        ghosts = new ArrayList<>();
+        ghosts.add(new Blinky(new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage(),lvl.getSpawn(CharacterName.BLINKY).multiply(gameUnit)));
+        ghosts.add(new Clyde(new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage(),lvl.getSpawn(CharacterName.CLYDE).multiply(gameUnit)));
+        ghosts.add(new Inky(new ImageIcon("src/game/resources/Inky/leftInky.png").getImage(),lvl.getSpawn(CharacterName.INKY).multiply(gameUnit)));
+        ghosts.add(new Pinky(new ImageIcon("src/game/resources/Pinky/leftPinky.png").getImage(),lvl.getSpawn(CharacterName.PINKY).multiply(gameUnit)));
         startTheGame();
         return gp;
     }

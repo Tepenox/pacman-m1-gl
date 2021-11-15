@@ -4,6 +4,7 @@ import game.GameObject;
 import game.utility.Direction;
 import game.utility.Vector2;
 import java.awt.*;
+import java.util.Map;
 
 
 public abstract class Character extends GameObject{
@@ -12,6 +13,7 @@ public abstract class Character extends GameObject{
     private Direction direction;
     private Vector2 position;
     private int speed = 1;
+    public Map<Direction , Image> sprites;
 
 
     public Character(Image sprite, Vector2 position) {
@@ -19,6 +21,7 @@ public abstract class Character extends GameObject{
         this.direction = Direction.NEUTRAL;
         this.sprite = sprite;
         this.position = position;
+        this.sprites = sprites;
     }
 
 

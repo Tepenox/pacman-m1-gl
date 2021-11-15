@@ -1,5 +1,6 @@
 package game;
 
+import game.character.Ghosts.Ghost;
 import game.object.PacGomme;
 import game.object.SuperPacGomme;
 import game.object.Wall;
@@ -37,16 +38,28 @@ public class GamePanel extends JPanel implements ActionListener {
         int unitSize = PacManGame.gameUnit;
         int[][] maze = PacManGame.lvl.getLevelArray();
         drawGrid(graphics);
+        drawMaze(graphics, unitSize, maze);
+        drawCharacters(graphics,unitSize,maze);
+    }
+
+    private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
         for (int i = 0; i < maze.length; i++)
             for (int j = 0; j < maze[0].length; j++) {
                 if (maze[i][j] == Wall.ID)
-                    Engines.fillRect((Graphics2D) graphics,j*unitSize,i*unitSize,unitSize,Color.BLUE);
+                    Engines.fillRect((Graphics2D)graphics,j* unitSize,i* unitSize, unitSize,Color.BLUE);
                 if (maze[i][j] == PacGomme.ID)
-                    Engines.fillOval((Graphics2D) graphics,j*unitSize+(unitSize/2),i*unitSize+(unitSize/2),unitSize/6,Color.WHITE);
+                    Engines.fillOval((Graphics2D)graphics,j* unitSize +(unitSize /2),i* unitSize +(unitSize /2), unitSize /6,Color.WHITE);
                 if (maze[i][j] == SuperPacGomme.ID)
-                    Engines.fillOval((Graphics2D) graphics,j*unitSize+(unitSize/2),i*unitSize+(unitSize/2),unitSize/2,Color.WHITE);
+                    Engines.fillOval((Graphics2D)graphics,j* unitSize +(unitSize /2),i* unitSize +(unitSize /2), unitSize /2,Color.WHITE);
             }
+    }
+
+    public void drawCharacters(Graphics graphics,int unitSize , int[][]maze){
         Engines.drawImage(this,(Graphics2D) graphics,PacManGame.pacMan.getSprite(),PacManGame.pacMan.getPosition().x, PacManGame.pacMan.getPosition().y,unitSize);
+        for (Ghost ghost : PacManGame.ghosts){
+            Engines.drawImage(this,(Graphics2D) graphics,ghost.getSprite(),ghost.getPosition().x, ghost.getPosition().y,unitSize);
+        }
+
     }
 
     public void drawGrid(Graphics graphics) {
@@ -63,18 +76,10 @@ public class GamePanel extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT:
-                    PacManGame.setPacmanDir(Direction.LEFT);
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    PacManGame.setPacmanDir(Direction.RIGHT);
-                    break;
-                case KeyEvent.VK_UP:
-                    PacManGame.setPacmanDir(Direction.UP);
-                    break;
-                case KeyEvent.VK_DOWN:
-                    PacManGame.setPacmanDir(Direction.DOWN);
-                    break;
+                case KeyEvent.VK_LEFT -> PacManGame.setPacmanDir(Direction.LEFT);
+                case KeyEvent.VK_RIGHT -> PacManGame.setPacmanDir(Direction.RIGHT);
+                case KeyEvent.VK_UP -> PacManGame.setPacmanDir(Direction.UP);
+                case KeyEvent.VK_DOWN -> PacManGame.setPacmanDir(Direction.DOWN);
             }
         }
 //    }

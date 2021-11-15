@@ -12,7 +12,7 @@ public class SuperPacGomme extends GameObject {
     private Image sprite;
 
     public SuperPacGomme(Vector2 position, Image sprite){
-        super(position);
+        super(3,position);
         this.sprite = sprite;
     }
 

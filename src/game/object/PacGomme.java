@@ -13,7 +13,7 @@ public class PacGomme extends GameObject {
     private Vector2 position;
 
     public PacGomme (int points, Image sprite, Vector2 position){
-        super(position);
+        super(2,position);
         this.points = points;
         this.sprite = sprite;
     }

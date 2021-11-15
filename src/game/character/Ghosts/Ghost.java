@@ -4,15 +4,17 @@ import game.GameObject;
 import game.character.Character;
 import game.character.PacMan;
 import game.levels.Level;
+import game.utility.Direction;
 import game.utility.Vector2;
 
 import java.awt.*;
+import java.util.Map;
 
 public abstract class Ghost extends Character {
     private Vector2 target;
 
-    public Ghost(Image sprite, Vector2 position) {
-        super(sprite, position);
+    public Ghost(int id, Image sprite, Vector2 position, Map<Direction, Image> sprites) {
+        super(id,sprite, position,sprites);
     }
 
     @Override
