@@ -6,7 +6,7 @@ import game.utility.Vector2;
 import java.awt.*;
 
 
-public abstract class Character {
+public abstract class Character extends GameObject{
 
     private Image sprite;
     private Direction direction;
@@ -15,6 +15,7 @@ public abstract class Character {
 
 
     public Character(Image sprite, Vector2 position) {
+        super(position);
         this.direction = Direction.NEUTRAL;
         this.sprite = sprite;
         this.position = position;

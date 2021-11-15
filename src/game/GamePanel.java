@@ -64,16 +64,16 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
-                    PacManGame.pacMan.setDirection(Direction.LEFT);
+                    PacManGame.setPacmanDir(Direction.LEFT);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    PacManGame.pacMan.setDirection(Direction.RIGHT);
+                    PacManGame.setPacmanDir(Direction.RIGHT);
                     break;
                 case KeyEvent.VK_UP:
-                    PacManGame.pacMan.setDirection(Direction.UP);
+                    PacManGame.setPacmanDir(Direction.UP);
                     break;
                 case KeyEvent.VK_DOWN:
-                    PacManGame.pacMan.setDirection(Direction.DOWN);
+                    PacManGame.setPacmanDir(Direction.DOWN);
                     break;
             }
         }
