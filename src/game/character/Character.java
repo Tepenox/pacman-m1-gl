@@ -1,8 +1,8 @@
 package game.character;
 
-import game.GameObject;
-import game.utility.Direction;
-import game.utility.Vector2;
+import utility.GameObject;
+import utility.Direction;
+import utility.Vector2;
 import java.awt.*;
 import java.util.Map;
 

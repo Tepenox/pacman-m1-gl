@@ -3,9 +3,9 @@ package game.character.Ghosts;
 import game.Engines;
 import game.character.PacMan;
 import game.levels.Level;
-import game.utility.CharacterName;
-import game.utility.Direction;
-import game.utility.Vector2;
+import game.GameUtility.CharacterName;
+import utility.Direction;
+import utility.Vector2;
 
 import javax.swing.*;
 import java.awt.*;

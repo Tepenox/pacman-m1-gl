@@ -1,7 +1,7 @@
 package game.levels;
 
-import game.utility.CharacterName;
-import game.utility.Vector2;
+import game.GameUtility.CharacterName;
+import utility.Vector2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

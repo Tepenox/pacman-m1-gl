@@ -2,13 +2,12 @@ package game.character.Ghosts;
 
 import game.character.PacMan;
 import game.levels.Level;
-import game.utility.Direction;
-import game.utility.Vector2;
+import utility.Direction;
+import utility.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Blinky extends Ghost{
 

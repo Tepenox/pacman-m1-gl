@@ -1,11 +1,11 @@
 package game.character.Ghosts;
 
-import game.GameObject;
+import utility.GameObject;
 import game.character.Character;
 import game.character.PacMan;
 import game.levels.Level;
-import game.utility.Direction;
-import game.utility.Vector2;
+import utility.Direction;
+import utility.Vector2;
 
 import java.awt.*;
 import java.util.Map;

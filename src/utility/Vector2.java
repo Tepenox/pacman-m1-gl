@@ -1,4 +1,4 @@
-package game.utility;
+package utility;
 
 public class Vector2 {
     public int x;

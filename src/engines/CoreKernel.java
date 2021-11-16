@@ -1,6 +1,6 @@
 package engines;
 
-import game.utility.Vector2;
+import utility.Vector2;
 
 import javax.swing.*;
 import java.awt.*;

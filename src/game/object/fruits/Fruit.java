@@ -1,5 +1,5 @@
 package game.object.fruits;
-import game.utility.Vector2;
+import utility.Vector2;
 
 import java.awt.*;
 

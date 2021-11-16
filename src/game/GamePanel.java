@@ -4,7 +4,7 @@ import game.character.Ghosts.Ghost;
 import game.object.PacGomme;
 import game.object.SuperPacGomme;
 import game.object.Wall;
-import game.utility.Direction;
+import utility.Direction;
 
 import javax.swing.*;
 import java.awt.*;

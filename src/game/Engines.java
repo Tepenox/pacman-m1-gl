@@ -1,9 +1,7 @@
 package game;
 
 import engines.CoreKernel;
-import engines.GraphicEngine;
-import engines.PhysicEngine;
-import game.utility.Vector2;
+import utility.Vector2;
 
 import javax.swing.*;
 import java.awt.*;

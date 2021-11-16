@@ -1,6 +1,4 @@
-package game;
-
-import game.utility.Vector2;
+package utility;
 
 public class GameObject {
 

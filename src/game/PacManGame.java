@@ -7,10 +7,11 @@ import game.levels.Level;
 import game.object.PacGomme;
 import game.object.SuperPacGomme;
 import game.object.Wall;
-import game.utility.CharacterName;
-import game.utility.Direction;
-import game.utility.GameState;
-import game.utility.Vector2;
+import game.GameUtility.CharacterName;
+import utility.Direction;
+import game.GameUtility.GameState;
+import utility.Vector2;
+import utility.GameObject;
 
 import javax.swing.*;
 import java.util.ArrayList;

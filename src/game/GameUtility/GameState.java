@@ -1,4 +1,4 @@
-package game.utility;
+package game.GameUtility;
 
 public enum GameState {
     RUNNING,

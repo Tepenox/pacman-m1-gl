@@ -1,7 +1,7 @@
 package game.object;
 
-import game.GameObject;
-import game.utility.Vector2;
+import utility.GameObject;
+import utility.Vector2;
 
 import java.awt.*;
 
