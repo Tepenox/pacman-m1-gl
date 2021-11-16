@@ -67,7 +67,7 @@ public class PacManGame{
     }
 
     private static void moveTheCharacterByOneStep(Character character, Direction direction){
-        int moveByCases = (PacManGame.gameUnit) * character.getSpeed();
+        int moveByCases = character.getSpeed();//Todo : speed must Always be multiple of gameUnit cause collisions are check everytime x and y of character is multiple of gameUnit, mayb find beter solution
         character.setDirection(direction);
         switch (direction) {
             case UP:
@@ -100,19 +100,21 @@ public class PacManGame{
     }
 
     private static void checkPacmanCollisions() {
-        int positionX = pacMan.getPosition().x / PacManGame.gameUnit;
-        int positionY = pacMan.getPosition().y / PacManGame.gameUnit;
+        if(pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0 ) {
+            int positionX = pacMan.getPosition().x / PacManGame.gameUnit;
+            int positionY = pacMan.getPosition().y / PacManGame.gameUnit;
 //        checking collisions with wall
-        try {
-            checkTeleportOtherSide(positionX);
-            checkEating(PacGomme.ID,PacGomme.point,positionX,positionY);
-            checkEating(SuperPacGomme.ID,SuperPacGomme.point,positionX,positionY);
-            if(!checkWall(pacMan.nextDir,positionX,positionY))
-                pacMan.setDirection(pacMan.nextDir);
-            if(checkWall(pacMan.getDirection(),positionX,positionY))
-                PacManGame.stopPacmanMovement();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            //do nothing
+            try {
+                checkTeleportOtherSide(positionX);
+                checkEating(PacGomme.ID, PacGomme.point, positionX, positionY);
+                checkEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
+                if (!checkWall(pacMan.nextDir, positionX, positionY))
+                    pacMan.setDirection(pacMan.nextDir);
+                if (checkWall(pacMan.getDirection(), positionX, positionY))
+                    PacManGame.stopPacmanMovement();
+            } catch (ArrayIndexOutOfBoundsException e) {
+                //do nothing
+            }
         }
     }
 
@@ -135,22 +137,26 @@ public class PacManGame{
         }
     }
 
-    private static boolean checkWall(Direction direction, int positionX, int positionY) {//TODO : when implementing smooth movement use Engines.checkCollision()
+    private static boolean checkWall(Direction direction, int positionX, int positionY) {
         switch (direction) {
             case DOWN:
-                if (PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID){
+                if (PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID) {
                     return true;
                 }
                 break;
-            case UP :
-                if(PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID){
+            case UP:
+                if (PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID) {
                     return true;
                 }
                 break;
-            case LEFT :
+            case LEFT:
+                if (PacManGame.lvl.getLevelArray()[positionY][positionX - 1] == Wall.ID){
+                    return true;
+                }
+                /*
                 if(PacManGame.lvl.getLevelArray()[positionY][positionX-1] == Wall.ID){
                     return true;
-                }
+                }*/
                 break;
             case RIGHT :
                 if(PacManGame.lvl.getLevelArray()[positionY][positionX+1] == Wall.ID){
@@ -168,12 +174,6 @@ public class PacManGame{
 
     public static void setPacmanDir(Direction dir) {
         pacMan.nextDir = dir;
-        int positionX = PacManGame.pacMan.getPosition().x / PacManGame.gameUnit;
-        int positionY = PacManGame.pacMan.getPosition().y / PacManGame.gameUnit;
-        if(checkWall(dir,positionX,positionY)){
-            return;
-        }
-        pacMan.setDirection(dir);
     }
 }
 
