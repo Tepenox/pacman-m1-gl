@@ -1,5 +1,6 @@
 package game;
 
+import engines.GraphicEngine;
 import game.character.Ghosts.Ghost;
 import game.object.PacGomme;
 import game.object.SuperPacGomme;
@@ -39,7 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
         int[][] maze = PacManGame.lvl.getLevelArray();
         drawGrid(graphics);
         drawMaze(graphics, unitSize, maze);
-        drawCharacters(graphics,unitSize,maze);
+        drawCharacters(graphics,unitSize);
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
@@ -54,12 +55,10 @@ public class GamePanel extends JPanel implements ActionListener {
             }
     }
 
-    public void drawCharacters(Graphics graphics,int unitSize , int[][]maze){
-        Engines.drawImage(this,(Graphics2D) graphics,PacManGame.pacMan.getSprite(),PacManGame.pacMan.getPosition().x, PacManGame.pacMan.getPosition().y,unitSize);
-        for (Ghost ghost : PacManGame.ghosts){
-            Engines.drawImage(this,(Graphics2D) graphics,ghost.getSprite(),ghost.getPosition().x, ghost.getPosition().y,unitSize);
-        }
-
+    public void drawCharacters(Graphics graphics,int unitSize){
+        Engines.drawGameObject(this,(Graphics2D) graphics,PacManGame.pacMan,unitSize);
+        for (Ghost ghost : PacManGame.ghosts)
+            Engines.drawGameObject(this,(Graphics2D) graphics,ghost,unitSize);
     }
 
     public void drawGrid(Graphics graphics) {

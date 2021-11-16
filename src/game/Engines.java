@@ -1,6 +1,8 @@
 package game;
 
 import engines.CoreKernel;
+import engines.GraphicEngine;
+import utility.GameObject;
 import utility.Vector2;
 
 import javax.swing.*;
@@ -18,6 +20,10 @@ public class Engines {
 
     public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, int x, int y,int widthAndHeight) {
         CoreKernel.drawImage(jPanel, g2d, img, x,y,widthAndHeight);
+    }
+
+    public static void drawGameObject(JPanel jPanel, Graphics2D g2d, GameObject go, int widthAndHeight) {
+        CoreKernel.drawGameObject(jPanel,g2d,go,widthAndHeight);
     }
 
     public static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {

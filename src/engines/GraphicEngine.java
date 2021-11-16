@@ -1,5 +1,7 @@
 package engines;
 
+import utility.GameObject;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,6 +28,10 @@ public class GraphicEngine {
 
     protected static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, int x, int y,int widthAndHeight) {
         g2d.drawImage(img, x, y,widthAndHeight,widthAndHeight, jPanel);
+    }
+
+    protected static void drawGameObject(JPanel jPanel, Graphics2D g2d, GameObject go, int widthAndHeight) {
+        g2d.drawImage(go.getSprite(), go.getPosition().x, go.getPosition().y,widthAndHeight,widthAndHeight, jPanel);
     }
 
     protected static void fillRect(Graphics2D g2d, int x, int y, int widthAndHeight, Color color) {
