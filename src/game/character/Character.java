@@ -9,7 +9,6 @@ import java.util.Map;
 
 public abstract class Character extends GameObject{
 
-    private Image sprite;
     private Direction direction;
     private Vector2 position;
     private int speed = 1;
@@ -17,16 +16,15 @@ public abstract class Character extends GameObject{
 
 
     public Character(int id,Image sprite, Vector2 position,Map<Direction,Image> sprites) {
-        super(id,position);
+        super(id,position,sprite);
         this.direction = Direction.NEUTRAL;
-        this.sprite = sprite;
         this.position = position;
         this.sprites = sprites;
     }
 
 
     public Image getSprite() {
-        return sprite;
+        return super.getSprite();
     }
 
     public Direction getDirection() {
@@ -42,12 +40,12 @@ public abstract class Character extends GameObject{
     }
 
     public void setSprite(Image sprite) {
-        this.sprite = sprite;
+        super.setSprite(sprite);
     }
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-        this.sprite = sprites.get(direction);
+        super.setSprite(sprites.get(direction));
     }
 
     public void setPosition(Vector2 position) {
