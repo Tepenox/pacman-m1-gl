@@ -1,5 +1,6 @@
 package game;
 
+import engines.PhysicEngine;
 import game.character.Character;
 import game.character.Ghosts.*;
 import game.character.PacMan;
@@ -63,29 +64,7 @@ public class PacManGame{
     }
 
     public static void moveThePacman(){
-        moveTheCharacterByOneStep(PacManGame.pacMan, PacManGame.pacMan.getDirection());
-    }
-
-    private static void moveTheCharacterByOneStep(Character character, Direction direction){
-        int moveByCases = character.getSpeed();//Todo : speed must Always be multiple of gameUnit cause collisions are check everytime x and y of character is multiple of gameUnit, mayb find beter solution
-        character.setDirection(direction);
-        switch (direction) {
-            case UP:
-                character.getPosition().addToY(-moveByCases);
-                break;
-            case DOWN:
-                character.getPosition().addToY(+moveByCases);
-                break;
-            case LEFT:
-                character.getPosition().addToX(-moveByCases);
-                break;
-            case RIGHT:
-                character.getPosition().addToX(+moveByCases);
-                break;
-            case NEUTRAL:
-                //do nothing
-                break;
-        }
+        PhysicEngine.moveGameObjectByOneStep(PacManGame.pacMan, PacManGame.pacMan.getDirection(), pacMan.getSpeed());
     }
 
     public static void actionPerformed(){
@@ -141,16 +120,19 @@ public class PacManGame{
         switch (direction) {
             case DOWN:
                 if (PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID) {
-                    return true;
+                    if (PhysicEngine.willColideVerticaly(positionY,positionY + 1 , 1,1,1))
+                        return true;
                 }
                 break;
             case UP:
                 if (PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID) {
-                    return true;
+                    if (PhysicEngine.willColideVerticaly(positionY,positionY - 1 , 1,1,1))
+                        return true;
                 }
                 break;
             case LEFT:
                 if (PacManGame.lvl.getLevelArray()[positionY][positionX - 1] == Wall.ID){
+                    if (PhysicEngine.willColideHorizentaly(positionX,positionX - 1 , 1,1,1))
                     return true;
                 }
                 /*
@@ -160,6 +142,7 @@ public class PacManGame{
                 break;
             case RIGHT :
                 if(PacManGame.lvl.getLevelArray()[positionY][positionX+1] == Wall.ID){
+                    if (PhysicEngine.willColideHorizentaly(positionX,positionX + 1 , 1,1,1))
                     return true;
                 }
                 break;
