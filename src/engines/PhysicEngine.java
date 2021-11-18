@@ -18,26 +18,23 @@ public class PhysicEngine {
         return distX < requiredMinDist || distY < requiredMinDist;
     }
 
-    public static boolean willColideHorizentaly(int x1, int x2, int size1, int size2, int step) {
-        if (x2 > x1){
-            return (x2) - (x1 + size1 + step) < 0;
+    public static boolean willCollide(int cord1, int cord2, int size1, int size2, int step) {
+        if (cord2 > cord1){
+            return (cord2) - (cord1 + size1 + step) < 0;
         }
-        if(x2 < x1){
-            return (x1 - size1- step) -(x2+size2)  < 0;
+        if(cord2 < cord1){
+            return (cord1 - size1- step) -(cord2+size2)  < 0;
         }else{
             return false;
         }
     }
 
-    public static boolean willColideVerticaly(int y1, int y2, int size1, int size2, int step) {
-        if (y2 > y1){
-            return (y2) - (y1 + size1 + step) < 0;
-        }
-        if(y2 < y1){
-            return (y1 - size1- step) -(y2+size2)  < 0;
-        }else{
-            return false;
-        }
+    public static boolean isInCollision(int x1, int y1,int x2,int y2, int width1, int height1,int width2, int height2) {
+        return x1 < x2 + width2 &&
+                x1 + width1 > x2 &&
+                y1 < y2 + height2 &&
+                y1 + height1 > y2;
+
     }
 
     public static void move(GameObject gameObject, int x , int y){
@@ -49,7 +46,7 @@ public class PhysicEngine {
                 PhysicEngine.move(character, character.getPosition().x,character.getPosition().y - step);
                 break;
             case DOWN:
-                PhysicEngine.move(character, character.getPosition().x,character.getPosition().y + step + step);
+                PhysicEngine.move(character, character.getPosition().x,character.getPosition().y + step );
                 break;
             case LEFT:
                 PhysicEngine.move(character, character.getPosition().x - step,character.getPosition().y  );
