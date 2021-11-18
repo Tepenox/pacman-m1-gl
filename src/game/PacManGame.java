@@ -28,7 +28,8 @@ public class PacManGame {
     public static List<GameObject> gameObjects;
     public static GameState gameState = GameState.PAUSED;
     public static PacMan pacMan;
-    public static Level lvl = new Level(1);
+    public static Blinky blinky;
+    public static Level lvl;
     public static GamePanel gamePanel;
 
 
@@ -38,16 +39,19 @@ public class PacManGame {
         gameDelay = d;
         gameUnit = u;
         score = 0;
+        lvl = new Level(1,gameUnit);
         gameObjects = new ArrayList<>();
-        pacMan = new PacMan(new ImageIcon("src/game/resources/PacMan/neutralPacMan.png").getImage(), lvl.getSpawn(CharacterName.PACMAN).multiply(gameUnit), 3);//todo refactor
+        pacMan = new PacMan(new ImageIcon("src/game/resources/PacMan/neutralPacMan.png").getImage(), lvl.getSpawn(CharacterName.PACMAN), 3);//todo refactor
         GamePanel gp = new GamePanel();
         pacMan.setDirection(Direction.NEUTRAL);
         gamePanel = gp;
         ghosts = new ArrayList<>();
-        ghosts.add(new Blinky(new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage(), lvl.getSpawn(CharacterName.BLINKY).multiply(gameUnit)));
-        ghosts.add(new Clyde(new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage(), lvl.getSpawn(CharacterName.CLYDE).multiply(gameUnit)));
-        ghosts.add(new Inky(new ImageIcon("src/game/resources/Inky/leftInky.png").getImage(), lvl.getSpawn(CharacterName.INKY).multiply(gameUnit)));
-        ghosts.add(new Pinky(new ImageIcon("src/game/resources/Pinky/leftPinky.png").getImage(), lvl.getSpawn(CharacterName.PINKY).multiply(gameUnit)));
+        blinky = new Blinky(new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage(), lvl.getSpawn(CharacterName.BLINKY));
+        ghosts.add(blinky);
+        //TODO : test movement from other ghosts + ADD place where pacman can't walk (entry of ghost spawn) + ADD place where only pacman can walk (ex : tunnel from both side) or just handle exception
+        //ghosts.add(new Clyde(new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage(), lvl.getSpawn(CharacterName.CLYDE)));
+        //ghosts.add(new Inky(new ImageIcon("src/game/resources/Inky/leftInky.png").getImage(), lvl.getSpawn(CharacterName.INKY)));
+        //ghosts.add(new Pinky(new ImageIcon("src/game/resources/Pinky/leftPinky.png").getImage(), lvl.getSpawn(CharacterName.PINKY)));
         startTheGame();
         return gp;
     }
@@ -66,10 +70,27 @@ public class PacManGame {
         PhysicEngine.moveGameObjectByOneStep(PacManGame.pacMan, PacManGame.pacMan.getDirection(), pacMan.getSpeed());
     }
 
+    private static void moveTheGhost() {
+        for (Ghost ghost:ghosts) {
+            if (ghost.getPosition().x % gameUnit == 0 && ghost.getPosition().y % gameUnit == 0) {
+                int posX = ghost.getPosition().x / PacManGame.gameUnit;
+                int posY = ghost.getPosition().y / PacManGame.gameUnit;
+                List<Direction> directions = new ArrayList<>();
+                for (Direction dir : Direction.values()) {
+                    if (dir == Direction.NEUTRAL) continue;
+                    if (!checkWall(dir, posX, posY)) directions.add(dir);
+                }
+                ghost.thinkNextDirection(lvl, blinky, directions);
+            }
+            PhysicEngine.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
+        }
+    }
+
     public static void actionPerformed() {
         if (gameState.equals(GameState.RUNNING)) {
             checkCollision();
             moveThePacman();
+            moveTheGhost();
         }
     }
 

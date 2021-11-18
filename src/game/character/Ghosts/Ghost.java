@@ -1,5 +1,8 @@
 package game.character.Ghosts;
 
+import engines.IAEngine;
+import engines.PhysicEngine;
+import game.PacManGame;
 import utility.GameObject;
 import game.character.Character;
 import game.character.PacMan;
@@ -8,6 +11,8 @@ import utility.Direction;
 import utility.Vector2;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Ghost extends Character {
@@ -27,5 +32,12 @@ public abstract class Ghost extends Character {
     }
 
     public abstract Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos);
+
+    public void thinkNextDirection(Level level, Blinky blinky, List<Direction> directions){
+        Direction oppositeOfCurrentDirection = IAEngine.getDirFromVector(IAEngine.getVectorFromDir(this.getDirection(),1).multiply(-1));
+        directions.remove(oppositeOfCurrentDirection);
+        Vector2 targetPos = calculateTarget(PacManGame.pacMan,level,blinky.getPosition());
+        this.setDirection(IAEngine.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
+    }
 
 }

@@ -21,15 +21,18 @@ public class Level {
 
     private int pacGommeCount = 0;
     private int[][] mazeArray;
+    private int gameUnit;
 
-    public Level(int level){
+    public Level(int level, int gameUnit){
+        this.gameUnit = gameUnit;
         try {fillMaze(level);} catch (IOException e) {
             System.out.println("fileNotFound");
         }
-        this.blinkySide = new Vector2(mazeArray[0].length,mazeArray.length);
-        this.pinkySide = new Vector2(0,mazeArray.length);
-        this.inkySide = new Vector2(mazeArray[0].length,0);
-        this.clydeSide = new Vector2(0,0);
+        this.blinkySide = new Vector2(mazeArray[0].length,mazeArray.length).multiply(gameUnit);
+        this.pinkySide = new Vector2(0,mazeArray.length).multiply(gameUnit);
+        this.inkySide = new Vector2(mazeArray[0].length,0).multiply(gameUnit);
+        this.clydeSide = new Vector2(0,0).multiply(gameUnit);
+
     }
 
     private void fillMaze(int level) throws IOException {
@@ -71,11 +74,11 @@ public class Level {
     private void initiateVar(String value,int x,int y){
         switch (value) {
             case "2" -> pacGommeCount++;
-            case "5" -> pacManSpawn = new Vector2(x, y);
-            case "6" -> blinkySpawn = new Vector2(x, y);
-            case "7" -> clydeSpawn = new Vector2(x, y);
-            case "8" -> inkySpawn = new Vector2(x, y);
-            case "9" -> pinkySpawn = new Vector2(x, y);
+            case "5" -> pacManSpawn = new Vector2(x, y).multiply(gameUnit);
+            case "6" -> blinkySpawn = new Vector2(x, y).multiply(gameUnit);
+            case "7" -> clydeSpawn = new Vector2(x, y).multiply(gameUnit);
+            case "8" -> inkySpawn = new Vector2(x, y).multiply(gameUnit);
+            case "9" -> pinkySpawn = new Vector2(x, y).multiply(gameUnit);
         }
 
     }
