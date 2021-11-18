@@ -1,6 +1,7 @@
 package game;
 
 import engines.GraphicEngine;
+import game.GameUtility.GameState;
 import game.character.Ghosts.Ghost;
 import game.object.PacGomme;
 import game.object.SuperPacGomme;
@@ -38,9 +39,21 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw(Graphics graphics) {
         int unitSize = PacManGame.gameUnit;
         int[][] maze = PacManGame.lvl.getLevelArray();
-        drawGrid(graphics);
-        drawMaze(graphics, unitSize, maze);
-        drawCharacters(graphics,unitSize);
+        if(PacManGame.gameState.equals(GameState.RUNNING)){
+            drawGrid(graphics);
+            drawMaze(graphics, unitSize, maze);
+            drawCharacters(graphics,unitSize);
+        }else if (PacManGame.gameState.equals(GameState.OVER)) {
+            graphics.setColor(Color.red);
+            graphics.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics1 = getFontMetrics(graphics.getFont());
+            graphics.drawString("Score: " + PacManGame.score, (PacManGame.screenWidth - metrics1.stringWidth("Score: " + PacManGame.score)) / 2, graphics.getFont().getSize());
+            graphics.setColor(Color.red);
+            graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
+            FontMetrics metrics2 = getFontMetrics(graphics.getFont());
+            graphics.drawString("Game Over", (PacManGame.screenWidth - metrics2.stringWidth("Game Over")) / 2, PacManGame.screenHeight/ 2);
+
+        }
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
@@ -70,6 +83,7 @@ public class GamePanel extends JPanel implements ActionListener {
             Engines.drawLine((Graphics2D) graphics, 0,i * unitSize,screenWidth, i * unitSize);
         }
     }
+
 
     class MyKeyAdapter extends KeyAdapter {
         @Override

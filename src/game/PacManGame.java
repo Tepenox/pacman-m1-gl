@@ -98,7 +98,7 @@ public class PacManGame {
                         System.out.println(pacManSpawn.x + " "+pacManSpawn.y);
                         PhysicEngine.move(pacMan,pacManSpawn.x , pacManSpawn.y);
                     } catch (IllegalStateException e) {
-                        gameState = GameState.DEAD;
+                        gameState = GameState.OVER;
                     }
             } catch (ArrayIndexOutOfBoundsException e) {
                 //do nothing
