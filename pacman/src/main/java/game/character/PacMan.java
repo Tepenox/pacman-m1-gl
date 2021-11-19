@@ -27,12 +27,12 @@ public class PacMan extends Character{
 
     }
 
-    public void removeOneLife(){
-        if (lives > 1)
-        lives--;
-        else
-            throw new IllegalStateException("pac man has no lives left");
+    public boolean useLife(){
+        lives --;
+        return lives > 0;
     }
 
-
+    public int getLives() {
+        return lives;
+    }
 }

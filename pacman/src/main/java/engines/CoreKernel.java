@@ -1,10 +1,13 @@
 package engines;
 
+import game.character.Character;
+import utility.Direction;
 import utility.GameObject;
 import utility.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class CoreKernel {
     //List of all methods to call for each engine
@@ -50,7 +53,36 @@ public class CoreKernel {
         return PhysicEngine.calculateDist(from,to);
     }
 
-    public static boolean checkCollision(int x1, int y1, int x2, int y2, int hitBoxSize1, int hitBoxSize2){
-        return PhysicEngine.checkCollision(x1, y1, x2, y2, hitBoxSize1, hitBoxSize2);
+    public static boolean willCollide(int cord1, int cord2, int size1, int size2, int step){
+        return PhysicEngine.willCollide(cord1,cord2,size1,size2,step);
+    }
+
+    public static boolean isInCollision(int x1, int y1,int x2,int y2, int width1, int height1,int width2, int height2){
+        return PhysicEngine.isInCollision(x1,y1,x2,y2,width1,height1,width2,height2);
+    }
+
+    public static void move(GameObject gameObject, int x , int y){
+        PhysicEngine.move(gameObject,x,y);
+    }
+
+    public static void moveGameObjectByOneStep(Character character, Direction direction, int step){
+        PhysicEngine.moveGameObjectByOneStep(character,direction,step);
+    }
+
+    public static Vector2 getVectorFromDir(Direction direction, int amplitude){
+        return PhysicEngine.getVectorFromDir(direction,amplitude);
+    }
+
+    public static Direction getDirFromVector(Vector2 vector){return PhysicEngine.getDirFromVector(vector);}
+
+
+    //==================================================IAEngine======================================
+
+    public static Direction getDirReducingDist(GameObject from, Vector2 to, List<Direction> directions, int step){
+        return IAEngine.getDirReducingDist(from,to,directions,step);
+    }
+
+    public static Direction getDirIncreasingDist(GameObject from, Vector2 to, List<Direction> directions, int step){
+        return IAEngine.getDirIncreasingDist(from,to,directions,step);
     }
 }

@@ -14,10 +14,10 @@ public class Blinky extends Ghost{
     public Blinky(Vector2 position) { // todo change
         super(6,GhostState.CHASING,position,new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/upBlinky.png").getFile()).getImage());
-        this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/upBlinky.png").getFile()).getImage());
-        this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/upBlinky.png").getFile()).getImage());
-        this.sprites.put(Direction.LEFT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/upBlinky.png").getFile()).getImage());
-        this.sprites.put(Direction.NEUTRAL,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/upBlinky.png").getFile()).getImage());
+        this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/downBlinky.png").getFile()).getImage());
+        this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/rightBlinky.png").getFile()).getImage());
+        this.sprites.put(Direction.LEFT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/leftBlinky.png").getFile()).getImage());
+        this.sprites.put(Direction.NEUTRAL,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Blinky/leftBlinky.png").getFile()).getImage());
         Image img = sprites.get(Direction.NEUTRAL);
         super.setSprite(img);
     }

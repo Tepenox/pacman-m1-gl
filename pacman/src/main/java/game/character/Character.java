@@ -2,6 +2,7 @@ package game.character;
 
 import engines.IAEngine;
 import engines.PhysicEngine;
+import game.Engines;
 import utility.GameObject;
 import utility.Direction;
 import utility.Vector2;
@@ -35,7 +36,7 @@ public abstract class Character extends GameObject{
     }
 
     public Vector2 getDirectionAsVector(){
-        return IAEngine.getVectorFromDir(this.direction,this.speed);
+        return Engines.getVectorFromDir(this.direction,this.speed);
 }
 
     public Vector2 getPosition() {
