@@ -1,5 +1,6 @@
 package game.character.Ghosts;
 
+import game.GameUtility.CharacterName;
 import game.character.PacMan;
 import game.levels.Level;
 import utility.Direction;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 
 public class Inky extends Ghost {
     public Inky(Vector2 position) {
-        super(8,GhostState.CHASING,position, new HashMap<>());
+        super(8,GhostState.DISPERSION,position, new HashMap<>(), CharacterName.INKY);
         this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/upInky.png").getFile()).getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/downInky.png").getFile()).getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/rightInky.png").getFile()).getImage());

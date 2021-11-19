@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class Clyde extends Ghost{                       //le fantôme orange.
     public Clyde(Vector2 position) {
-        super(7,GhostState.CHASING,position,new HashMap<>());
+        super(7,GhostState.DISPERSION,position,new HashMap<>(),CharacterName.CLYDE);
         this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/upClyde.png").getFile()).getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/downClyde.png").getFile()).getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/rightClyde.png").getFile()).getImage());

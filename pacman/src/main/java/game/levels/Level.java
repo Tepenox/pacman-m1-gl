@@ -23,6 +23,8 @@ public class Level {
     private int pacGommeCount = 0;
     private int[][] mazeArray;
     private int gameUnit;
+    private int mazeWidth;
+    private int mazeHeight;
 
     public Level(int level, int gameUnit){
         this.gameUnit = gameUnit;
@@ -46,11 +48,13 @@ public class Level {
         while((line = br.readLine())!= null) {
             if(line.startsWith("//"))
                 continue;
-            if(line.startsWith("Level")){
+            if(line.startsWith("Level ")){
                 line = line.substring(6);
                 String[] lvlInfo = line.split("-");
                 if(Integer.parseInt(lvlInfo[0]) == level){
-                    this.mazeArray = new int[Integer.parseInt(lvlInfo[2])][Integer.parseInt(lvlInfo[1])];
+                    this.mazeWidth = Integer.parseInt(lvlInfo[1]);
+                    this.mazeHeight = Integer.parseInt(lvlInfo[2]);
+                    this.mazeArray = new int[mazeHeight][mazeWidth];
                     foundLevel = true;
                 }
                 continue;
@@ -143,5 +147,11 @@ public class Level {
 
     }
 
+    public int getMazeWidth() {
+        return mazeWidth;
+    }
 
+    public int getMazeHeight() {
+        return mazeHeight;
+    }
 }
