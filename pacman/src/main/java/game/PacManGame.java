@@ -1,6 +1,5 @@
 package game;
 
-import engines.PhysicEngine;
 import game.character.Character;
 import game.character.Ghosts.*;
 import game.character.PacMan;
@@ -17,7 +16,6 @@ import utility.GameObject;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 public class PacManGame {
     public static int screenWidth;
@@ -33,7 +31,9 @@ public class PacManGame {
     public static Blinky blinky;
     public static Level lvl;
     public static GamePanel gamePanel;
-    private static GhostState ghostPhase = GhostState.DISPERSION;
+    public static GhostState ghostPhase = GhostState.CHASING;
+    public static java.util.Timer ghostPhaseTimer;
+    public static int numberOfPhaseLeft;
 
 
     public static GamePanel createGame(int w, int h, int d, int u) {
@@ -43,6 +43,7 @@ public class PacManGame {
         gameUnit = u;
         score = 0;
         lvl = new Level(1,gameUnit);
+        numberOfPhaseLeft = 7;
         gameObjects = new ArrayList<>();
         GamePanel gp = new GamePanel();
         gamePanel = gp;
@@ -56,28 +57,9 @@ public class PacManGame {
         PacManGame.gameState = GameState.RUNNING;
         PacManGame.timer = new Timer(PacManGame.gameDelay, gamePanel);
         timer.start();
-
-        class ChangeGhostsState extends TimerTask {
-            public void run() {
-                if(ghostPhase == GhostState.CHASING)
-                    ghostPhase = GhostState.DISPERSION;
-                else ghostPhase = GhostState.CHASING;
-
-                for (Ghost ghost:ghosts) {
-                    if(ghost.state != GhostState.EATEN
-                            && ghost.state != GhostState.REGENERATING
-                            && ghost.state != GhostState.FRIGHTENED){
-                        ghost.state = ghostPhase;
-                    }
-                }
-            }
-        }
-
-        java.util.Timer timer = new java.util.Timer();
-        timer.schedule(new ChangeGhostsState(), 0, 7000);
-        //TODO : 7 sec dispersion then 20 sec chase
-
+        AutoChangeGhostsState.createPhaseTimer(6000);
     }
+
 
 
     public static boolean hasEatenAllThePacGomme() {
