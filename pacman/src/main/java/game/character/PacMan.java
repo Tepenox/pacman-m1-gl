@@ -29,7 +29,7 @@ public class PacMan extends Character{
 
     public boolean useLife(){
         lives --;
-        return lives <= 0;
+        return lives > 0;
     }
 
     public int getLives() {
