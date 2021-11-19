@@ -1,6 +1,7 @@
 package game.character.Ghosts;
 
 public enum GhostState {
-    EATABLE,NOEATABLE
+    FRIGHTENED,                                 //eatable
+    CHASING,DISPERSION,EATEN,REGENERATING       //no eatable
 }
 

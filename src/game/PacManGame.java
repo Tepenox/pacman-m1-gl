@@ -41,12 +41,12 @@ public class PacManGame {
         score = 0;
         lvl = new Level(1,gameUnit);
         gameObjects = new ArrayList<>();
-        pacMan = new PacMan(new ImageIcon("src/game/resources/PacMan/neutralPacMan.png").getImage(), lvl.getSpawn(CharacterName.PACMAN), 3);//todo refactor
+        pacMan = new PacMan(lvl.getSpawn(CharacterName.PACMAN), 3);//todo refactor
         GamePanel gp = new GamePanel();
         pacMan.setDirection(Direction.NEUTRAL);
         gamePanel = gp;
         ghosts = new ArrayList<>();
-        blinky = new Blinky(new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage(), lvl.getSpawn(CharacterName.BLINKY));
+        blinky = new Blinky(lvl.getSpawn(CharacterName.BLINKY));
         ghosts.add(blinky);
         //TODO : test movement from other ghosts + ADD place where pacman can't walk (entry of ghost spawn) + ADD place where only pacman can walk (ex : tunnel from both side) or just handle exception
         //ghosts.add(new Clyde(new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage(), lvl.getSpawn(CharacterName.CLYDE)));

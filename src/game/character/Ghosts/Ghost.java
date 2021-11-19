@@ -17,9 +17,14 @@ import java.util.Map;
 
 public abstract class Ghost extends Character {
     public Vector2 target;
+    public ThinkEnum state;
 
-    public Ghost(int id, Image sprite, Vector2 position, Map<Direction, Image> sprites) {
-        super(id,sprite, position,sprites);
+    public enum ThinkEnum {
+        DISPERSION,FRIGHTENED,EATEN,REGENERATING,CHASING
+    }
+
+    public Ghost(int id, Vector2 position, Map<Direction, Image> sprites) {
+        super(id,position,sprites);
     }
 
     @Override

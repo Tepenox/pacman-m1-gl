@@ -10,8 +10,8 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class Inky extends Ghost {
-    public Inky(Image sprite, Vector2 position) {
-        super(8,sprite, position, new HashMap<>());
+    public Inky(Vector2 position) {
+        super(8,position, new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/Inky/upInky.png").getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/Inky/downInky.png").getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Inky/rightInky.png").getImage());

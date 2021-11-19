@@ -15,11 +15,12 @@ public abstract class Character extends GameObject{
     public Map<Direction , Image> sprites;
 
 
-    public Character(int id,Image sprite, Vector2 position,Map<Direction,Image> sprites) {
-        super(id,position,sprite);
+    public Character(int id,Vector2 position,Map<Direction,Image> sprites) {
+        super(id,position);
         this.direction = Direction.NEUTRAL;
         this.position = position;
         this.sprites = sprites;
+        super.setSprite(sprites.get(Direction.NEUTRAL));
     }
 
 

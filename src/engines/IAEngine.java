@@ -32,8 +32,8 @@ public class IAEngine {
     }
 
     public static void main(String[] args) {
-        GameObject pacman = new GameObject(1,new Vector2(420,690),null);
-        GameObject ghost = new GameObject(1,new Vector2(450,330),null);
+        GameObject pacman = new GameObject(1,new Vector2(420,690));
+        GameObject ghost = new GameObject(1,new Vector2(450,330));
 
 
         System.out.println(getDirReducingDist(ghost,pacman.getPosition(),List.of(Direction.RIGHT,Direction.UP),10));

@@ -7,10 +7,9 @@ public class GameObject {
     protected Vector2 position;
     private Image sprite;
 
-    public GameObject(int id, Vector2 position, Image img) {
+    public GameObject(int id, Vector2 position) {
         this.id = id;
         this.position = position;
-        this.sprite = img;
     }
 
     public Image getSprite() {

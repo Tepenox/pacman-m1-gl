@@ -8,7 +8,7 @@ import java.awt.*;
 public class Wall extends GameObject {
     public static final int ID = 1;
 
-    public Wall(int id, Vector2 position, Image img) {
-        super(id, position, img);
+    public Wall(int id, Vector2 position) {
+        super(id, position);
     }
 }

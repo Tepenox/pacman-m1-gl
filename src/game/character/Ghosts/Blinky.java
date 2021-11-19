@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 public class Blinky extends Ghost{
 
-    public Blinky(Image sprite, Vector2 position) { // todo change
-        super(6,sprite, position,new HashMap<>());
+    public Blinky(Vector2 position) { // todo change
+        super(6,position,new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/Blinky/upBlinky.png").getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/Blinky/downBlinky.png").getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Blinky/rightBlinky.png").getImage());

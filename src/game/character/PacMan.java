@@ -12,8 +12,8 @@ public class PacMan extends Character{
     public final static int ID = 5;
     public Direction nextDir = Direction.NEUTRAL;
     int lives;
-    public PacMan(Image appearence, Vector2 position,int lives) {
-        super(5,appearence,position, new HashMap<>());
+    public PacMan(Vector2 position,int lives) {
+        super(5,position, new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/PacMan/upPacMan.png").getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/PacMan/downPacMan.png").getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/PacMan/rightPacMan.png").getImage());

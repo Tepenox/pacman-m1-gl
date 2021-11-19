@@ -12,8 +12,8 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class Clyde extends Ghost{                       //le fantôme orange.
-    public Clyde(Image sprite, Vector2 position) {
-        super(7,sprite, position,new HashMap<>());
+    public Clyde(Vector2 position) {
+        super(7,position,new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/Clyde/upClyde.png").getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/Clyde/downClyde.png").getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Clyde/rightClyde.png").getImage());

@@ -10,8 +10,8 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class Pinky extends Ghost {
-    public Pinky(Image sprite, Vector2 position) {
-        super(9,sprite, position, new HashMap<>());
+    public Pinky(Vector2 position) {
+        super(9,position, new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/Pinky/upPinky.png").getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/Pinky/downPinky.png").getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Pinky/rightPinky.png").getImage());
