@@ -14,10 +14,10 @@ public class Pinky extends Ghost {
     public Pinky(Vector2 position) {
         super(9,GhostState.CHASING,position, new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/upPinky.png").getFile()).getImage());
-        this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/upPinky.png").getFile()).getImage());
-        this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/upPinky.png").getFile()).getImage());
-        this.sprites.put(Direction.LEFT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/upPinky.png").getFile()).getImage());
-        this.sprites.put(Direction.NEUTRAL,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/upPinky.png").getFile()).getImage());
+        this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/downPinky.png").getFile()).getImage());
+        this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/rightPinky.png").getFile()).getImage());
+        this.sprites.put(Direction.LEFT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/leftPinky.png").getFile()).getImage());
+        this.sprites.put(Direction.NEUTRAL,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/leftPinky.png").getFile()).getImage());
     }
 
     @Override
