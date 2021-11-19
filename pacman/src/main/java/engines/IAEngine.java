@@ -9,43 +9,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public class IAEngine {
-    public static Direction getDirReducingDist(GameObject from, Vector2 to, List<Direction> directions, int step){ //TODO : faire la cascade
+    protected static Direction getDirReducingDist(GameObject from, Vector2 to, List<Direction> directions, int step){
         List<Double> listOfDist = new ArrayList<>();
         int indexOfBest = 0;
         for (int i = 0; i < directions.size(); i++) {
-            listOfDist.add(CoreKernel.calculateDist(Vector2.add(from.getPosition(),getVectorFromDir(directions.get(i),step)),to));
+            listOfDist.add(CoreKernel.calculateDist(Vector2.add(from.getPosition(),CoreKernel.getVectorFromDir(directions.get(i),step)),to));
             if(listOfDist.get(i) < listOfDist.get(indexOfBest))
                 indexOfBest = i;
         }
         return directions.get(indexOfBest);
     }
 
-    public static Direction getDirIncreasingDist(GameObject from, Vector2 to, List<Direction> directions, int step){ //TODO : faire la cascade
+    protected static Direction getDirIncreasingDist(GameObject from, Vector2 to, List<Direction> directions, int step){
         List<Double> listOfDist = new ArrayList<>();
         int indexOfBest = 0;
         for (int i = 0; i < directions.size(); i++) {
-            listOfDist.add(CoreKernel.calculateDist(Vector2.add(from.getPosition(),getVectorFromDir(directions.get(i),step)),to));
+            listOfDist.add(CoreKernel.calculateDist(Vector2.add(from.getPosition(),CoreKernel.getVectorFromDir(directions.get(i),step)),to));
             if(listOfDist.get(i) > listOfDist.get(indexOfBest))
                 indexOfBest = i;
         }
         return directions.get(indexOfBest);
-    }
-
-    public static Vector2 getVectorFromDir(Direction direction, int amplitude){//TODO : faire la cascade + bouger vers physics engine
-        return switch (direction){
-            case LEFT -> new Vector2(-amplitude,0);
-            case NEUTRAL -> new Vector2(0,0);
-            case RIGHT -> new Vector2(amplitude,0);
-            case UP -> new Vector2(0,-amplitude);
-            case DOWN -> new Vector2(0,amplitude);
-        };
-    }
-
-    public static Direction getDirFromVector(Vector2 vector){//TODO : faire la cascade + bouger vers physics engine
-        if(vector.x > 0 && vector.y == 0) return Direction.RIGHT;
-        if(vector.x < 0 && vector.y == 0) return Direction.LEFT;
-        if(vector.x == 0 && vector.y < 0) return Direction.UP;
-        if(vector.x == 0 && vector.y > 0) return Direction.DOWN;
-        return Direction.NEUTRAL;
     }
 }

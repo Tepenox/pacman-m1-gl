@@ -2,6 +2,7 @@ package game.character.Ghosts;
 
 import engines.IAEngine;
 import engines.PhysicEngine;
+import game.Engines;
 import game.PacManGame;
 import utility.GameObject;
 import game.character.Character;
@@ -32,12 +33,12 @@ public abstract class Ghost extends Character {
     public abstract Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos);
 
     public void thinkNextDirection(Level level, Blinky blinky, List<Direction> directions){
-        Direction oppositeOfCurrentDirection = IAEngine.getDirFromVector(IAEngine.getVectorFromDir(this.getDirection(),1).multiply(-1));
+        Direction oppositeOfCurrentDirection = Engines.getDirFromVector(Engines.getVectorFromDir(this.getDirection(),1).multiply(-1));
         directions.remove(oppositeOfCurrentDirection);
         Vector2 targetPos = this.getPosition();
         if(this.state == GhostState.CHASING){
             targetPos = calculateTarget(PacManGame.pacMan,level,blinky.getPosition());
-            this.setDirection(IAEngine.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
+            this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
         }
         this.target = targetPos; //debugging
     }

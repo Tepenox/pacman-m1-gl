@@ -42,17 +42,10 @@ public class PacManGame {
         score = 0;
         lvl = new Level(1,gameUnit);
         gameObjects = new ArrayList<>();
-        pacMan = new PacMan(lvl.getSpawn(CharacterName.PACMAN), 3);//todo refactor
         GamePanel gp = new GamePanel();
-        pacMan.setDirection(Direction.NEUTRAL);
         gamePanel = gp;
-        ghosts = new ArrayList<>();
-        blinky = new Blinky(lvl.getSpawn(CharacterName.BLINKY));
-        ghosts.add(blinky);
+        createGameCharacters(lvl, 3);
         //TODO : ADD place where pacman can't walk (entry of ghost spawn)
-        ghosts.add(new Clyde(lvl.getSpawn(CharacterName.CLYDE)));
-        ghosts.add(new Inky(lvl.getSpawn(CharacterName.INKY)));
-        ghosts.add(new Pinky(lvl.getSpawn(CharacterName.PINKY)));
         startTheGame();
         return gp;
     }
@@ -68,7 +61,7 @@ public class PacManGame {
     }
 
     public static void moveThePacman() {
-        PhysicEngine.moveGameObjectByOneStep(PacManGame.pacMan, PacManGame.pacMan.getDirection(), pacMan.getSpeed());
+        Engines.moveGameObjectByOneStep(PacManGame.pacMan, PacManGame.pacMan.getDirection(), pacMan.getSpeed());
     }
 
     private static void moveTheGhost() {
@@ -82,7 +75,7 @@ public class PacManGame {
                     try{
                         if (!checkWall(dir, posX, posY)) directions.add(dir);
                     }catch (ArrayIndexOutOfBoundsException e) {
-                        PhysicEngine.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
+                        Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
                         checkTeleportOtherSide(ghost,posX);
                         return;
                     }
@@ -90,7 +83,7 @@ public class PacManGame {
                 }
                 ghost.thinkNextDirection(lvl, blinky, directions);
             }
-            PhysicEngine.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
+            Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
             checkTeleportOtherSide(ghost,posX);
         }
     }
@@ -122,11 +115,9 @@ public class PacManGame {
                     PacManGame.stopPacmanMovement();
                 if (pacManIsInCollisionWithGhost())
                     try {//todo set to if
-                        pacMan.removeOneLife();
-                        pacMan.setDirection(Direction.NEUTRAL);
-                        Vector2 pacManSpawn = lvl.getSpawn(CharacterName.PACMAN);
-                        System.out.println(pacManSpawn.x + " "+pacManSpawn.y);
-                        PhysicEngine.move(pacMan,pacManSpawn.x , pacManSpawn.y);
+                        if(pacMan.useLife()){
+                            createGameCharacters(lvl,pacMan.getLives());
+                        }
                     } catch (IllegalStateException e) {
                         gameState = GameState.OVER;
                     }
@@ -163,29 +154,25 @@ public class PacManGame {
         switch (direction) {
             case DOWN:
                 if (PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID) {
-                    if (PhysicEngine.willCollide(positionY, positionY + 1, 1, 1, 1))
+                    if (Engines.willCollide(positionY, positionY + 1, 1, 1, 1))
                         return true;
                 }
                 break;
             case UP:
                 if (PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID) {
-                    if (PhysicEngine.willCollide(positionY, positionY - 1, 1, 1, 1))
+                    if (Engines.willCollide(positionY, positionY - 1, 1, 1, 1))
                         return true;
                 }
                 break;
             case LEFT:
                 if (PacManGame.lvl.getLevelArray()[positionY][positionX - 1] == Wall.ID) {
-                    if (PhysicEngine.willCollide(positionX, positionX - 1, 1, 1, 1))
+                    if (Engines.willCollide(positionX, positionX - 1, 1, 1, 1))
                         return true;
                 }
-                /*
-                if(PacManGame.lvl.getLevelArray()[positionY][positionX-1] == Wall.ID){
-                    return true;
-                }*/
                 break;
             case RIGHT:
                 if (PacManGame.lvl.getLevelArray()[positionY][positionX + 1] == Wall.ID) {
-                    if (PhysicEngine.willCollide(positionX, positionX + 1, 1, 1, 1))
+                    if (Engines.willCollide(positionX, positionX + 1, 1, 1, 1))
                         return true;
                 }
                 break;
@@ -195,7 +182,7 @@ public class PacManGame {
 
     public static boolean pacManIsInCollisionWithGhost() {
         for (Ghost ghost : ghosts) {
-            if (PhysicEngine.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit, gameUnit, gameUnit, gameUnit)) {
+            if (Engines.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit, gameUnit, gameUnit, gameUnit)) {
                 System.out.println("Bruh u touched a ghost u are gay");
                 return true;
             }
@@ -213,6 +200,17 @@ public class PacManGame {
             pacMan.setDirection(dir);
             pacMan.nextDir = null;
         }else pacMan.nextDir = dir;
+    }
+
+    public static void createGameCharacters(Level level, int livesOfPacMan){
+        pacMan = new PacMan(level.getSpawn(CharacterName.PACMAN), livesOfPacMan);
+        pacMan.setDirection(Direction.NEUTRAL);
+        ghosts = new ArrayList<>();
+        blinky = new Blinky(level.getSpawn(CharacterName.BLINKY));    //need to create blinky separately from other ghost for AI
+        ghosts.add(blinky);
+        ghosts.add(new Clyde(level.getSpawn(CharacterName.CLYDE)));
+        ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
+        ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
     }
 }
 
