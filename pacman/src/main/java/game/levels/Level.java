@@ -38,7 +38,7 @@ public class Level {
 
     private void fillMaze(int level) throws IOException {
         // Create Reader to read a file.
-        BufferedReader br = new BufferedReader(new FileReader("src/game/resources/levels.text"));
+        BufferedReader br = new BufferedReader(new FileReader(ClassLoader.getSystemClassLoader().getResource("levels.text").getFile()));
 
         String line;
         boolean foundLevel = false;

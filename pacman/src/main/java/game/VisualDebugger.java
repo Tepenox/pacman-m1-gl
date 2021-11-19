@@ -11,19 +11,19 @@ public class VisualDebugger {
         for (Ghost ghost:PacManGame.ghosts) {
             if(ghost instanceof Blinky)
                 Engines.drawImage(jPanel,(Graphics2D) graphics,
-                   new ImageIcon("src/game/resources/croixRouge.png").getImage(),
+                   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("croixRouge.png").getFile()).getImage(),
                    ghost.target.x,ghost.target.y,PacManGame.gameUnit);
             if(ghost instanceof Pinky)
                 Engines.drawImage(jPanel,(Graphics2D) graphics,
-                        new ImageIcon("src/game/resources/croixRose.png").getImage(),
+                        new ImageIcon(ClassLoader.getSystemClassLoader().getResource("croixRose.png").getFile()).getImage(),
                         ghost.target.x,ghost.target.y,PacManGame.gameUnit);
             if(ghost instanceof Inky)
                 Engines.drawImage(jPanel,(Graphics2D) graphics,
-                        new ImageIcon("src/game/resources/croixBleu.png").getImage(),
+                        new ImageIcon(ClassLoader.getSystemClassLoader().getResource("croixBleu.png").getFile()).getImage(),
                         ghost.target.x,ghost.target.y,PacManGame.gameUnit);
             if(ghost instanceof Clyde)
                 Engines.drawImage(jPanel,(Graphics2D) graphics,
-                        new ImageIcon("src/game/resources/croixOrange.png").getImage(),
+                        new ImageIcon(ClassLoader.getSystemClassLoader().getResource("croixOrange.png").getFile()).getImage(),
                         ghost.target.x,ghost.target.y,PacManGame.gameUnit);
         }
 

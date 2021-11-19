@@ -14,11 +14,11 @@ import java.util.HashMap;
 public class Clyde extends Ghost{                       //le fantôme orange.
     public Clyde(Vector2 position) {
         super(7,GhostState.CHASING,position,new HashMap<>());
-        this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/Clyde/upClyde.png").getImage());
-        this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/Clyde/downClyde.png").getImage());
-        this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Clyde/rightClyde.png").getImage());
-        this.sprites.put(Direction.LEFT,new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage());
-        this.sprites.put(Direction.NEUTRAL,new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage());
+        this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/upClyde.png").getFile()).getImage());
+        this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/upClyde.png").getFile()).getImage());
+        this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/upClyde.png").getFile()).getImage());
+        this.sprites.put(Direction.LEFT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/upClyde.png").getFile()).getImage());
+        this.sprites.put(Direction.NEUTRAL,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Clyde/upClyde.png").getFile()).getImage());
     }
 
     @Override
