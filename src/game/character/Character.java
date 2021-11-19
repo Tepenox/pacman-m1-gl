@@ -1,5 +1,7 @@
 package game.character;
 
+import engines.IAEngine;
+import engines.PhysicEngine;
 import utility.GameObject;
 import utility.Direction;
 import utility.Vector2;
@@ -33,7 +35,7 @@ public abstract class Character extends GameObject{
     }
 
     public Vector2 getDirectionAsVector(){
-        return new Vector2(0,0);// todo implement cases
+        return IAEngine.getVectorFromDir(this.direction,this.speed);
 }
 
     public Vector2 getPosition() {

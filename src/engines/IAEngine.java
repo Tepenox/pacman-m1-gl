@@ -31,15 +31,7 @@ public class IAEngine {
         return directions.get(indexOfBest);
     }
 
-    public static void main(String[] args) {
-        GameObject pacman = new GameObject(1,new Vector2(420,690));
-        GameObject ghost = new GameObject(1,new Vector2(450,330));
-
-
-        System.out.println(getDirReducingDist(ghost,pacman.getPosition(),List.of(Direction.RIGHT,Direction.UP),10));
-    }
-
-    public static Vector2 getVectorFromDir(Direction direction, int amplitude){//TODO : faire la cascade
+    public static Vector2 getVectorFromDir(Direction direction, int amplitude){//TODO : faire la cascade + bouger vers physics engine
         return switch (direction){
             case LEFT -> new Vector2(-amplitude,0);
             case NEUTRAL -> new Vector2(0,0);
@@ -49,7 +41,7 @@ public class IAEngine {
         };
     }
 
-    public static Direction getDirFromVector(Vector2 vector){//TODO : faire la cascade
+    public static Direction getDirFromVector(Vector2 vector){//TODO : faire la cascade + bouger vers physics engine
         if(vector.x > 0 && vector.y == 0) return Direction.RIGHT;
         if(vector.x < 0 && vector.y == 0) return Direction.LEFT;
         if(vector.x == 0 && vector.y < 0) return Direction.UP;

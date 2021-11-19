@@ -1,6 +1,7 @@
 package game.levels;
 
 import game.GameUtility.CharacterName;
+import game.character.Ghosts.Blinky;
 import utility.Vector2;
 
 import java.io.BufferedReader;
@@ -59,11 +60,7 @@ public class Level {
                 for (int i = 0; i < parts.length; i++) {
                     if (parts[i].equals("-"))
                         parts[i] = "-1";
-                    this.mazeArray[mazeLine][i] = Integer.parseInt(parts[i]);
-                    initiateVar(parts[i],i,mazeLine);
-                    if(parts[i].equals("2") ){
-                        pacGommeCount++;
-                    }
+                    this.mazeArray[mazeLine][i] = initiateVar(parts[i],i,mazeLine);
                 }
                 mazeLine ++;
             }
@@ -71,16 +68,38 @@ public class Level {
         br.close();
     }
 
-    private void initiateVar(String value,int x,int y){
+    private int initiateVar(String value,int x,int y){
         switch (value) {
-            case "2" -> pacGommeCount++;
-            case "5" -> pacManSpawn = new Vector2(x, y).multiply(gameUnit);
-            case "6" -> blinkySpawn = new Vector2(x, y).multiply(gameUnit);
-            case "7" -> clydeSpawn = new Vector2(x, y).multiply(gameUnit);
-            case "8" -> inkySpawn = new Vector2(x, y).multiply(gameUnit);
-            case "9" -> pinkySpawn = new Vector2(x, y).multiply(gameUnit);
+            case "1" -> {
+                return 1;
+            }
+            case "2", "3" -> {
+                pacGommeCount++;
+                return 2;
+            }
+            case "5" -> {
+                pacManSpawn = new Vector2(x, y).multiply(gameUnit);
+                pacGommeCount++;
+                return 2;
+            }
+            case "6" -> {
+                blinkySpawn = new Vector2(x, y).multiply(gameUnit);
+                return 6;
+            }
+            case "7" -> {
+                clydeSpawn = new Vector2(x, y).multiply(gameUnit);
+                return 7;
+            }
+            case "8" -> {
+                inkySpawn = new Vector2(x, y).multiply(gameUnit);
+                return 8;
+            }
+            case "9" -> {
+                pinkySpawn = new Vector2(x, y).multiply(gameUnit);
+                return 9;
+            }
         }
-
+        return -1;
     }
 
     public int[][] getLevelArray() {

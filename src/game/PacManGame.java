@@ -1,6 +1,7 @@
 package game;
 
 import engines.PhysicEngine;
+import game.character.Character;
 import game.character.Ghosts.*;
 import game.character.PacMan;
 import game.levels.Level;
@@ -72,17 +73,25 @@ public class PacManGame {
 
     private static void moveTheGhost() {
         for (Ghost ghost:ghosts) {
+            int posX = ghost.getPosition().x / PacManGame.gameUnit;
+            int posY = ghost.getPosition().y / PacManGame.gameUnit;
             if (ghost.getPosition().x % gameUnit == 0 && ghost.getPosition().y % gameUnit == 0) {
-                int posX = ghost.getPosition().x / PacManGame.gameUnit;
-                int posY = ghost.getPosition().y / PacManGame.gameUnit;
                 List<Direction> directions = new ArrayList<>();
                 for (Direction dir : Direction.values()) {
                     if (dir == Direction.NEUTRAL) continue;
-                    if (!checkWall(dir, posX, posY)) directions.add(dir);
+                    try{
+                        if (!checkWall(dir, posX, posY)) directions.add(dir);
+                    }catch (ArrayIndexOutOfBoundsException e) {
+                        PhysicEngine.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
+                        checkTeleportOtherSide(ghost,posX);
+                        return;
+                    }
+
                 }
                 ghost.thinkNextDirection(lvl, blinky, directions);
             }
             PhysicEngine.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
+            checkTeleportOtherSide(ghost,posX);
         }
     }
 
@@ -104,10 +113,10 @@ public class PacManGame {
             int positionY = pacMan.getPosition().y / PacManGame.gameUnit;
 //        checking collisions with wall
             try {
-                checkTeleportOtherSide(positionX);
+                checkTeleportOtherSide(pacMan,positionX);
                 checkPacManEating(PacGomme.ID, PacGomme.point, positionX, positionY);
                 checkPacManEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
-                if (!checkWall(pacMan.nextDir, positionX, positionY))
+                if (pacMan.nextDir != null && !checkWall(pacMan.nextDir, positionX, positionY))
                     pacMan.setDirection(pacMan.nextDir);
                 if (checkWall(pacMan.getDirection(), positionX, positionY))
                     PacManGame.stopPacmanMovement();
@@ -142,11 +151,11 @@ public class PacManGame {
 
     }
 
-    private static void checkTeleportOtherSide(int posX) {//TODO : make generic (with y axis teleport)
-        if (posX == 0 && pacMan.getDirection().equals(Direction.LEFT)) {//Todo : make a getter x and y in level
-            pacMan.setPosition(new Vector2((PacManGame.lvl.getLevelArray()[0].length - 1) * gameUnit, pacMan.getPosition().y));
-        } else if (posX == (PacManGame.lvl.getLevelArray()[0].length - 1) && pacMan.getDirection().equals(Direction.RIGHT)) {
-            pacMan.setPosition(new Vector2(0, pacMan.getPosition().y));
+    private static void checkTeleportOtherSide(Character c, int posX) {//TODO : make generic (with y axis teleport)
+        if (posX == 0 && c.getDirection().equals(Direction.LEFT)) {//Todo : make a getter x and y in level
+            c.setPosition(new Vector2((PacManGame.lvl.getLevelArray()[0].length - 1) * gameUnit, c.getPosition().y));
+        } else if (posX == (PacManGame.lvl.getLevelArray()[0].length - 1) && c.getDirection().equals(Direction.RIGHT)) {
+            c.setPosition(new Vector2(0, c.getPosition().y));
         }
     }
 
@@ -200,7 +209,10 @@ public class PacManGame {
     }
 
     public static void setPacmanDir(Direction dir) {
-        pacMan.nextDir = dir;
+        if(pacMan.getDirection() == Direction.NEUTRAL) {
+            pacMan.setDirection(dir);
+            pacMan.nextDir = null;
+        }else pacMan.nextDir = dir;
     }
 }
 
