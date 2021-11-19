@@ -13,7 +13,7 @@ public abstract class Character extends GameObject{
 
     private Direction direction;
     private Vector2 position;
-    private int speed = 10;
+    private int speed = 6;
     public Map<Direction , Image> sprites;
 
 

@@ -73,7 +73,10 @@ public class Level {
             case "1" -> {
                 return 1;
             }
-            case "2", "3" -> {
+            case "3" -> {
+                return 3;
+            }
+            case "2" -> {
                 pacGommeCount++;
                 return 2;
             }
