@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Ghost extends Character {
-    private Vector2 target;
+    public Vector2 target;
 
     public Ghost(int id, Image sprite, Vector2 position, Map<Direction, Image> sprites) {
         super(id,sprite, position,sprites);
@@ -27,16 +27,13 @@ public abstract class Ghost extends Character {
 
     }
 
-    public void setTarget(Vector2 newVal){
-        this.target = newVal;
-    }
-
     public abstract Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos);
 
     public void thinkNextDirection(Level level, Blinky blinky, List<Direction> directions){
         Direction oppositeOfCurrentDirection = IAEngine.getDirFromVector(IAEngine.getVectorFromDir(this.getDirection(),1).multiply(-1));
         directions.remove(oppositeOfCurrentDirection);
         Vector2 targetPos = calculateTarget(PacManGame.pacMan,level,blinky.getPosition());
+        this.target = targetPos; //debugging
         this.setDirection(IAEngine.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
     }
 

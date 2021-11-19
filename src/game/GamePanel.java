@@ -54,6 +54,8 @@ public class GamePanel extends JPanel implements ActionListener {
             graphics.drawString("Game Over", (PacManGame.screenWidth - metrics2.stringWidth("Game Over")) / 2, PacManGame.screenHeight/ 2);
 
         }
+
+        VisualDebugger.draw(this,graphics);
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
