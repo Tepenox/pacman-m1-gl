@@ -41,18 +41,18 @@ public class PhysicEngine {
         gameObject.setPosition(new Vector2(x,y));
     }
     //todo fair la cascade
-    public static void moveGameObjectByOneStep(Character character, Direction direction, int step){ switch (direction) {
+    public static void moveGameObjectByOneStep(GameObject gameObject, Direction direction, int step){ switch (direction) {
             case UP:
-                PhysicEngine.move(character, character.getPosition().x,character.getPosition().y - step);
+                PhysicEngine.move(gameObject, gameObject.getPosition().x,gameObject.getPosition().y - step);
                 break;
             case DOWN:
-                PhysicEngine.move(character, character.getPosition().x,character.getPosition().y + step );
+                PhysicEngine.move(gameObject, gameObject.getPosition().x,gameObject.getPosition().y + step );
                 break;
             case LEFT:
-                PhysicEngine.move(character, character.getPosition().x - step,character.getPosition().y  );
+                PhysicEngine.move(gameObject, gameObject.getPosition().x - step,gameObject.getPosition().y  );
                 break;
             case RIGHT:
-                PhysicEngine.move(character, character.getPosition().x + step,character.getPosition().y  );
+                PhysicEngine.move(gameObject, gameObject.getPosition().x + step,gameObject.getPosition().y  );
                 break;
             case NEUTRAL:
                 //do nothing
