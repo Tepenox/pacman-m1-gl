@@ -1,5 +1,6 @@
 package game.character.Ghosts;
 
+import engines.IAEngine;
 import game.character.PacMan;
 import game.levels.Level;
 import utility.Direction;
@@ -17,11 +18,10 @@ public class Pinky extends Ghost {
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Pinky/rightPinky.png").getImage());
         this.sprites.put(Direction.LEFT,new ImageIcon("src/game/resources/Pinky/leftPinky.png").getImage());
         this.sprites.put(Direction.NEUTRAL,new ImageIcon("src/game/resources/Pinky/leftPinky.png").getImage());
-        super.setSprite(this.sprites.get(Direction.LEFT));
     }
 
     @Override
     public Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos){
-        return Vector2.add(pacman.getPosition(),pacman.getDirectionAsVector().multiply(4));
+        return Vector2.add(pacman.getPosition(), IAEngine.getVectorFromDir(pacman.getDirection(),level.getGameUnit()*3));
     }
 }

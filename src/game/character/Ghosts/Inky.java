@@ -17,7 +17,6 @@ public class Inky extends Ghost {
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Inky/rightInky.png").getImage());
         this.sprites.put(Direction.LEFT,new ImageIcon("src/game/resources/Inky/leftInky.png").getImage());
         this.sprites.put(Direction.NEUTRAL,new ImageIcon("src/game/resources/Inky/leftInky.png").getImage());
-        super.setSprite(this.sprites.get(Direction.LEFT));
     }
 
     @Override

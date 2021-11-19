@@ -18,7 +18,8 @@ public class Blinky extends Ghost{
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Blinky/rightBlinky.png").getImage());
         this.sprites.put(Direction.LEFT,new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage());
         this.sprites.put(Direction.NEUTRAL,new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage());
-        super.setSprite(this.sprites.get(Direction.LEFT));
+        Image img = sprites.get(Direction.NEUTRAL);
+        super.setSprite(img);
     }
 
     @Override

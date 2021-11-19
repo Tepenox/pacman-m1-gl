@@ -19,7 +19,6 @@ public class Clyde extends Ghost{                       //le fantôme orange.
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Clyde/rightClyde.png").getImage());
         this.sprites.put(Direction.LEFT,new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage());
         this.sprites.put(Direction.NEUTRAL,new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage());
-        super.setSprite(this.sprites.get(Direction.LEFT));
     }
 
     @Override
