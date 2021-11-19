@@ -29,10 +29,10 @@ public class Level {
         try {fillMaze(level);} catch (IOException e) {
             System.out.println("fileNotFound");
         }
-        this.blinkySide = new Vector2(mazeArray[0].length,mazeArray.length).multiply(gameUnit);
-        this.pinkySide = new Vector2(0,mazeArray.length).multiply(gameUnit);
-        this.inkySide = new Vector2(mazeArray[0].length,0).multiply(gameUnit);
-        this.clydeSide = new Vector2(0,0).multiply(gameUnit);
+        this.blinkySide = new Vector2(mazeArray[0].length-1,0).multiply(gameUnit);
+        this.pinkySide = new Vector2(0,0).multiply(gameUnit);
+        this.inkySide = new Vector2(mazeArray[0].length-1,mazeArray.length-1).multiply(gameUnit);
+        this.clydeSide = new Vector2(0,mazeArray.length-1).multiply(gameUnit);
 
     }
 
@@ -104,6 +104,10 @@ public class Level {
 
     public int[][] getLevelArray() {
         return mazeArray;
+    }
+
+    public int getGameUnit() {
+        return gameUnit;
     }
 
     public Vector2 getSide(CharacterName ghostName){
