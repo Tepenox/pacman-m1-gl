@@ -12,13 +12,13 @@ import java.util.HashMap;
 public class Blinky extends Ghost{
 
     public Blinky(Vector2 position) { // todo change
-        super(6,position,new HashMap<>());
+        super(6,GhostState.CHASING,position,new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/Blinky/upBlinky.png").getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/Blinky/downBlinky.png").getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Blinky/rightBlinky.png").getImage());
         this.sprites.put(Direction.LEFT,new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage());
         this.sprites.put(Direction.NEUTRAL,new ImageIcon("src/game/resources/Blinky/leftBlinky.png").getImage());
-
+        super.setSprite(this.sprites.get(Direction.LEFT));
     }
 
     @Override

@@ -11,13 +11,13 @@ import java.util.HashMap;
 
 public class Inky extends Ghost {
     public Inky(Vector2 position) {
-        super(8,position, new HashMap<>());
+        super(8,GhostState.REGENERATING,position, new HashMap<>());
         this.sprites.put(Direction.UP,new ImageIcon("src/game/resources/Inky/upInky.png").getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon("src/game/resources/Inky/downInky.png").getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon("src/game/resources/Inky/rightInky.png").getImage());
         this.sprites.put(Direction.LEFT,new ImageIcon("src/game/resources/Inky/leftInky.png").getImage());
         this.sprites.put(Direction.NEUTRAL,new ImageIcon("src/game/resources/Inky/leftInky.png").getImage());
-
+        super.setSprite(this.sprites.get(Direction.LEFT));
     }
 
     @Override

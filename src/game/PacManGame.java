@@ -49,9 +49,9 @@ public class PacManGame {
         blinky = new Blinky(lvl.getSpawn(CharacterName.BLINKY));
         ghosts.add(blinky);
         //TODO : test movement from other ghosts + ADD place where pacman can't walk (entry of ghost spawn) + ADD place where only pacman can walk (ex : tunnel from both side) or just handle exception
-        //ghosts.add(new Clyde(new ImageIcon("src/game/resources/Clyde/leftClyde.png").getImage(), lvl.getSpawn(CharacterName.CLYDE)));
-        //ghosts.add(new Inky(new ImageIcon("src/game/resources/Inky/leftInky.png").getImage(), lvl.getSpawn(CharacterName.INKY)));
-        //ghosts.add(new Pinky(new ImageIcon("src/game/resources/Pinky/leftPinky.png").getImage(), lvl.getSpawn(CharacterName.PINKY)));
+        ghosts.add(new Clyde(lvl.getSpawn(CharacterName.CLYDE)));
+        ghosts.add(new Inky(lvl.getSpawn(CharacterName.INKY)));
+        ghosts.add(new Pinky(lvl.getSpawn(CharacterName.PINKY)));
         startTheGame();
         return gp;
     }
