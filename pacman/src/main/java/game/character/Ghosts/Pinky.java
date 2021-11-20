@@ -2,6 +2,7 @@ package game.character.Ghosts;
 
 import engines.IAEngine;
 import game.Engines;
+import game.GameUtility.CharacterName;
 import game.character.PacMan;
 import game.levels.Level;
 import utility.Direction;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 
 public class Pinky extends Ghost {
     public Pinky(Vector2 position) {
-        super(9,GhostState.CHASING,position, new HashMap<>());
+        super(9,GhostState.DISPERSION,position, new HashMap<>(), CharacterName.PINKY);
         this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/upPinky.png").getFile()).getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/downPinky.png").getFile()).getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Pinky/rightPinky.png").getFile()).getImage());

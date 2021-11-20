@@ -1,5 +1,6 @@
 package game.character;
 
+import game.GameUtility.CharacterName;
 import utility.GameObject;
 import utility.Direction;
 import utility.Vector2;
@@ -13,7 +14,7 @@ public class PacMan extends Character{
     public Direction nextDir = Direction.NEUTRAL;
     int lives;
     public PacMan(Vector2 position,int lives) {
-        super(5,position, new HashMap<>());
+        super(5,position, new HashMap<>(), CharacterName.PACMAN);
         this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("PacMan/upPacMan.png").getFile()).getImage());
         this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("PacMan/downPacMan.png").getFile()).getImage());
         this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("PacMan/rightPacMan.png").getFile()).getImage());

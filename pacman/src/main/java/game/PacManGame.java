@@ -1,6 +1,5 @@
 package game;
 
-import engines.PhysicEngine;
 import game.character.Character;
 import game.character.Ghosts.*;
 import game.character.PacMan;
@@ -32,6 +31,9 @@ public class PacManGame {
     public static Blinky blinky;
     public static Level lvl;
     public static GamePanel gamePanel;
+    public static GhostState ghostPhase = GhostState.CHASING;
+    public static java.util.Timer ghostPhaseTimer;
+    public static int numberOfPhaseLeft;
 
 
     public static GamePanel createGame(int w, int h, int d, int u) {
@@ -41,6 +43,7 @@ public class PacManGame {
         gameUnit = u;
         score = 0;
         lvl = new Level(1,gameUnit);
+        numberOfPhaseLeft = 7;
         gameObjects = new ArrayList<>();
         GamePanel gp = new GamePanel();
         gamePanel = gp;
@@ -54,7 +57,10 @@ public class PacManGame {
         PacManGame.gameState = GameState.RUNNING;
         PacManGame.timer = new Timer(PacManGame.gameDelay, gamePanel);
         timer.start();
+        AutoChangeGhostsState.createPhaseTimer(6000);
     }
+
+
 
     public static boolean hasEatenAllThePacGomme() {
         return lvl.getPacGommeCount() == 0;
@@ -85,7 +91,7 @@ public class PacManGame {
                 ghost.thinkNextDirection(lvl, blinky, directions);
             }
             Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
-            checkTeleportOtherSide(ghost,posX);
+            checkTeleportOtherSide(ghost,posX,posY);
         }
     }
 
@@ -93,7 +99,7 @@ public class PacManGame {
         if (pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0) {
             int positionX = pacMan.getPosition().x / PacManGame.gameUnit;
             int positionY = pacMan.getPosition().y / PacManGame.gameUnit;
-            checkTeleportOtherSide(pacMan,positionX);
+            checkTeleportOtherSide(pacMan,positionX,positionY);
             checkPacManEating(PacGomme.ID, PacGomme.point, positionX, positionY);
             checkPacManEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
             checkPacmanCanChangeDir(positionX,positionY);
@@ -128,11 +134,16 @@ public class PacManGame {
         }
     }
 
-    private static void checkTeleportOtherSide(Character c, int posX) {//TODO : make generic (with y axis teleport)
+    private static void checkTeleportOtherSide(Character c, int posX, int posY) {
         if (posX == 0 && c.getDirection().equals(Direction.LEFT)) {//Todo : make a getter x and y in level
-            c.setPosition(new Vector2((PacManGame.lvl.getLevelArray()[0].length - 1) * gameUnit, c.getPosition().y));
-        } else if (posX == (PacManGame.lvl.getLevelArray()[0].length - 1) && c.getDirection().equals(Direction.RIGHT)) {
+            c.setPosition(new Vector2((PacManGame.lvl.getMazeWidth() - 1) * gameUnit, c.getPosition().y));
+        } else if (posX == (PacManGame.lvl.getMazeWidth() - 1) && c.getDirection().equals(Direction.RIGHT)) {
             c.setPosition(new Vector2(0, c.getPosition().y));
+        }
+        if (posY == 0 && c.getDirection().equals(Direction.UP)) {//Todo : make a getter x and y in level
+            c.setPosition(new Vector2(c.getPosition().x,(PacManGame.lvl.getMazeHeight() - 1) * gameUnit));
+        } else if (posY == (PacManGame.lvl.getMazeHeight() - 1) && c.getDirection().equals(Direction.DOWN)) {
+            c.setPosition(new Vector2(c.getPosition().x,0));
         }
     }
 
@@ -201,6 +212,7 @@ public class PacManGame {
         ghosts.add(new Clyde(level.getSpawn(CharacterName.CLYDE)));
         ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
         ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
+        ghostPhase = GhostState.DISPERSION;
     }
 }
 

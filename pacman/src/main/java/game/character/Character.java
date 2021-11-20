@@ -3,6 +3,7 @@ package game.character;
 import engines.IAEngine;
 import engines.PhysicEngine;
 import game.Engines;
+import game.GameUtility.CharacterName;
 import utility.GameObject;
 import utility.Direction;
 import utility.Vector2;
@@ -16,14 +17,16 @@ public abstract class Character extends GameObject{
     private Vector2 position;
     private int speed = 10;
     public Map<Direction , Image> sprites;
+    public CharacterName name;
 
 
-    public Character(int id,Vector2 position,Map<Direction,Image> sprites) {
+    public Character(int id,Vector2 position,Map<Direction,Image> sprites, CharacterName name) {
         super(id,position);
         this.direction = Direction.NEUTRAL;
         this.position = position;
         this.sprites = sprites;
         super.setSprite(sprites.get(Direction.NEUTRAL));
+        this.name = name;
     }
 
 

@@ -3,6 +3,7 @@ package game.character.Ghosts;
 import engines.IAEngine;
 import engines.PhysicEngine;
 import game.Engines;
+import game.GameUtility.CharacterName;
 import game.PacManGame;
 import utility.GameObject;
 import game.character.Character;
@@ -20,8 +21,8 @@ public abstract class Ghost extends Character {
     public Vector2 target;
     public GhostState state;
 
-    public Ghost(int id, GhostState state, Vector2 position, Map<Direction, Image> sprites) {
-        super(id,position,sprites);
+    public Ghost(int id, GhostState state, Vector2 position, Map<Direction, Image> sprites,CharacterName name) {
+        super(id,position,sprites,name);
         this.state = state;
     }
 
@@ -38,8 +39,9 @@ public abstract class Ghost extends Character {
         Vector2 targetPos = this.getPosition();
         if(this.state == GhostState.CHASING){
             targetPos = calculateTarget(PacManGame.pacMan,level,blinky.getPosition());
-            this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
-        }
+        }else if(this.state == GhostState.DISPERSION)
+            targetPos = level.getSide(this.name);
+        this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
         this.target = targetPos; //debugging
     }
 
