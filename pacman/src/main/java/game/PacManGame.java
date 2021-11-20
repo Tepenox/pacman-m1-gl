@@ -42,7 +42,7 @@ public class PacManGame {
         gameDelay = d;
         gameUnit = u;
         score = 0;
-        lvl = new Level(1,gameUnit);
+        lvl = new Level(2,gameUnit);
         numberOfPhaseLeft = 7;
         gameObjects = new ArrayList<>();
         GamePanel gp = new GamePanel();
@@ -149,6 +149,9 @@ public class PacManGame {
 
     private static boolean checkWall(Direction direction, int positionX, int positionY) {
         try {
+            Vector2 dir = Engines.getVectorFromDir(direction,1);
+            return PacManGame.lvl.getLevelArray()[positionY + dir.y][positionX + dir.x] == Wall.ID;
+            /*
             switch (direction) {
                 case DOWN:
                     if (PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID) {
@@ -175,7 +178,7 @@ public class PacManGame {
                     }
                     break;
             }
-            return false;
+            return false;*/
         }catch (ArrayIndexOutOfBoundsException e){                  //used when the Object reached Limit of maze array (ex : when reaching tunnel on side)
             return false;
         }
