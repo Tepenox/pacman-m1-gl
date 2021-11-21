@@ -1,12 +1,11 @@
 package game.levels;
 
+import game.GameFrame;
 import game.GameUtility.CharacterName;
 import game.character.Ghosts.Blinky;
 import utility.Vector2;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Level {
     private final Vector2 blinkySide;     //top-right of maze
@@ -40,7 +39,7 @@ public class Level {
 
     private void fillMaze(int level) throws IOException {
         // Create Reader to read a file.
-        BufferedReader br = new BufferedReader(new FileReader(ClassLoader.getSystemClassLoader().getResource("levels.text").getFile()));
+        BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("levels.text")));
 
         String line;
         boolean foundLevel = false;

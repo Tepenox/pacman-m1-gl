@@ -13,11 +13,11 @@ import java.util.HashMap;
 public class Inky extends Ghost {
     public Inky(Vector2 position) {
         super(8,GhostState.DISPERSION,position, new HashMap<>(), CharacterName.INKY);
-        this.sprites.put(Direction.UP,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/upInky.png").getFile()).getImage());
-        this.sprites.put(Direction.DOWN,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/downInky.png").getFile()).getImage());
-        this.sprites.put(Direction.RIGHT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/rightInky.png").getFile()).getImage());
-        this.sprites.put(Direction.LEFT,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/leftInky.png").getFile()).getImage());
-        this.sprites.put(Direction.NEUTRAL,new ImageIcon(ClassLoader.getSystemClassLoader().getResource("Inky/leftInky.png").getFile()).getImage());
+        this.sprites.put(Direction.UP,new ImageIcon(getClass().getResource("/Inky/upInky.png")).getImage());
+        this.sprites.put(Direction.DOWN,new ImageIcon(getClass().getResource("/Inky/downInky.png")).getImage());
+        this.sprites.put(Direction.RIGHT,new ImageIcon(getClass().getResource("/Inky/rightInky.png")).getImage());
+        this.sprites.put(Direction.LEFT,new ImageIcon(getClass().getResource("/Inky/leftInky.png")).getImage());
+        this.sprites.put(Direction.NEUTRAL,new ImageIcon(getClass().getResource("/Inky/leftInky.png")).getImage());
     }
 
     @Override

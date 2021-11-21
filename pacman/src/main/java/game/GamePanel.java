@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         }
 
-        VisualDebugger.draw(this,graphics);
+//        VisualDebugger.draw(this,graphics);
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
