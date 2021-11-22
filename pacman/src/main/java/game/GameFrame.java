@@ -16,6 +16,6 @@ public class GameFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameFrame(PacManGame.createGame(840,960,40,30));
+        new GameFrame(PacManGame.createGame(840,960,30,30));
     }
 }
