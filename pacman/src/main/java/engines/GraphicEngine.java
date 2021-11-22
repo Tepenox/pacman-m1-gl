@@ -19,10 +19,12 @@ public class GraphicEngine {
     }
 
     protected static void setSize(JFrame jFrame, int width, int height){
+        jFrame.setPreferredSize(new Dimension(width, height));
         jFrame.setSize(width, height);
     }
 
     protected static void setSize(JPanel jPanel, int width, int height){
+        jPanel.setPreferredSize(new Dimension(width, height));
         jPanel.setSize(width, height);
     }
 
