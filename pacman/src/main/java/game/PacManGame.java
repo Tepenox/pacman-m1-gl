@@ -43,7 +43,7 @@ public class PacManGame {
         gameDelay = d;
         gameUnit = u;
         score = 0;
-        lvl = new Level(2,gameUnit);
+        lvl = new Level(1,gameUnit);
         numberOfPhaseLeft = 7;
         gameObjects = new ArrayList<>();
         GamePanel gp = new GamePanel();
