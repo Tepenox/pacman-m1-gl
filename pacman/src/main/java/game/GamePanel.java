@@ -17,6 +17,8 @@ import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements ActionListener {
 
+    Image heatImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(PacManGame.screenWidth, PacManGame.screenHeight));
         this.setBackground(Color.black);
@@ -43,6 +45,7 @@ public class GamePanel extends JPanel implements ActionListener {
             drawGrid(graphics);
             drawMaze(graphics, unitSize, maze);
             drawCharacters(graphics,unitSize);
+            drawHearts(graphics);
         }else if (PacManGame.gameState.equals(GameState.OVER)) {
             graphics.setColor(Color.red);
             graphics.setFont(new Font("Ink Free", Font.BOLD, 40));
@@ -83,6 +86,13 @@ public class GamePanel extends JPanel implements ActionListener {
         for (int i = 0; i < screenHeight / unitSize; i++) {
             Engines.drawLine((Graphics2D) graphics, i * unitSize,0,i * unitSize, screenHeight);
             Engines.drawLine((Graphics2D) graphics, 0,i * unitSize,screenWidth, i * unitSize);
+        }
+    }
+
+    public void drawHearts(Graphics graphics){
+        int heartCount = PacManGame.pacMan.getLives();
+        for (int i = 0 ; i < heartCount; i++){
+            Engines.drawImage(this,(Graphics2D) graphics, heatImage,  i * PacManGame.gameUnit,PacManGame.screenHeight - PacManGame.gameUnit,PacManGame.gameUnit );
         }
     }
 
