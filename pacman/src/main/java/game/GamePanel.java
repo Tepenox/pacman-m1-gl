@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     Image heatImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
 
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(PacManGame.screenWidth, PacManGame.screenHeight));
         this.setBackground(Color.black);
@@ -46,16 +47,20 @@ public class GamePanel extends JPanel implements ActionListener {
             drawMaze(graphics, unitSize, maze);
             drawCharacters(graphics,unitSize);
             drawHearts(graphics);
-        }else if (PacManGame.gameState.equals(GameState.OVER)) {
+            drawTimer(graphics);
+        }else if (PacManGame.gameState.equals(GameState.OVER)) {// TODO not using graphics engine  add methode text
             graphics.setColor(Color.red);
-            graphics.setFont(new Font("Ink Free", Font.BOLD, 40));
+            graphics.setFont(new Font("Arial", Font.BOLD, 40));
             FontMetrics metrics1 = getFontMetrics(graphics.getFont());
             graphics.drawString("Score: " + PacManGame.score, (PacManGame.screenWidth - metrics1.stringWidth("Score: " + PacManGame.score)) / 2, graphics.getFont().getSize());
             graphics.setColor(Color.red);
             graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
             FontMetrics metrics2 = getFontMetrics(graphics.getFont());
             graphics.drawString("Game Over", (PacManGame.screenWidth - metrics2.stringWidth("Game Over")) / 2, PacManGame.screenHeight/ 2);
-
+            graphics.setColor(Color.WHITE);
+            graphics.setFont(new Font("Arial", Font.BOLD, 30));
+            FontMetrics metrics3 = getFontMetrics(graphics.getFont());
+            graphics.drawString("Press Space to restart", (PacManGame.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, PacManGame.screenHeight/ 2 + metrics2.getHeight()/2);
         }
 
 //        VisualDebugger.draw(this,graphics);
@@ -89,11 +94,23 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    public void drawHearts(Graphics graphics){
+    public void drawHearts(Graphics graphics){ // todo maybe draw only when pacman dies
         int heartCount = PacManGame.pacMan.getLives();
         for (int i = 0 ; i < heartCount; i++){
             Engines.drawImage(this,(Graphics2D) graphics, heatImage,  i * PacManGame.gameUnit,PacManGame.screenHeight - PacManGame.gameUnit,PacManGame.gameUnit );
         }
+    }
+
+    public void drawTimer (Graphics graphics){
+        graphics.setColor(Color.red);
+        graphics.setFont(new Font("Arial", Font.BOLD, 20));
+        FontMetrics metrics1 = getFontMetrics(graphics.getFont());
+        long endTime= System.currentTimeMillis();
+        long time = (endTime - PacManGame.startTime);
+        int minutes = (int)time / (60 * 1000);
+        int seconds = ((int)time / 1000) % 60;
+        String str = String.format("%d:%02d", minutes, seconds);
+        graphics.drawString ( str, (PacManGame.screenWidth - metrics1.stringWidth(str)) / 2, PacManGame.screenHeight - PacManGame.gameUnit/4 );
     }
 
 
@@ -105,6 +122,10 @@ public class GamePanel extends JPanel implements ActionListener {
                 case KeyEvent.VK_RIGHT -> PacManGame.setPacmanDir(Direction.RIGHT);
                 case KeyEvent.VK_UP -> PacManGame.setPacmanDir(Direction.UP);
                 case KeyEvent.VK_DOWN -> PacManGame.setPacmanDir(Direction.DOWN);
+                case KeyEvent.VK_SPACE -> {
+                    if (PacManGame.gameState.equals(GameState.OVER)) {
+                        PacManGame.startTheGame();
+                    }}
             }
         }
 //    }

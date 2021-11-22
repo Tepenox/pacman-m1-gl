@@ -34,6 +34,7 @@ public class PacManGame {
     public static GhostState ghostPhase = GhostState.CHASING;
     public static java.util.Timer ghostPhaseTimer;
     public static int numberOfPhaseLeft;
+    public static long startTime = System.currentTimeMillis();
 
 
     public static GamePanel createGame(int w, int h, int d, int u) {
@@ -47,17 +48,19 @@ public class PacManGame {
         gameObjects = new ArrayList<>();
         GamePanel gp = new GamePanel();
         gamePanel = gp;
-        createGameCharacters(lvl, 3);
         //TODO : ADD place where pacman can't walk (entry of ghost spawn)
         startTheGame();
+        PacManGame.timer = new Timer(PacManGame.gameDelay, gamePanel);
+        timer.start();
+        AutoChangeGhostsState.createPhaseTimer(6000);
+
         return gp;
     }
 
     public static void startTheGame() {
+        createGameCharacters(lvl, 3);
         PacManGame.gameState = GameState.RUNNING;
-        PacManGame.timer = new Timer(PacManGame.gameDelay, gamePanel);
-        timer.start();
-        AutoChangeGhostsState.createPhaseTimer(6000);
+
     }
 
 
@@ -103,8 +106,8 @@ public class PacManGame {
             checkPacManEating(PacGomme.ID, PacGomme.point, positionX, positionY);
             checkPacManEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
             checkPacmanCanChangeDir(positionX,positionY);
-            checkCollWithGhost();
         }
+        checkCollWithGhost();
     }
 
     private static void checkCollWithGhost() {
