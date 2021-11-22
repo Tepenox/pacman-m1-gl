@@ -1,6 +1,5 @@
 package game;
 
-import engines.GraphicEngine;
 import game.GameUtility.GameState;
 import game.character.Ghosts.Ghost;
 import game.object.PacGomme;
@@ -48,22 +47,28 @@ public class GamePanel extends JPanel implements ActionListener {
             drawCharacters(graphics,unitSize);
             drawHearts(graphics);
             drawTimer(graphics);
+            drawScore(graphics);
+            drawLevelCounter(graphics);
         }else if (PacManGame.gameState.equals(GameState.OVER)) {// TODO not using graphics engine  add methode text
-            graphics.setColor(Color.red);
-            graphics.setFont(new Font("Arial", Font.BOLD, 40));
-            FontMetrics metrics1 = getFontMetrics(graphics.getFont());
-            graphics.drawString("Score: " + PacManGame.score, (PacManGame.screenWidth - metrics1.stringWidth("Score: " + PacManGame.score)) / 2, graphics.getFont().getSize());
-            graphics.setColor(Color.red);
-            graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
-            FontMetrics metrics2 = getFontMetrics(graphics.getFont());
-            graphics.drawString("Game Over", (PacManGame.screenWidth - metrics2.stringWidth("Game Over")) / 2, PacManGame.screenHeight/ 2);
-            graphics.setColor(Color.WHITE);
-            graphics.setFont(new Font("Arial", Font.BOLD, 30));
-            FontMetrics metrics3 = getFontMetrics(graphics.getFont());
-            graphics.drawString("Press Space to restart", (PacManGame.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, PacManGame.screenHeight/ 2 + metrics2.getHeight()/2);
+            drawGameOver(graphics);
         }
 
 //        VisualDebugger.draw(this,graphics);
+    }
+
+    private void drawGameOver(Graphics graphics) {
+        graphics.setColor(Color.red);
+        graphics.setFont(new Font("Arial", Font.BOLD, 40));
+        FontMetrics metrics1 = getFontMetrics(graphics.getFont());
+        graphics.drawString("Score: " + PacManGame.score, (PacManGame.screenWidth - metrics1.stringWidth("Score: " + PacManGame.score)) / 2, graphics.getFont().getSize());
+        graphics.setColor(Color.red);
+        graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics2 = getFontMetrics(graphics.getFont());
+        graphics.drawString("Game Over", (PacManGame.screenWidth - metrics2.stringWidth("Game Over")) / 2, PacManGame.screenHeight/ 2);
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("Arial", Font.BOLD, 30));
+        FontMetrics metrics3 = getFontMetrics(graphics.getFont());
+        graphics.drawString("Press Space to restart", (PacManGame.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, PacManGame.screenHeight/ 2 + metrics2.getHeight()/2);
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
@@ -110,7 +115,21 @@ public class GamePanel extends JPanel implements ActionListener {
         int minutes = (int)time / (60 * 1000);
         int seconds = ((int)time / 1000) % 60;
         String str = String.format("%d:%02d", minutes, seconds);
-        graphics.drawString ( str, (PacManGame.screenWidth - metrics1.stringWidth(str)) / 2, PacManGame.screenHeight - PacManGame.gameUnit/4 );
+        graphics.drawString ( str, (PacManGame.screenWidth - metrics1.stringWidth(str)) / 3, PacManGame.screenHeight - PacManGame.gameUnit/4 );
+    }
+
+    public void drawScore(Graphics graphics){
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("Arial", Font.BOLD, 20));
+        FontMetrics metrics = getFontMetrics(graphics.getFont());
+        graphics.drawString("score:" +PacManGame.score, PacManGame.screenWidth-(PacManGame.screenWidth - metrics.stringWidth("score:"+PacManGame.score)) /3, PacManGame.screenHeight - PacManGame.gameUnit/4);
+    }
+
+    public void drawLevelCounter(Graphics graphics){
+        graphics.setColor(Color.yellow);
+        graphics.setFont(new Font("Arial", Font.BOLD, 20));
+        FontMetrics metrics = getFontMetrics(graphics.getFont());
+        graphics.drawString("lvl:" +PacManGame.lvl.getLevelNumber(), PacManGame.screenWidth - metrics.stringWidth("lvl:" +PacManGame.lvl.getLevelNumber()) , PacManGame.screenHeight - PacManGame.gameUnit/4);
     }
 
 

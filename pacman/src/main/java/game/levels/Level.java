@@ -24,8 +24,10 @@ public class Level {
     private int gameUnit;
     private int mazeWidth;
     private int mazeHeight;
+    private int levelNumber;
 
     public Level(int level, int gameUnit){
+        this.levelNumber = level;
         this.gameUnit = gameUnit;
         try {fillMaze(level);} catch (IOException e) {
             System.out.println("fileNotFound");
@@ -152,5 +154,9 @@ public class Level {
 
     public int getMazeHeight() {
         return mazeHeight;
+    }
+
+    public int getLevelNumber() {
+        return levelNumber;
     }
 }

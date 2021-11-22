@@ -58,6 +58,7 @@ public class PacManGame {
     }
 
     public static void startTheGame() {
+        score = 0;
         createGameCharacters(lvl, 3);
         PacManGame.gameState = GameState.RUNNING;
 
