@@ -14,11 +14,11 @@ import java.util.HashMap;
 public class Clyde extends Ghost{                       //le fantôme orange.
     public Clyde(Vector2 position) {
         super(7,GhostState.DISPERSION,position,new HashMap<>(),CharacterName.CLYDE);
-        this.sprites.put(Direction.UP,new ImageIcon(getClass().getResource("/Clyde/upClyde.png")).getImage());
-        this.sprites.put(Direction.DOWN,new ImageIcon(getClass().getResource("/Clyde/downClyde.png")).getImage());
-        this.sprites.put(Direction.RIGHT,new ImageIcon(getClass().getResource("/Clyde/rightClyde.png")).getImage());
-        this.sprites.put(Direction.LEFT,new ImageIcon(getClass().getResource("/Clyde/leftClyde.png")).getImage());
-        this.sprites.put(Direction.NEUTRAL,new ImageIcon(getClass().getResource("/Clyde/leftClyde.png")).getImage());
+        this.sprites.put(Direction.UP,new ImageIcon(getClass().getResource("/Clyde/upClyde.gif")).getImage());
+        this.sprites.put(Direction.DOWN,new ImageIcon(getClass().getResource("/Clyde/downClyde.gif")).getImage());
+        this.sprites.put(Direction.RIGHT,new ImageIcon(getClass().getResource("/Clyde/rightClyde.gif")).getImage());
+        this.sprites.put(Direction.LEFT,new ImageIcon(getClass().getResource("/Clyde/leftClyde.gif")).getImage());
+        this.sprites.put(Direction.NEUTRAL,new ImageIcon(getClass().getResource("/Clyde/leftClyde.gif")).getImage());
     }
 
     @Override

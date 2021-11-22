@@ -15,11 +15,11 @@ import java.util.HashMap;
 public class Pinky extends Ghost {
     public Pinky(Vector2 position) {
         super(9,GhostState.DISPERSION,position, new HashMap<>(), CharacterName.PINKY);
-        this.sprites.put(Direction.UP,new ImageIcon(getClass().getResource("/Pinky/upPinky.png")).getImage());
-        this.sprites.put(Direction.DOWN,new ImageIcon(getClass().getResource("/Pinky/downPinky.png")).getImage());
-        this.sprites.put(Direction.RIGHT,new ImageIcon(getClass().getResource("/Pinky/rightPinky.png")).getImage());
-        this.sprites.put(Direction.LEFT,new ImageIcon(getClass().getResource("/Pinky/leftPinky.png")).getImage());
-        this.sprites.put(Direction.NEUTRAL,new ImageIcon(getClass().getResource("/Pinky/leftPinky.png")).getImage());
+        this.sprites.put(Direction.UP,new ImageIcon(getClass().getResource("/Pinky/upPinky.gif")).getImage());
+        this.sprites.put(Direction.DOWN,new ImageIcon(getClass().getResource("/Pinky/downPinky.gif")).getImage());
+        this.sprites.put(Direction.RIGHT,new ImageIcon(getClass().getResource("/Pinky/rightPinky.gif")).getImage());
+        this.sprites.put(Direction.LEFT,new ImageIcon(getClass().getResource("/Pinky/leftPinky.gif")).getImage());
+        this.sprites.put(Direction.NEUTRAL,new ImageIcon(getClass().getResource("/Pinky/leftPinky.gif")).getImage());
     }
 
     @Override

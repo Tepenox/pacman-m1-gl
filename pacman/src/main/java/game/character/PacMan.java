@@ -26,11 +26,11 @@ public class PacMan extends Character {
                 new HashMap<>(),
                 CharacterName.PACMAN);
 
-        this.sprites.put(Direction.UP, new ImageIcon(getClass().getResource("/PacMan/upPacMan.png")).getImage());
-        this.sprites.put(Direction.DOWN, new ImageIcon(getClass().getResource("/PacMan/downPacMan.png")).getImage());
-        this.sprites.put(Direction.RIGHT, new ImageIcon(getClass().getResource("/PacMan/rightPacMan.png")).getImage());
-        this.sprites.put(Direction.LEFT, new ImageIcon(getClass().getResource("/PacMan/leftPacMan.png")).getImage());
-        this.sprites.put(Direction.NEUTRAL, new ImageIcon(getClass().getResource("/PacMan/neutralPacMan.png")).getImage());
+        this.sprites.put(Direction.UP, new ImageIcon(getClass().getResource("/PacMan/upPacMan.gif")).getImage());
+        this.sprites.put(Direction.DOWN, new ImageIcon(getClass().getResource("/PacMan/downPacMan.gif")).getImage());
+        this.sprites.put(Direction.RIGHT, new ImageIcon(getClass().getResource("/PacMan/rightPacMan.gif")).getImage());
+        this.sprites.put(Direction.LEFT, new ImageIcon(getClass().getResource("/PacMan/leftPacMan.gif")).getImage());
+        this.sprites.put(Direction.NEUTRAL, new ImageIcon(getClass().getResource("/PacMan/neutralPacMan.gif")).getImage());
         this.lives = lives;
     }
 
