@@ -135,6 +135,7 @@ public class PacManGame {
             int totalDist = ghost.getSpeed();
             while (totalDist > 0){
                 int distToTravel = progressiveMovement(ghost,Engines.getVectorFromDir(ghost.getDirection(),1),totalDist);
+                if(distToTravel == 0) break;
                 Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
                 checkGhostCollisions(ghost);
                 totalDist -= distToTravel;
@@ -280,9 +281,9 @@ public class PacManGame {
         ghosts = new ArrayList<>();
         blinky = new Blinky(level.getSpawn(CharacterName.BLINKY));    //need to create blinky separately from other ghost for AI
         ghosts.add(blinky);
-        //ghosts.add(new Clyde(level.getSpawn(CharacterName.CLYDE)));
-        //ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
-        //ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
+        ghosts.add(new Clyde(level.getSpawn(CharacterName.CLYDE)));
+        ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
+        ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
         ghostPhase = GhostState.DISPERSION;
     }
 }
