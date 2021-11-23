@@ -3,6 +3,7 @@ package game.GameEngine;
 import game.GameUtility.GameState;
 import game.character.Ghosts.Ghost;
 import game.object.PacGomme;
+import game.object.PinkWall;
 import game.object.SuperPacGomme;
 import game.object.Wall;
 import utility.Direction;
@@ -94,6 +95,8 @@ public class PacManGamePanel extends JPanel implements ActionListener {
             for (int j = 0; j < maze[0].length; j++) {
                 if (maze[i][j] == Wall.ID)
                     Engines.fillRect((Graphics2D)graphics,j* unitSize,i* unitSize, unitSize,Color.BLUE);
+                if (maze[i][j] == PinkWall.ID)
+                    Engines.fillRect((Graphics2D)graphics,j* unitSize,i* unitSize, unitSize,Color.PINK);
                 if (maze[i][j] == PacGomme.ID)
                     Engines.fillOval((Graphics2D)graphics,j* unitSize +(unitSize /2),i* unitSize +(unitSize /2), unitSize /6,Color.WHITE);
                 if (maze[i][j] == SuperPacGomme.ID)

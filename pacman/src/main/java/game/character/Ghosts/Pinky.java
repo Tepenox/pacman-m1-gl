@@ -19,6 +19,7 @@ public class Pinky extends Ghost {
         this.sprites.put(Direction.RIGHT,new ImageIcon(getClass().getResource("/Pinky/rightPinky.gif")).getImage());
         this.sprites.put(Direction.LEFT,new ImageIcon(getClass().getResource("/Pinky/leftPinky.gif")).getImage());
         this.sprites.put(Direction.NEUTRAL,new ImageIcon(getClass().getResource("/Pinky/leftPinky.gif")).getImage());
+        setDirection(Direction.LEFT);
         Image img = sprites.get(Direction.NEUTRAL);
         super.setSprite(img);
     }

@@ -74,6 +74,9 @@ public class Level {
 
     private int initiateVar(String value,int x,int y){
         switch (value) {
+            case "0" -> {
+                return 0;
+            }
             case "1" -> {
                 return 1;
             }
@@ -138,11 +141,11 @@ public class Level {
 
     public Vector2 getSpawn(CharacterName name){
         return switch (name) {
-            case BLINKY -> blinkySpawn;
-            case PINKY -> pinkySpawn;
-            case INKY -> inkySpawn;
-            case CLYDE -> clydeSpawn;
-            case PACMAN -> pacManSpawn;
+            case BLINKY -> Vector2.add(blinkySpawn, new Vector2(gameUnit/2,0));
+            case PINKY -> Vector2.add(pinkySpawn, new Vector2(gameUnit/2,0));
+            case INKY -> Vector2.add(inkySpawn, new Vector2(gameUnit/2,0));
+            case CLYDE -> Vector2.add(clydeSpawn, new Vector2(gameUnit/2,0));
+            case PACMAN -> Vector2.add(pacManSpawn, new Vector2(gameUnit/2,0));
         };
     }
 

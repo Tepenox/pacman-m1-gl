@@ -5,6 +5,7 @@ import game.character.Ghosts.*;
 import game.character.PacMan;
 import game.levels.Level;
 import game.object.PacGomme;
+import game.object.PinkWall;
 import game.object.SuperPacGomme;
 import game.object.Wall;
 import game.GameUtility.CharacterName;
@@ -163,10 +164,15 @@ public class GameLogic {
     }
 
     private static void checkCollWithGhost() {
-        if (pacManIsInCollisionWithGhost()){
-            if(pacMan.useLife()){
-                createGameCharacters(lvl,pacMan.getLives());
-            }else gameState = GameState.OVER;
+        Ghost ghostTouching = pacManIsInCollisionWithGhost();
+        if (ghostTouching != null){
+            if(ghostTouching.state == GhostState.CHASING || ghostTouching.state == GhostState.DISPERSION){
+                if(pacMan.useLife()){
+                    createGameCharacters(lvl,pacMan.getLives());
+                }else gameState = GameState.OVER;
+            }else if(ghostTouching.state == GhostState.FRIGHTENED || ghostTouching.state == GhostState.TWINKLING){
+
+            }
         }
     }
 
@@ -181,7 +187,7 @@ public class GameLogic {
         if (GameLogic.lvl.getLevelArray()[y][x] == ID) {
             score += point;
             if (ID == 3 || ID == 2)
-                lvl.removePacGomme(x, y, 0);
+                lvl.removePacGomme(x, y, -1);
             System.out.println("SCORE: " + score);
             if (GameLogic.hasEatenAllThePacGomme())
                 wonLevel();
@@ -245,20 +251,21 @@ public class GameLogic {
     private static boolean checkWall(Direction direction, int positionX, int positionY) {
         try {
             Vector2 dir = Engines.getVectorFromDir(direction,1);
-            return GameLogic.lvl.getLevelArray()[positionY + dir.y][positionX + dir.x] == Wall.ID;
+            int ID = GameLogic.lvl.getLevelArray()[positionY + dir.y][positionX + dir.x];
+            return ID == Wall.ID || ID == PinkWall.ID;
         }catch (ArrayIndexOutOfBoundsException e){                  //used when the Object reached Limit of maze array (ex : when reaching tunnel on side)
             return false;
         }
     }
 
-    public static boolean pacManIsInCollisionWithGhost() {
+    public static Ghost pacManIsInCollisionWithGhost() {
         for (Ghost ghost : ghosts) {
-            if (Engines.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit, gameUnit, gameUnit, gameUnit)) {
+            if (Engines.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit/2, gameUnit/2, gameUnit/2, gameUnit/2)) {
                 System.out.println("Ghost killed Pacman");
-                return true;
+                return ghost;
             }
         }
-        return false;
+        return null;
     }
 
     private static void stopPacmanMovement() {
