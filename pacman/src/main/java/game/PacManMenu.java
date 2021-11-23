@@ -59,7 +59,7 @@ public class PacManMenu extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == buttonStart){
-            this.frame.startGame();
+            this.frame.startGame(1,0);
         }
         if(e.getSource() == buttonExit){
             System.exit(0);

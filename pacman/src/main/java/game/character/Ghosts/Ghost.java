@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Ghost extends Character {
-    public Vector2 target;
+    public Vector2 target = new Vector2(0,0);
     public GhostState state;
 
     public Ghost(int id, GhostState state, Vector2 position, Map<Direction, Image> sprites,CharacterName name) {

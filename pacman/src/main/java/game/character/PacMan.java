@@ -31,6 +31,8 @@ public class PacMan extends Character {
         this.sprites.put(Direction.RIGHT, new ImageIcon(getClass().getResource("/PacMan/rightPacMan.gif")).getImage());
         this.sprites.put(Direction.LEFT, new ImageIcon(getClass().getResource("/PacMan/leftPacMan.gif")).getImage());
         this.sprites.put(Direction.NEUTRAL, new ImageIcon(getClass().getResource("/PacMan/neutralPacMan.gif")).getImage());
+        Image img = sprites.get(Direction.NEUTRAL);
+        super.setSprite(img);
         this.lives = lives;
     }
 

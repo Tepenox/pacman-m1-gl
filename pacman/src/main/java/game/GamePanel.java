@@ -16,13 +16,17 @@ import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    Image heatImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
+    Image hearthImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
+    private String messageMiddleScreen = "Ready !!!";
 
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(PacManGame.screenWidth, PacManGame.screenHeight));
         this.setBackground(Color.black);
         this.setFocusable(true);
+    }
+
+    public void addInputListener(){
         this.addKeyListener(new MyKeyAdapter());
     }
 
@@ -38,10 +42,14 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
     }
 
+    public void setMessageMiddleScreen(String str) {
+        this.messageMiddleScreen = str;
+    }
+
     public void draw(Graphics graphics) {
         int unitSize = PacManGame.gameUnit;
         int[][] maze = PacManGame.lvl.getLevelArray();
-        if(PacManGame.gameState.equals(GameState.RUNNING)){
+        if(PacManGame.gameState.equals(GameState.RUNNING) || PacManGame.gameState.equals(GameState.STARTING) ){
             drawGrid(graphics);
             drawMaze(graphics, unitSize, maze);
             drawCharacters(graphics,unitSize);
@@ -49,12 +57,18 @@ public class GamePanel extends JPanel implements ActionListener {
             drawTimer(graphics);
             drawScore(graphics);
             drawLevelCounter(graphics);
+            //VisualDebugger.draw(this,graphics);
+            drawMsg(graphics);
         }else if (PacManGame.gameState.equals(GameState.OVER)) {// TODO not using graphics engine  add methode text
             drawGameOver(graphics);
         }
-
-//        VisualDebugger.draw(this,graphics);
     }
+
+    private void drawMsg(Graphics graphics) {
+        FontMetrics metrics1 = getFontMetrics(graphics.getFont());
+        graphics.drawString(messageMiddleScreen,(PacManGame.screenWidth - (metrics1.stringWidth(messageMiddleScreen))) / 2, PacManGame.lvl.getFruitSpawn().y + 2*PacManGame.gameUnit/3);
+    }
+
 
     private void drawGameOver(Graphics graphics) {
         graphics.setColor(Color.red);
@@ -102,7 +116,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void drawHearts(Graphics graphics){ // todo maybe draw only when pacman dies
         int heartCount = PacManGame.pacMan.getLives();
         for (int i = 0 ; i < heartCount; i++){
-            Engines.drawImage(this,(Graphics2D) graphics, heatImage,  i * PacManGame.gameUnit,PacManGame.screenHeight - PacManGame.gameUnit,PacManGame.gameUnit );
+            Engines.drawImage(this,(Graphics2D) graphics, hearthImage,  i * PacManGame.gameUnit,PacManGame.screenHeight - 2*PacManGame.gameUnit,PacManGame.gameUnit );
         }
     }
 
@@ -122,14 +136,14 @@ public class GamePanel extends JPanel implements ActionListener {
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
         FontMetrics metrics = getFontMetrics(graphics.getFont());
-        graphics.drawString("score:" +PacManGame.score, PacManGame.screenWidth-(PacManGame.screenWidth - metrics.stringWidth("score:"+PacManGame.score)) /3, PacManGame.screenHeight - PacManGame.gameUnit/4);
+        graphics.drawString("score:" +PacManGame.score, PacManGame.screenWidth-(PacManGame.screenWidth/2 - metrics.stringWidth("score:"+PacManGame.score)), PacManGame.screenHeight - 5*PacManGame.gameUnit/4);
     }
 
     public void drawLevelCounter(Graphics graphics){
         graphics.setColor(Color.yellow);
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
         FontMetrics metrics = getFontMetrics(graphics.getFont());
-        graphics.drawString("lvl:" +PacManGame.lvl.getLevelNumber(), PacManGame.screenWidth - metrics.stringWidth("lvl:" +PacManGame.lvl.getLevelNumber()) , PacManGame.screenHeight - PacManGame.gameUnit/4);
+        graphics.drawString("lvl:" +PacManGame.lvl.getLevelNumber(), PacManGame.screenWidth - metrics.stringWidth("lvl:" +PacManGame.lvl.getLevelNumber()) - PacManGame.gameUnit , PacManGame.screenHeight - 5*PacManGame.gameUnit/4);
     }
 
 

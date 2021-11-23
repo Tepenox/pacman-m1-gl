@@ -10,19 +10,42 @@ import java.io.File;
 
 public class GameFrame extends JFrame {
 
-    private static final int screenWidth = 840;
-    private static final int screenHeight = 960;
-    private static final int gameDelay = 30;
-    private static final int gameUnit = 30;
+    public final int screenWidth = 840;
+    public final int screenHeight = 990;
+    public final int gameDelay = 30;
+    public final int gameUnit = 30;
+
+    private final int numberOfLvl = 3;
 
     private JPanel content;
 
     public GameFrame(){
         showMenu();
         Engines.createFrame(this,"Pacman");
-        Engines.setSize(this, screenWidth, screenHeight);
+        Engines.setSize(this, screenWidth+10, screenHeight+10);
 
     }
+
+    public static void main(String[] args) {
+        new GameFrame();
+    }
+
+    //============================================Content Logic=================================================
+
+    public void levelEnded(int lvl, Boolean hasWon, int scoreObtained){
+        if(hasWon){
+            if(lvl <= numberOfLvl) {
+                startGame(lvl + 1, scoreObtained);
+            }else {
+                //TODO : save scoreObtained
+            }
+        }
+        if(!hasWon){
+            showMenu();
+        }
+    }
+
+    //============================================Content setter================================================
 
     private void showMenu() {
         removeOldContent();
@@ -30,9 +53,9 @@ public class GameFrame extends JFrame {
         showNewContent();
     }
 
-    public void startGame(){
+    public void startGame(int level, int startScore){
         removeOldContent();
-        content = PacManGame.createGame(screenWidth,screenHeight,gameDelay,gameUnit);
+        content = PacManGame.createGame(this,level,startScore);
         showNewContent();
     }
 
@@ -48,7 +71,4 @@ public class GameFrame extends JFrame {
         this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new GameFrame();
-    }
 }

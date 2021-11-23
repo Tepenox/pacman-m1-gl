@@ -18,6 +18,7 @@ public class Level {
     private Vector2 inkySpawn = null;
     private Vector2 clydeSpawn = null;
     private Vector2 pacManSpawn = null;
+    private Vector2 fruitSpawn = null;
 
     private int pacGommeCount = 0;
     private int[][] mazeArray;
@@ -78,12 +79,16 @@ public class Level {
             case "1" -> {
                 return 1;
             }
-            case "3" -> {
-                return 3;
-            }
             case "2" -> {
                 pacGommeCount++;
                 return 2;
+            }
+            case "3" -> {
+                return 3;
+            }
+            case "4" -> {
+                fruitSpawn = new Vector2(x, y).multiply(gameUnit);
+                return -1;
             }
             case "5" -> {
                 pacManSpawn = new Vector2(x, y).multiply(gameUnit);
@@ -126,6 +131,10 @@ public class Level {
             case CLYDE -> clydeSide;
             default -> null;
         };
+    }
+
+    public Vector2 getFruitSpawn() {
+        return fruitSpawn;
     }
 
     public Vector2 getSpawn(CharacterName name){

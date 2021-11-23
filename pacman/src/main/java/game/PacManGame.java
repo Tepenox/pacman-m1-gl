@@ -37,31 +37,42 @@ public class PacManGame {
     public static long startTime = System.currentTimeMillis();
 
 
-    public static GamePanel createGame(int w, int h, int d, int u) {
-        screenWidth = w;
-        screenHeight = h;
-        gameDelay = d;
-        gameUnit = u;
-        score = 0;
-        lvl = new Level(1,gameUnit);
+    public static GamePanel createGame(GameFrame gameFrame, int lvlNumber, int startScore) {
+        screenWidth = gameFrame.screenWidth;
+        screenHeight = gameFrame.screenHeight;
+        gameDelay = gameFrame.gameDelay;
+        gameUnit = gameFrame.gameUnit;
+        score = startScore;
+        lvl = new Level(lvlNumber,gameUnit);
         numberOfPhaseLeft = 7;
         gameObjects = new ArrayList<>();
         GamePanel gp = new GamePanel();
         gamePanel = gp;
-        //TODO : ADD place where pacman can't walk (entry of ghost spawn)
         startTheGame();
-        PacManGame.timer = new Timer(PacManGame.gameDelay, gamePanel);
-        timer.start();
-        AutoChangeGhostsState.createPhaseTimer(6000);
-
         return gp;
     }
 
     public static void startTheGame() {
-        score = 0;
         createGameCharacters(lvl, 3);
-        PacManGame.gameState = GameState.RUNNING;
+        PacManGame.gameState = GameState.STARTING;
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        runTheGame();
+                    }
+                },
+                5000
+        );
+    }
 
+    public static void runTheGame(){
+        gamePanel.addInputListener();
+        PacManGame.gameState = GameState.RUNNING;
+        gamePanel.setMessageMiddleScreen("");
+        PacManGame.timer = new Timer(PacManGame.gameDelay, gamePanel);
+        timer.start();
+        AutoChangeGhostsState.createPhaseTimer(6000);
     }
 
 
@@ -108,7 +119,7 @@ public class PacManGame {
             checkPacManEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
             checkPacmanCanChangeDir(positionX,positionY);
         }
-        checkCollWithGhost();
+        //checkCollWithGhost();
     }
 
     private static void checkCollWithGhost() {
