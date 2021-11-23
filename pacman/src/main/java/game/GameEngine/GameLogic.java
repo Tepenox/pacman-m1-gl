@@ -229,7 +229,7 @@ public class GameLogic {
                     @Override
                     public void run() {
                         for (Ghost ghost:ghosts) {
-                            if(ghost.state != GhostState.REGENERATING)
+                            if(ghost.state == GhostState.FRIGHTENED)
                                 ghost.setState(GhostState.TWINKLING);
                         }
                     }
