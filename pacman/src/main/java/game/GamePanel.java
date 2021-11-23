@@ -36,10 +36,14 @@ public class GamePanel extends JPanel implements ActionListener {
         draw(g);
     }
 
+    private long time = System.currentTimeMillis();
+
     @Override
     public void actionPerformed(ActionEvent e) {
         PacManGame.actionPerformed();
         repaint();
+        System.out.println(System.currentTimeMillis() - time);
+        time = System.currentTimeMillis();
     }
 
     public void setMessageMiddleScreen(String str) {

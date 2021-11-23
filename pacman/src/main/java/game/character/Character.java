@@ -15,9 +15,10 @@ public abstract class Character extends GameObject{
 
     private Direction direction;
     private Vector2 position;
-    private int speed = 5;
+    private int speed = 7;
     public Map<Direction , Image> sprites;
     public CharacterName name;
+    protected boolean spriteIsBasedOnDir;
 
 
     public Character(int id,Vector2 position,Map<Direction,Image> sprites, CharacterName name) {
@@ -27,6 +28,7 @@ public abstract class Character extends GameObject{
         this.sprites = sprites;
         super.setSprite(sprites.get(Direction.NEUTRAL));
         this.name = name;
+        this.spriteIsBasedOnDir = true;
     }
 
 
@@ -52,7 +54,8 @@ public abstract class Character extends GameObject{
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-        super.setSprite(sprites.get(direction));
+        if(spriteIsBasedOnDir)
+            super.setSprite(sprites.get(direction));
     }
 
     public void setPosition(Vector2 position) {

@@ -100,23 +100,59 @@ public class PacManGame {
     }
 
     public static void moveThePacman() {
-        Engines.moveGameObjectByOneStep(PacManGame.pacMan, PacManGame.pacMan.getDirection(), pacMan.getSpeed());
+        int totalDist = pacMan.getSpeed();
+        while (totalDist > 0){
+            int distToTravel = progressiveMovement(pacMan,Engines.getVectorFromDir(pacMan.getDirection(),1),totalDist);
+            Engines.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
+            checkPacmanCollisions();
+            totalDist -= distToTravel;
+        }
+    }
+
+    private static int progressiveMovement(GameObject go, Vector2 dir, int amount){ //give a dist to travel (in pixel) till it reach a %gameUnit==0
+        if(go.getPosition().x % gameUnit == 0 && go.getPosition().y % gameUnit == 0){
+            return amount;
+        }
+        if(dir.x != 0 && dir.y == 0){//horizontal mov
+            int distBeforeGameUnitMultiple;
+            if(dir.x > 0){
+                distBeforeGameUnitMultiple = gameUnit - go.getPosition().x % gameUnit;
+            }else distBeforeGameUnitMultiple = go.getPosition().x % gameUnit;
+            return Math.min(distBeforeGameUnitMultiple,amount);
+        }
+        if(dir.x == 0 && dir.y != 0){//vertical mov
+            int distBeforeGameUnitMultiple;
+            if(dir.y > 0){
+                distBeforeGameUnitMultiple = gameUnit - go.getPosition().y % gameUnit;
+            }else distBeforeGameUnitMultiple = go.getPosition().y % gameUnit;
+            return Math.min(distBeforeGameUnitMultiple,amount);
+        }
+        return amount;//case of neutral mov
     }
 
     private static void moveTheGhost() {
         for (Ghost ghost:ghosts) {
-            int posX = ghost.getPosition().x / PacManGame.gameUnit;
-            int posY = ghost.getPosition().y / PacManGame.gameUnit;
-            if (ghost.getPosition().x % gameUnit == 0 && ghost.getPosition().y % gameUnit == 0) {
-                List<Direction> directions = new ArrayList<>();
-                for (Direction dir : Direction.values()) {
-                    if (dir == Direction.NEUTRAL) continue;
-                    if (!checkWall(dir, posX, posY)) directions.add(dir);
-                }
-                ghost.thinkNextDirection(lvl, blinky, directions);
+            int totalDist = ghost.getSpeed();
+            while (totalDist > 0){
+                int distToTravel = progressiveMovement(ghost,Engines.getVectorFromDir(ghost.getDirection(),1),totalDist);
+                Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
+                checkGhostCollisions(ghost);
+                totalDist -= distToTravel;
             }
-            Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), ghost.getSpeed());
-            checkTeleportOtherSide(ghost,posX,posY);
+        }
+    }
+
+    private static void checkGhostCollisions(Ghost ghost){
+        if (ghost.getPosition().x % gameUnit == 0 && ghost.getPosition().y % gameUnit == 0) {
+            int positionX = ghost.getPosition().x / PacManGame.gameUnit;
+            int positionY = ghost.getPosition().y / PacManGame.gameUnit;
+            checkTeleportOtherSide(ghost,positionX,positionY);
+            List<Direction> directions = new ArrayList<>();
+            for (Direction dir : Direction.values()) {
+                if (dir == Direction.NEUTRAL) continue;
+                if (!checkWall(dir, positionX, positionY)) directions.add(dir);
+            }
+            ghost.thinkNextDirection(lvl, blinky, directions);
         }
     }
 
@@ -155,12 +191,43 @@ public class PacManGame {
             System.out.println("SCORE: " + score);
             if (PacManGame.hasEatenAllThePacGomme())
                 wonLevel();
+            if(ID == 3)
+                superPacGommeEffect();
         }
     }
 
-    public static void wonLevel() {             //TODO : put this method private tu secure this class only can determine win condition
+    public static void wonLevel() {
         timer.stop();   //remove the Action listener on GamePanel, so that it reset correctly on new game
         gameFrame.startGame(lvl.getLevelNumber()+1,score);
+    }
+
+    private static void superPacGommeEffect() {
+        for (Ghost ghost:ghosts) {
+            ghost.setState(GhostState.FRIGHTENED);
+        }
+
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        for (Ghost ghost:ghosts) {
+                            ghost.setState(GhostState.TWINKLING);
+                        }
+                    }
+                },
+                6000
+        );
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        for (Ghost ghost:ghosts) {
+                            ghost.setState(ghostPhase);
+                        }
+                    }
+                },
+                10000
+        );
     }
 
     private static void checkTeleportOtherSide(Character c, int posX, int posY) {
@@ -180,34 +247,6 @@ public class PacManGame {
         try {
             Vector2 dir = Engines.getVectorFromDir(direction,1);
             return PacManGame.lvl.getLevelArray()[positionY + dir.y][positionX + dir.x] == Wall.ID;
-            /*
-            switch (direction) {
-                case DOWN:
-                    if (PacManGame.lvl.getLevelArray()[positionY + 1][positionX] == Wall.ID) {
-                        if (Engines.willCollide(positionY, positionY + 1, 1, 1, 1))
-                            return true;
-                    }
-                    break;
-                case UP:
-                    if (PacManGame.lvl.getLevelArray()[positionY - 1][positionX] == Wall.ID) {
-                        if (Engines.willCollide(positionY, positionY - 1, 1, 1, 1))
-                            return true;
-                    }
-                    break;
-                case LEFT:
-                    if (PacManGame.lvl.getLevelArray()[positionY][positionX - 1] == Wall.ID) {
-                        if (Engines.willCollide(positionX, positionX - 1, 1, 1, 1))
-                            return true;
-                    }
-                    break;
-                case RIGHT:
-                    if (PacManGame.lvl.getLevelArray()[positionY][positionX + 1] == Wall.ID) {
-                        if (Engines.willCollide(positionX, positionX + 1, 1, 1, 1))
-                            return true;
-                    }
-                    break;
-            }
-            return false;*/
         }catch (ArrayIndexOutOfBoundsException e){                  //used when the Object reached Limit of maze array (ex : when reaching tunnel on side)
             return false;
         }
@@ -241,9 +280,9 @@ public class PacManGame {
         ghosts = new ArrayList<>();
         blinky = new Blinky(level.getSpawn(CharacterName.BLINKY));    //need to create blinky separately from other ghost for AI
         ghosts.add(blinky);
-        ghosts.add(new Clyde(level.getSpawn(CharacterName.CLYDE)));
-        ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
-        ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
+        //ghosts.add(new Clyde(level.getSpawn(CharacterName.CLYDE)));
+        //ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
+        //ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
         ghostPhase = GhostState.DISPERSION;
     }
 }

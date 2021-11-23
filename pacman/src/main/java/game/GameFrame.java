@@ -12,7 +12,7 @@ public class GameFrame extends JFrame {
 
     public final int screenWidth = 840;
     public final int screenHeight = 990;
-    public final int gameDelay = 30;
+    public final int gameDelay = 20;
     public final int gameUnit = 30;
 
     private final int numberOfLvl = 3;

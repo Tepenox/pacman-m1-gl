@@ -21,9 +21,7 @@ class AutoChangeGhostsState extends TimerTask {
         }
 
         for (Ghost ghost:PacManGame.ghosts) {
-            if(ghost.state != GhostState.EATEN
-                    && ghost.state != GhostState.REGENERATING
-                    && ghost.state != GhostState.FRIGHTENED){
+            if(ghost.state == GhostState.CHASING || ghost.state == GhostState.DISPERSION){
                 ghost.state = PacManGame.ghostPhase;
             }
         }
