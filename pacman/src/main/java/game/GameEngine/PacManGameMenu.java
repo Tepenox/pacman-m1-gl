@@ -1,23 +1,20 @@
 package game.GameEngine;
 
-import game.GameEngine.Engines;
-import game.GameEngine.GameFrame;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PacManMenu extends JPanel implements ActionListener {
+public class PacManGameMenu extends JPanel implements ActionListener {
 
     private JButton buttonStart;
     private JButton buttonScore;
     private JButton buttonExit;
 
-    private final GameFrame frame;
+    private final MenuLogic frame;
 
-    public PacManMenu(int screenWidth, int screenHeight, GameFrame frame) {
+    public PacManGameMenu(int screenWidth, int screenHeight, MenuLogic frame) {
         this.frame = frame;
         this.setBackground(Color.black);
         Border border = BorderFactory.createLineBorder(Color.GRAY,2);

@@ -7,28 +7,28 @@ import java.util.TimerTask;
 
 class AutoChangeGhostsState extends TimerTask {
     public void run() {
-        PacManGame.numberOfPhaseLeft--;
-        if(PacManGame.ghostPhase == GhostState.CHASING) {
-            PacManGame.ghostPhase = GhostState.DISPERSION;
-            if(PacManGame.numberOfPhaseLeft>0)
+        GameLogic.numberOfPhaseLeft--;
+        if(GameLogic.ghostPhase == GhostState.CHASING) {
+            GameLogic.ghostPhase = GhostState.DISPERSION;
+            if(GameLogic.numberOfPhaseLeft>0)
                 createPhaseTimer(6000);
         }else {
-            PacManGame.ghostPhase = GhostState.CHASING;
-            if(PacManGame.numberOfPhaseLeft>0)
+            GameLogic.ghostPhase = GhostState.CHASING;
+            if(GameLogic.numberOfPhaseLeft>0)
                 createPhaseTimer(20000);
             else
-                PacManGame.ghostPhaseTimer.cancel();
+                GameLogic.ghostPhaseTimer.cancel();
         }
 
-        for (Ghost ghost:PacManGame.ghosts) {
+        for (Ghost ghost: GameLogic.ghosts) {
             if(ghost.state == GhostState.CHASING || ghost.state == GhostState.DISPERSION){
-                ghost.state = PacManGame.ghostPhase;
+                ghost.state = GameLogic.ghostPhase;
             }
         }
     }
 
     public static void createPhaseTimer(int timeToWait){
-        PacManGame.ghostPhaseTimer = new java.util.Timer();
-        PacManGame.ghostPhaseTimer.schedule(new AutoChangeGhostsState(), timeToWait);
+        GameLogic.ghostPhaseTimer = new java.util.Timer();
+        GameLogic.ghostPhaseTimer.schedule(new AutoChangeGhostsState(), timeToWait);
     }
 }

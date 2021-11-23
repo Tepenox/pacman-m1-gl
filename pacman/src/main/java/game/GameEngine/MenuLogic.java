@@ -1,8 +1,15 @@
 package game.GameEngine;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class GameFrame extends JFrame {
+public class MenuLogic extends JFrame {
 
     public final int screenWidth = 840;
     public final int screenHeight = 990;
@@ -13,7 +20,7 @@ public class GameFrame extends JFrame {
 
     private JPanel content;
 
-    public GameFrame(){
+    public MenuLogic(){
         showMenu();
         Engines.createFrame(this,"Pacman");
         Engines.setSize(this, screenWidth+10, screenHeight+10);
@@ -21,7 +28,7 @@ public class GameFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameFrame();
+        new MenuLogic();
     }
 
     //============================================Content Logic=================================================
@@ -31,6 +38,7 @@ public class GameFrame extends JFrame {
             if(lvl <= numberOfLvl) {
                 startGame(lvl + 1, scoreObtained);
             }else {
+                writeNewScore();
                 //TODO : save scoreObtained
             }
         }
@@ -39,17 +47,47 @@ public class GameFrame extends JFrame {
         }
     }
 
+    private void writeNewScore() {
+        try {
+            ArrayList<HighScore> list = readFile();
+        } catch (IOException e) {
+            System.err.println("Couldn't Find score.text to save HighScore");
+            System.exit(-1);
+        }
+    }
+
+    private static class HighScore{
+        public int score;
+        public String str;
+    }
+
+    private ArrayList<HighScore> readFile() throws IOException {
+        ArrayList<HighScore> result = new ArrayList<>();
+        Reader reader = new FileReader(String.valueOf(getClass().getResource("/scores.text")));
+        BufferedReader br = new BufferedReader(reader);
+        String line;
+        while((line = br.readLine())!= null) {
+            String[] str = line.split(" ");
+            HighScore hs = new HighScore();
+            hs.score = Integer.parseInt(str[1]);
+            hs.str = line;
+            result.add(hs);
+        }
+        br.close();
+        return result;
+    }
+
     //============================================Content setter================================================
 
     private void showMenu() {
         removeOldContent();
-        content = new PacManMenu(screenWidth,screenHeight,this);
+        content = new PacManGameMenu(screenWidth,screenHeight,this);
         showNewContent();
     }
 
     public void startGame(int level, int startScore){
         removeOldContent();
-        content = PacManGame.createGame(this,level,startScore);
+        content = GameLogic.createGame(this,level,startScore);
         showNewContent();
     }
 

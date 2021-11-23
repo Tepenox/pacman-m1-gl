@@ -14,14 +14,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class PacManGamePanel extends JPanel implements ActionListener {
 
     Image hearthImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
     private String messageMiddleScreen = "Ready !!!";
 
 
-    public GamePanel() {
-        this.setPreferredSize(new Dimension(PacManGame.screenWidth, PacManGame.screenHeight));
+    public PacManGamePanel() {
+        this.setPreferredSize(new Dimension(GameLogic.screenWidth, GameLogic.screenHeight));
         this.setBackground(Color.black);
         this.setFocusable(true);
     }
@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        PacManGame.actionPerformed();
+        GameLogic.actionPerformed();
         repaint();
         System.out.println(System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
@@ -51,9 +51,9 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics graphics) {
-        int unitSize = PacManGame.gameUnit;
-        int[][] maze = PacManGame.lvl.getLevelArray();
-        if(PacManGame.gameState.equals(GameState.RUNNING) || PacManGame.gameState.equals(GameState.STARTING) ){
+        int unitSize = GameLogic.gameUnit;
+        int[][] maze = GameLogic.lvl.getLevelArray();
+        if(GameLogic.gameState.equals(GameState.RUNNING) || GameLogic.gameState.equals(GameState.STARTING) ){
             drawGrid(graphics);
             drawMaze(graphics, unitSize, maze);
             drawCharacters(graphics,unitSize);
@@ -63,14 +63,14 @@ public class GamePanel extends JPanel implements ActionListener {
             drawLevelCounter(graphics);
             //VisualDebugger.draw(this,graphics);
             drawMsg(graphics);
-        }else if (PacManGame.gameState.equals(GameState.OVER)) {// TODO not using graphics engine  add methode text
+        }else if (GameLogic.gameState.equals(GameState.OVER)) {// TODO not using graphics engine  add methode text
             drawGameOver(graphics);
         }
     }
 
     private void drawMsg(Graphics graphics) {
         FontMetrics metrics1 = getFontMetrics(graphics.getFont());
-        graphics.drawString(messageMiddleScreen,(PacManGame.screenWidth - (metrics1.stringWidth(messageMiddleScreen))) / 2, PacManGame.lvl.getFruitSpawn().y + 2*PacManGame.gameUnit/3);
+        graphics.drawString(messageMiddleScreen,(GameLogic.screenWidth - (metrics1.stringWidth(messageMiddleScreen))) / 2, GameLogic.lvl.getFruitSpawn().y + 2* GameLogic.gameUnit/3);
     }
 
 
@@ -78,15 +78,15 @@ public class GamePanel extends JPanel implements ActionListener {
         graphics.setColor(Color.red);
         graphics.setFont(new Font("Arial", Font.BOLD, 40));
         FontMetrics metrics1 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Score: " + PacManGame.score, (PacManGame.screenWidth - metrics1.stringWidth("Score: " + PacManGame.score)) / 2, graphics.getFont().getSize());
+        graphics.drawString("Score: " + GameLogic.score, (GameLogic.screenWidth - metrics1.stringWidth("Score: " + GameLogic.score)) / 2, graphics.getFont().getSize());
         graphics.setColor(Color.red);
         graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Game Over", (PacManGame.screenWidth - metrics2.stringWidth("Game Over")) / 2, PacManGame.screenHeight/ 2);
+        graphics.drawString("Game Over", (GameLogic.screenWidth - metrics2.stringWidth("Game Over")) / 2, GameLogic.screenHeight/ 2);
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Arial", Font.BOLD, 30));
         FontMetrics metrics3 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Press Space to restart", (PacManGame.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, PacManGame.screenHeight/ 2 + metrics2.getHeight()/2);
+        graphics.drawString("Press Space to restart", (GameLogic.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, GameLogic.screenHeight/ 2 + metrics2.getHeight()/2);
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
@@ -102,15 +102,15 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void drawCharacters(Graphics graphics,int unitSize){
-        Engines.drawGameObject(this,(Graphics2D) graphics,PacManGame.pacMan,unitSize);
-        for (Ghost ghost : PacManGame.ghosts)
+        Engines.drawGameObject(this,(Graphics2D) graphics, GameLogic.pacMan,unitSize);
+        for (Ghost ghost : GameLogic.ghosts)
             Engines.drawGameObject(this,(Graphics2D) graphics,ghost,unitSize);
     }
 
     public void drawGrid(Graphics graphics) {
-        int screenWidth = PacManGame.screenWidth;
-        int screenHeight = PacManGame.screenHeight;
-        int unitSize = PacManGame.gameUnit;
+        int screenWidth = GameLogic.screenWidth;
+        int screenHeight = GameLogic.screenHeight;
+        int unitSize = GameLogic.gameUnit;
         for (int i = 0; i < screenHeight / unitSize; i++) {
             Engines.drawLine((Graphics2D) graphics, i * unitSize,0,i * unitSize, screenHeight);
             Engines.drawLine((Graphics2D) graphics, 0,i * unitSize,screenWidth, i * unitSize);
@@ -118,9 +118,9 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void drawHearts(Graphics graphics){ // todo maybe draw only when pacman dies
-        int heartCount = PacManGame.pacMan.getLives();
+        int heartCount = GameLogic.pacMan.getLives();
         for (int i = 0 ; i < heartCount; i++){
-            Engines.drawImage(this,(Graphics2D) graphics, hearthImage,  i * PacManGame.gameUnit,PacManGame.screenHeight - 2*PacManGame.gameUnit,PacManGame.gameUnit );
+            Engines.drawImage(this,(Graphics2D) graphics, hearthImage,  i * GameLogic.gameUnit, GameLogic.screenHeight - 2* GameLogic.gameUnit, GameLogic.gameUnit );
         }
     }
 
@@ -129,25 +129,25 @@ public class GamePanel extends JPanel implements ActionListener {
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
         FontMetrics metrics1 = getFontMetrics(graphics.getFont());
         long endTime= System.currentTimeMillis();
-        long time = (endTime - PacManGame.startTime);
+        long time = (endTime - GameLogic.startTime);
         int minutes = (int)time / (60 * 1000);
         int seconds = ((int)time / 1000) % 60;
         String str = String.format("%d:%02d", minutes, seconds);
-        graphics.drawString ( str, PacManGame.screenWidth - metrics1.stringWidth(str) - 3*PacManGame.gameUnit, PacManGame.screenHeight - 5*PacManGame.gameUnit/4 );
+        graphics.drawString ( str, GameLogic.screenWidth - metrics1.stringWidth(str) - 3* GameLogic.gameUnit, GameLogic.screenHeight - 5* GameLogic.gameUnit/4 );
     }
 
     public void drawScore(Graphics graphics){
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
         FontMetrics metrics = getFontMetrics(graphics.getFont());
-        graphics.drawString("score:" +PacManGame.score, PacManGame.screenWidth-(PacManGame.screenWidth/2 - metrics.stringWidth("score:"+PacManGame.score)), PacManGame.screenHeight - 5*PacManGame.gameUnit/4);
+        graphics.drawString("score:" + GameLogic.score, GameLogic.screenWidth-(GameLogic.screenWidth/2 - metrics.stringWidth("score:"+ GameLogic.score)), GameLogic.screenHeight - 5* GameLogic.gameUnit/4);
     }
 
     public void drawLevelCounter(Graphics graphics){
         graphics.setColor(Color.yellow);
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
         FontMetrics metrics = getFontMetrics(graphics.getFont());
-        graphics.drawString("lvl:" +PacManGame.lvl.getLevelNumber(), PacManGame.screenWidth - metrics.stringWidth("lvl:" +PacManGame.lvl.getLevelNumber()) - PacManGame.gameUnit , PacManGame.screenHeight - 5*PacManGame.gameUnit/4);
+        graphics.drawString("lvl:" + GameLogic.lvl.getLevelNumber(), GameLogic.screenWidth - metrics.stringWidth("lvl:" + GameLogic.lvl.getLevelNumber()) - GameLogic.gameUnit , GameLogic.screenHeight - 5* GameLogic.gameUnit/4);
     }
 
 
@@ -155,16 +155,16 @@ public class GamePanel extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT -> PacManGame.setPacmanDir(Direction.LEFT);
-                case KeyEvent.VK_RIGHT -> PacManGame.setPacmanDir(Direction.RIGHT);
-                case KeyEvent.VK_UP -> PacManGame.setPacmanDir(Direction.UP);
-                case KeyEvent.VK_DOWN -> PacManGame.setPacmanDir(Direction.DOWN);
+                case KeyEvent.VK_LEFT -> GameLogic.setPacmanDir(Direction.LEFT);
+                case KeyEvent.VK_RIGHT -> GameLogic.setPacmanDir(Direction.RIGHT);
+                case KeyEvent.VK_UP -> GameLogic.setPacmanDir(Direction.UP);
+                case KeyEvent.VK_DOWN -> GameLogic.setPacmanDir(Direction.DOWN);
                 case KeyEvent.VK_SPACE -> {
-                    if (PacManGame.gameState.equals(GameState.OVER)) {
-                        PacManGame.startTheGame();
+                    if (GameLogic.gameState.equals(GameState.OVER)) {
+                        GameLogic.startTheGame();
                     }}
                 case KeyEvent.VK_M -> {
-                    PacManGame.wonLevel();
+                    GameLogic.wonLevel();
                 }
             }
         }
