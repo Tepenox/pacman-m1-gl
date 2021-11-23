@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PacManGame {
+    private static GameFrame gameFrame;
     public static int screenWidth;
     public static int screenHeight;
     public static int gameUnit;
@@ -25,27 +26,35 @@ public class PacManGame {
     public static int score;
     public static Timer timer;
     public static List<Ghost> ghosts;
-    public static List<GameObject> gameObjects;
-    public static GameState gameState = GameState.PAUSED;
+    public static GameState gameState;
     public static PacMan pacMan;
     public static Blinky blinky;
     public static Level lvl;
     public static GamePanel gamePanel;
-    public static GhostState ghostPhase = GhostState.CHASING;
+    public static GhostState ghostPhase;
     public static java.util.Timer ghostPhaseTimer;
     public static int numberOfPhaseLeft;
-    public static long startTime = System.currentTimeMillis();
+    public static long startTime;
 
 
-    public static GamePanel createGame(GameFrame gameFrame, int lvlNumber, int startScore) {
-        screenWidth = gameFrame.screenWidth;
-        screenHeight = gameFrame.screenHeight;
-        gameDelay = gameFrame.gameDelay;
-        gameUnit = gameFrame.gameUnit;
+    public static GamePanel createGame(GameFrame gamef, int lvlNumber, int startScore) {
+        gameFrame = gamef;
+        screenWidth = gamef.screenWidth;
+        screenHeight = gamef.screenHeight;
+        gameDelay = gamef.gameDelay;
+        gameUnit = gamef.gameUnit;
         score = startScore;
+        timer = null;
+        ghosts = null;
+        gameState = null;
+        pacMan = null;
+        blinky = null;
         lvl = new Level(lvlNumber,gameUnit);
+        gamePanel = null;
+        ghostPhase = GhostState.CHASING;
+        ghostPhaseTimer = null;
         numberOfPhaseLeft = 7;
-        gameObjects = new ArrayList<>();
+        startTime = System.currentTimeMillis();
         GamePanel gp = new GamePanel();
         gamePanel = gp;
         startTheGame();
@@ -70,7 +79,8 @@ public class PacManGame {
         gamePanel.addInputListener();
         PacManGame.gameState = GameState.RUNNING;
         gamePanel.setMessageMiddleScreen("");
-        PacManGame.timer = new Timer(PacManGame.gameDelay, gamePanel);
+        timer = null;
+        timer = new Timer(PacManGame.gameDelay, gamePanel);
         timer.start();
         AutoChangeGhostsState.createPhaseTimer(6000);
     }
@@ -119,7 +129,7 @@ public class PacManGame {
             checkPacManEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
             checkPacmanCanChangeDir(positionX,positionY);
         }
-        //checkCollWithGhost();
+        checkCollWithGhost();
     }
 
     private static void checkCollWithGhost() {
@@ -144,9 +154,13 @@ public class PacManGame {
                 lvl.removePacGomme(x, y, 0);
             System.out.println("SCORE: " + score);
             if (PacManGame.hasEatenAllThePacGomme())
-                System.out.println("YOU WON THE LEVEL ");
-            //next Game
+                wonLevel();
         }
+    }
+
+    public static void wonLevel() {             //TODO : put this method private tu secure this class only can determine win condition
+        timer.stop();   //remove the Action listener on GamePanel, so that it reset correctly on new game
+        gameFrame.startGame(lvl.getLevelNumber()+1,score);
     }
 
     private static void checkTeleportOtherSide(Character c, int posX, int posY) {

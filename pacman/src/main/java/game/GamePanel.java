@@ -159,6 +159,9 @@ public class GamePanel extends JPanel implements ActionListener {
                     if (PacManGame.gameState.equals(GameState.OVER)) {
                         PacManGame.startTheGame();
                     }}
+                case KeyEvent.VK_M -> {
+                    PacManGame.wonLevel();
+                }
             }
         }
 //    }

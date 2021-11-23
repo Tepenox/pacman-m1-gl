@@ -84,6 +84,7 @@ public class Level {
                 return 2;
             }
             case "3" -> {
+                pacGommeCount++;
                 return 3;
             }
             case "4" -> {
