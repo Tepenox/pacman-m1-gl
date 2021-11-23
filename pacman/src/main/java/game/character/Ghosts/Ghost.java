@@ -43,33 +43,45 @@ public abstract class Ghost extends Character {
     private void setSpriteAndBehaviour() {
         if(this.state == GhostState.FRIGHTENED){
             this.spriteIsBasedOnDir = false;
-            initFrightened();
+            initFrightenedBehaviour();
             return;
         }
         if(this.state == GhostState.TWINKLING){
             this.spriteIsBasedOnDir = false;
-            initTwinkling();
+            initTwinklingBehaviour();
             return;
         }
         if(this.state == GhostState.CHASING || this.state == GhostState.DISPERSION){
             this.spriteIsBasedOnDir = true;
             initNormalBehaviour();
         }
+        if(this.state == GhostState.EATEN){
+            this.spriteIsBasedOnDir = false;
+            initEatenBehaviour();
+        }
+        if(this.state == GhostState.REGENERATING){
+            this.spriteIsBasedOnDir = true;
+            this.setSpeed(normalSpeed);
+        }
     }
 
-    private void initTwinkling() {
+    private void initTwinklingBehaviour() {
         setSprite(new ImageIcon(getClass().getResource("/VulnerableGhost/vulnerable2.gif")).getImage());
         this.setSpeed(frightenedSpeed);
     }
 
-    private void initFrightened(){
+    private void initFrightenedBehaviour(){
         setSprite(new ImageIcon(getClass().getResource("/VulnerableGhost/vulnerable1.gif")).getImage());
         this.setDirection(Engines.getDirFromVector(Engines.getVectorFromDir(this.getDirection(),1).multiply(-1)));
         this.setSpeed(frightenedSpeed);
     }
 
-    private void initNormalBehaviour(){
-        super.setDirection(getDirection());
+    private void initEatenBehaviour(){
+        setSprite(new ImageIcon(getClass().getResource("/VulnerableGhost/eaten.gif")).getImage());
+        this.setSpeed(eatenSpeed);
+    }
+
+    public void initNormalBehaviour(){
         this.setSpeed(normalSpeed);
     }
 
@@ -91,6 +103,9 @@ public abstract class Ghost extends Character {
         }else if(this.state == GhostState.FRIGHTENED || this.state == GhostState.TWINKLING){
             targetPos = GameLogic.pacMan.getPosition();
             this.setDirection(Engines.getDirIncreasingDist(this,targetPos,directions,this.getSpeed()));
+        }else if(this.state == GhostState.EATEN){
+            targetPos = GameLogic.ghostBase.getBaseEntry();
+            this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
         }
         this.target = targetPos; //debugging
     }

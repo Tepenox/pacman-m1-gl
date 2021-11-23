@@ -127,7 +127,6 @@ public class GameLogic {
     private static void moveTheGhost() {
         for (Ghost ghost : ghosts) {
             if (ghost.state == GhostState.REGENERATING) {
-                //regenerate(ghost);
                 continue;
             }
             int totalDist = ghost.getSpeed();
@@ -136,10 +135,18 @@ public class GameLogic {
                 if (distToTravel == 0) break;
                 Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
                 checkGhostCollisions(ghost);
+                if(ghost.state == GhostState.EATEN && checkGhostCloseBase(ghost) < 10) {
+                    ghostBase.addGhostApproxPos(ghost);
+                    break;
+                }
                 totalDist -= distToTravel;
             }
         }
         ghostBase.regenerateGhost();
+    }
+
+    private static int checkGhostCloseBase(Ghost ghost) {
+        return (int)Engines.calculateDist(ghost.getPosition(),ghostBase.getBaseEntry());
     }
 
     private static void checkGhostCollisions(Ghost ghost){
@@ -176,7 +183,7 @@ public class GameLogic {
                     createGameCharacters(lvl,pacMan.getLives());
                 }else gameState = GameState.OVER;
             }else if(ghostTouching.state == GhostState.FRIGHTENED || ghostTouching.state == GhostState.TWINKLING){
-
+                ghostTouching.setState(GhostState.EATEN);
             }
         }
     }
@@ -213,7 +220,8 @@ public class GameLogic {
 
     private static void superPacGommeEffect() {
         for (Ghost ghost:ghosts) {
-            ghost.setState(GhostState.FRIGHTENED);
+            if(ghost.state != GhostState.REGENERATING)
+                ghost.setState(GhostState.FRIGHTENED);
         }
 
         new java.util.Timer().schedule(
@@ -221,7 +229,8 @@ public class GameLogic {
                     @Override
                     public void run() {
                         for (Ghost ghost:ghosts) {
-                            ghost.setState(GhostState.TWINKLING);
+                            if(ghost.state != GhostState.REGENERATING)
+                                ghost.setState(GhostState.TWINKLING);
                         }
                     }
                 },
@@ -232,7 +241,8 @@ public class GameLogic {
                     @Override
                     public void run() {
                         for (Ghost ghost:ghosts) {
-                            ghost.setState(ghostPhase);
+                            if(ghost.state != GhostState.REGENERATING)
+                                ghost.setState(ghostPhase);
                         }
                     }
                 },

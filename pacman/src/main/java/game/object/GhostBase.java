@@ -4,6 +4,7 @@ import game.GameEngine.Engines;
 import game.GameEngine.GameLogic;
 import game.GameUtility.CharacterName;
 import game.character.Ghosts.Ghost;
+import game.character.Ghosts.GhostState;
 import utility.Direction;
 import utility.Vector2;
 
@@ -11,9 +12,9 @@ import java.sql.Time;
 import java.util.*;
 
 public class GhostBase {
-    private Vector2 baseEntry;
-    public final int YUp;
-    public final int YDown;
+    private final Vector2 baseEntry;
+    private final int YUp;
+    private final int YDown;
 
     private List<Ghost> ghosts = new ArrayList<>();
     private Ghost ghostExiting;
@@ -36,6 +37,10 @@ public class GhostBase {
                 else currentRegenTime = 0;
             }
         }, 0, 1000);
+    }
+
+    public Vector2 getBaseEntry() {
+        return baseEntry;
     }
 
     public void regenerateGhost(){
@@ -73,11 +78,18 @@ public class GhostBase {
                 return;
             }
             if(ghostExiting.getPosition().y <= baseEntry.y){
-                ghostExiting.setState(GameLogic.ghostPhase);
-                ghostExiting.setDirection(Direction.LEFT);
-                ghostExiting = null;
+                removeGhostFromBase();
             }
         }
+    }
+
+    private void removeGhostFromBase(){
+        ghostExiting.setState(GameLogic.ghostPhase);
+        ghostExiting.setDirection(Direction.LEFT);
+        ghostExiting = null;
+        currentRegenTime = 0;
+        if(ghosts.size() == 0)
+            isRegenerating = false;
     }
 
     public void addAllGhostToBase(List<Ghost> ghostList){
@@ -88,8 +100,10 @@ public class GhostBase {
 
     public void addGhostToBase(Ghost ghost){
         ghosts.add(ghost);
+        ghost.setState(GhostState.REGENERATING);
         if(!isRegenerating)
             isRegenerating = true;
+        ghost.setDirection(Direction.DOWN);
     }
 
     public void addGhostApproxPos(Ghost ghost){
@@ -98,9 +112,8 @@ public class GhostBase {
     }
 
     private void checkRegeneratedGhost() {
-        if(isRegenerating && currentRegenTime > regenTime && ghosts.size() >= 1){
+        if(isRegenerating && ghostExiting == null && currentRegenTime > regenTime && ghosts.size() >= 1 ){
             ghostExiting = ghosts.remove(0);
-            currentRegenTime = 0;
         }
     }
 }
