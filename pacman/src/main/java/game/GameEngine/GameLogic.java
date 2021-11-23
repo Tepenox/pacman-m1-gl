@@ -85,15 +85,8 @@ public class GameLogic {
         AutoChangeGhostsState.createPhaseTimer(6000);
     }
 
-
-
-    public static boolean hasEatenAllThePacGomme() {
-        return lvl.getPacGommeCount() == 0;
-    }
-
     public static void actionPerformed() {
         if (gameState.equals(GameState.RUNNING)) {
-            checkPacmanCollisions();
             moveThePacman();
             moveTheGhost();
         }
@@ -196,6 +189,11 @@ public class GameLogic {
                 superPacGommeEffect();
         }
     }
+
+    public static boolean hasEatenAllThePacGomme() {
+        return lvl.getPacGommeCount() == 0;
+    }
+
 
     public static void wonLevel() {
         timer.stop();   //remove the Action listener on GamePanel, so that it reset correctly on new game
