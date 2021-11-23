@@ -125,11 +125,15 @@ public class GameLogic {
     }
 
     private static void moveTheGhost() {
-        for (Ghost ghost:ghosts) {
+        for (Ghost ghost : ghosts) {
+            if (ghost.state == GhostState.REGENERATING) {
+                regenerate(ghost);
+                continue;
+            }
             int totalDist = ghost.getSpeed();
-            while (totalDist > 0){
-                int distToTravel = progressiveMovement(ghost,Engines.getVectorFromDir(ghost.getDirection(),1),totalDist);
-                if(distToTravel == 0) break;
+            while (totalDist > 0) {
+                int distToTravel = progressiveMovement(ghost, Engines.getVectorFromDir(ghost.getDirection(), 1), totalDist);
+                if (distToTravel == 0) break;
                 Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
                 checkGhostCollisions(ghost);
                 totalDist -= distToTravel;
@@ -290,6 +294,26 @@ public class GameLogic {
         ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
         ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
         ghostPhase = GhostState.DISPERSION;
+    }
+
+    private static void regenerate(Ghost ghost){
+        int baseYUp = lvl.getSpawn(CharacterName.BLINKY).y + 2 * gameUnit;
+        int baseYDown = lvl.getSpawn(CharacterName.BLINKY).y + 4 * gameUnit;
+        if(ghost.getDirection() == Direction.DOWN){
+            if(ghost.getPosition().y >= baseYDown) {
+                ghost.setDirection(Direction.UP);
+                Engines.moveGameObjectByOneStep(ghost, Direction.UP, 3);
+            }
+            Engines.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
+        }
+        if(ghost.getDirection() == Direction.UP){
+            if(ghost.getPosition().y <= baseYUp) {
+                ghost.setDirection(Direction.DOWN);
+                Engines.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
+            }
+            Engines.moveGameObjectByOneStep(ghost, Direction.UP, 3);
+        }
+
     }
 }
 

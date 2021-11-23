@@ -21,7 +21,7 @@ public abstract class Ghost extends Character {
 
     private int normalSpeed = super.getSpeed();
     private int frightenedSpeed = 3;
-    private int eatenSpeed = 12;
+    private int eatenSpeed = 15;
 
 
     public Ghost(int id, GhostState state, Vector2 position, Map<Direction, Image> sprites,CharacterName name) {
@@ -76,9 +76,12 @@ public abstract class Ghost extends Character {
     public abstract Vector2 calculateTarget(PacMan pacman, Level level, Vector2 blinkyPos);
 
     public void thinkNextDirection(Level level, Blinky blinky, List<Direction> directions){
+        if(this.state == GhostState.REGENERATING) {//in this state, GameEngine control the ghost
+            return;
+        }
+        Vector2 targetPos = this.getPosition();
         Direction oppositeOfCurrentDirection = Engines.getDirFromVector(Engines.getVectorFromDir(this.getDirection(),1).multiply(-1));
         directions.remove(oppositeOfCurrentDirection);
-        Vector2 targetPos = this.getPosition();
         if(this.state == GhostState.CHASING){
             targetPos = calculateTarget(GameLogic.pacMan,level,blinky.getPosition());
             this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));

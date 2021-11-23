@@ -1,6 +1,7 @@
 package game.GameEngine;
 
 import game.GameUtility.GameState;
+import game.VisualDebugger;
 import game.character.Ghosts.Ghost;
 import game.object.PacGomme;
 import game.object.PinkWall;
@@ -37,14 +38,10 @@ public class PacManGamePanel extends JPanel implements ActionListener {
         draw(g);
     }
 
-    private long time = System.currentTimeMillis();
-
     @Override
     public void actionPerformed(ActionEvent e) {
         GameLogic.actionPerformed();
         repaint();
-        System.out.println(System.currentTimeMillis() - time);
-        time = System.currentTimeMillis();
     }
 
     public void setMessageMiddleScreen(String str) {
@@ -62,7 +59,7 @@ public class PacManGamePanel extends JPanel implements ActionListener {
             drawTimer(graphics);
             drawScore(graphics);
             drawLevelCounter(graphics);
-            //VisualDebugger.draw(this,graphics);
+            VisualDebugger.draw(this,graphics);
             drawMsg(graphics);
         }else if (GameLogic.gameState.equals(GameState.OVER)) {// TODO not using graphics engine  add methode text
             drawGameOver(graphics);
