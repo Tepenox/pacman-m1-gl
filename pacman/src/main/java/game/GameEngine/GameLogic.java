@@ -4,10 +4,7 @@ import game.character.Character;
 import game.character.Ghosts.*;
 import game.character.PacMan;
 import game.levels.Level;
-import game.object.PacGomme;
-import game.object.PinkWall;
-import game.object.SuperPacGomme;
-import game.object.Wall;
+import game.object.*;
 import game.GameUtility.CharacterName;
 import utility.Direction;
 import game.GameUtility.GameState;
@@ -36,6 +33,7 @@ public class GameLogic {
     public static java.util.Timer ghostPhaseTimer;
     public static int numberOfPhaseLeft;
     public static long startTime;
+    public static GhostBase ghostBase;
 
 
     public static PacManGamePanel createGame(MenuLogic gamef, int lvlNumber, int startScore) {
@@ -51,6 +49,7 @@ public class GameLogic {
         pacMan = null;
         blinky = null;
         lvl = new Level(lvlNumber,gameUnit);
+        ghostBase = new GhostBase(lvl.getSpawn(CharacterName.BLINKY));
         pacManGamePanel = null;
         ghostPhase = GhostState.CHASING;
         ghostPhaseTimer = null;
@@ -84,6 +83,7 @@ public class GameLogic {
         timer = new Timer(GameLogic.gameDelay, pacManGamePanel);
         timer.start();
         AutoChangeGhostsState.createPhaseTimer(6000);
+        ghostBase.startRegenTimer();
     }
 
     public static void actionPerformed() {
@@ -127,7 +127,7 @@ public class GameLogic {
     private static void moveTheGhost() {
         for (Ghost ghost : ghosts) {
             if (ghost.state == GhostState.REGENERATING) {
-                regenerate(ghost);
+                //regenerate(ghost);
                 continue;
             }
             int totalDist = ghost.getSpeed();
@@ -139,6 +139,7 @@ public class GameLogic {
                 totalDist -= distToTravel;
             }
         }
+        ghostBase.regenerateGhost();
     }
 
     private static void checkGhostCollisions(Ghost ghost){
@@ -289,10 +290,11 @@ public class GameLogic {
         pacMan.setDirection(Direction.NEUTRAL);
         ghosts = new ArrayList<>();
         blinky = new Blinky(level.getSpawn(CharacterName.BLINKY));    //need to create blinky separately from other ghost for AI
-        ghosts.add(blinky);
+        ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
         ghosts.add(new Clyde(level.getSpawn(CharacterName.CLYDE)));
         ghosts.add(new Inky(level.getSpawn(CharacterName.INKY)));
-        ghosts.add(new Pinky(level.getSpawn(CharacterName.PINKY)));
+        ghostBase.addAllGhostToBase(ghosts);
+        ghosts.add(blinky);
         ghostPhase = GhostState.DISPERSION;
     }
 
