@@ -1,6 +1,7 @@
 package game;
 
-import game.GameUtility.GameState;
+import game.GameEngine.Engines;
+import game.GameEngine.PacManGame;
 import game.character.Ghosts.*;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 
 public class VisualDebugger {
     public static void draw(JPanel jPanel, Graphics graphics) {
-        for (Ghost ghost:PacManGame.ghosts) {
+        for (Ghost ghost: PacManGame.ghosts) {
             if(ghost instanceof Blinky)
                 Engines.drawImage(jPanel,(Graphics2D) graphics,
                    new ImageIcon(VisualDebugger.class.getResource("/croixRouge.png")).getImage(),

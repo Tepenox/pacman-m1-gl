@@ -1,4 +1,7 @@
-package game;
+package game.GameEngine;
+
+import game.GameEngine.Engines;
+import game.GameEngine.GameFrame;
 
 import javax.swing.*;
 import javax.swing.border.Border;

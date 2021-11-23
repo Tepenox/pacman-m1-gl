@@ -1,8 +1,6 @@
 package game.character;
 
-import engines.IAEngine;
-import engines.PhysicEngine;
-import game.Engines;
+import game.GameEngine.Engines;
 import game.GameUtility.CharacterName;
 import utility.GameObject;
 import utility.Direction;

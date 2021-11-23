@@ -1,6 +1,5 @@
 package game.character;
 
-import game.GameFrame;
 import game.GameUtility.CharacterName;
 import utility.GameObject;
 import utility.Direction;
@@ -8,11 +7,6 @@ import utility.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 
 public class PacMan extends Character {

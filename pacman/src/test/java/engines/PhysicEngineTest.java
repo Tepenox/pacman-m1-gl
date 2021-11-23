@@ -1,8 +1,5 @@
 package engines;
-import game.PacManGame;
-import game.character.PacMan;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utility.Direction;
 import utility.GameObject;

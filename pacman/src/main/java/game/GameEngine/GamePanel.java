@@ -1,4 +1,4 @@
-package game;
+package game.GameEngine;
 
 import game.GameUtility.GameState;
 import game.character.Ghosts.Ghost;
@@ -133,7 +133,7 @@ public class GamePanel extends JPanel implements ActionListener {
         int minutes = (int)time / (60 * 1000);
         int seconds = ((int)time / 1000) % 60;
         String str = String.format("%d:%02d", minutes, seconds);
-        graphics.drawString ( str, (PacManGame.screenWidth - metrics1.stringWidth(str)) / 3, PacManGame.screenHeight - PacManGame.gameUnit/4 );
+        graphics.drawString ( str, PacManGame.screenWidth - metrics1.stringWidth(str) - 3*PacManGame.gameUnit, PacManGame.screenHeight - 5*PacManGame.gameUnit/4 );
     }
 
     public void drawScore(Graphics graphics){

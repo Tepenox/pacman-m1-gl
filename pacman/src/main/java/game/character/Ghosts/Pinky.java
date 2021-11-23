@@ -1,7 +1,6 @@
 package game.character.Ghosts;
 
-import engines.IAEngine;
-import game.Engines;
+import game.GameEngine.Engines;
 import game.GameUtility.CharacterName;
 import game.character.PacMan;
 import game.levels.Level;

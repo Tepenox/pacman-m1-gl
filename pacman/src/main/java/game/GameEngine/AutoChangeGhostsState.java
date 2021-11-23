@@ -1,4 +1,4 @@
-package game;
+package game.GameEngine;
 
 import game.character.Ghosts.Ghost;
 import game.character.Ghosts.GhostState;

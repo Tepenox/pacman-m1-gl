@@ -1,8 +1,8 @@
 package game.character.Ghosts;
 
-import game.Engines;
+import game.GameEngine.Engines;
 import game.GameUtility.CharacterName;
-import game.PacManGame;
+import game.GameEngine.PacManGame;
 import utility.GameObject;
 import game.character.Character;
 import game.character.PacMan;

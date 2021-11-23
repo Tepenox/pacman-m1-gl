@@ -1,4 +1,4 @@
-package game;
+package game.GameEngine;
 
 import engines.CoreKernel;
 import engines.GraphicEngine;

@@ -1,4 +1,4 @@
-package game;
+package game.GameEngine;
 
 import game.character.Character;
 import game.character.Ghosts.*;
@@ -102,7 +102,7 @@ public class PacManGame {
     public static void moveThePacman() {
         int totalDist = pacMan.getSpeed();
         while (totalDist > 0){
-            int distToTravel = progressiveMovement(pacMan,Engines.getVectorFromDir(pacMan.getDirection(),1),totalDist);
+            int distToTravel = progressiveMovement(pacMan, Engines.getVectorFromDir(pacMan.getDirection(),1),totalDist);
             Engines.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
             checkPacmanCollisions();
             totalDist -= distToTravel;

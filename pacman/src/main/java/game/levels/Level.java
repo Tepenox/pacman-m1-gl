@@ -1,8 +1,6 @@
 package game.levels;
 
-import game.GameFrame;
 import game.GameUtility.CharacterName;
-import game.character.Ghosts.Blinky;
 import utility.Vector2;
 
 import java.io.*;
