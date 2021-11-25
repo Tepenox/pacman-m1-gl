@@ -34,6 +34,7 @@ public class GameLogic {
     public static int numberOfPhaseLeft;
     public static long startTime;
     public static GhostBase ghostBase;
+    public static int eatenGhostInARow;
 
 
     public static PacManGamePanel createGame(MenuLogic gamef, int lvlNumber, int startScore) {
@@ -57,6 +58,7 @@ public class GameLogic {
         startTime = System.currentTimeMillis();
         PacManGamePanel gp = new PacManGamePanel();
         pacManGamePanel = gp;
+        eatenGhostInARow = 0;
         startTheGame();
         return gp;
     }
@@ -76,6 +78,7 @@ public class GameLogic {
     }
 
     public static void runTheGame(){
+        setPacmanDir(Direction.LEFT);
         pacManGamePanel.addInputListener();
         GameLogic.gameState = GameState.RUNNING;
         pacManGamePanel.setMessageMiddleScreen("");
@@ -95,8 +98,17 @@ public class GameLogic {
 
     public static void moveThePacman() {
         int totalDist = pacMan.getSpeed();
-        while (totalDist > 0){
+        if (pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0) {
+            int positionX = pacMan.getPosition().x / GameLogic.gameUnit;
+            int positionY = pacMan.getPosition().y / GameLogic.gameUnit;
+            checkPacmanCanChangeDir(positionX,positionY);
+        }
+        while (totalDist > 0 && pacMan.getDirection() != Direction.NEUTRAL){
             int distToTravel = progressiveMovement(pacMan, Engines.getVectorFromDir(pacMan.getDirection(),1),totalDist);
+            if(distToTravel == 0){
+                pacMan.setDirection(Direction.NEUTRAL);
+                break;
+            }
             Engines.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
             checkPacmanCollisions();
             totalDist -= distToTravel;
@@ -105,7 +117,7 @@ public class GameLogic {
 
     private static int progressiveMovement(GameObject go, Vector2 dir, int amount){ //give a dist to travel (in pixel) till it reach a %gameUnit==0
         if(go.getPosition().x % gameUnit == 0 && go.getPosition().y % gameUnit == 0){
-            return amount;
+            return Math.min(gameUnit,amount);
         }
         if(dir.x != 0 && dir.y == 0){//horizontal mov
             int distBeforeGameUnitMultiple;
@@ -121,7 +133,7 @@ public class GameLogic {
             }else distBeforeGameUnitMultiple = go.getPosition().y % gameUnit;
             return Math.min(distBeforeGameUnitMultiple,amount);
         }
-        return amount;//case of neutral mov
+        return 0;//case of neutral mov
     }
 
     private static void moveTheGhost() {
@@ -164,6 +176,7 @@ public class GameLogic {
     }
 
     private static void checkPacmanCollisions() {
+        checkCollWithGhost();
         if (pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0) {
             int positionX = pacMan.getPosition().x / GameLogic.gameUnit;
             int positionY = pacMan.getPosition().y / GameLogic.gameUnit;
@@ -172,7 +185,6 @@ public class GameLogic {
             checkPacManEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
             checkPacmanCanChangeDir(positionX,positionY);
         }
-        checkCollWithGhost();
     }
 
     private static void checkCollWithGhost() {
@@ -183,6 +195,8 @@ public class GameLogic {
                     createGameCharacters(lvl,pacMan.getLives());
                 }else gameState = GameState.OVER;
             }else if(ghostTouching.state == GhostState.FRIGHTENED || ghostTouching.state == GhostState.TWINKLING){
+                eatenGhostInARow++;
+                score += Math.pow(200,eatenGhostInARow);
                 ghostTouching.setState(GhostState.EATEN);
             }
         }
@@ -192,7 +206,7 @@ public class GameLogic {
         if (pacMan.nextDir != null && !checkWall(pacMan.nextDir, positionX, positionY))
             pacMan.setDirection(pacMan.nextDir);
         if (checkWall(pacMan.getDirection(), positionX, positionY))
-            GameLogic.stopPacmanMovement();
+            pacMan.setDirection(Direction.NEUTRAL);
     }
 
     private static void checkPacManEating(int ID, int point, int x, int y) {
@@ -244,6 +258,7 @@ public class GameLogic {
                             if(ghost.state != GhostState.REGENERATING)
                                 ghost.setState(ghostPhase);
                         }
+                        eatenGhostInARow = 0;
                     }
                 },
                 10000
@@ -283,11 +298,6 @@ public class GameLogic {
         return null;
     }
 
-    private static void stopPacmanMovement() {
-        //si on a des animation on peut les arreter ici
-        pacMan.setDirection(Direction.NEUTRAL);
-    }
-
     public static void setPacmanDir(Direction dir) {
         if(pacMan.getDirection() == Direction.NEUTRAL) {
             pacMan.setDirection(dir);
@@ -306,26 +316,6 @@ public class GameLogic {
         ghostBase.addAllGhostToBase(ghosts);
         ghosts.add(blinky);
         ghostPhase = GhostState.DISPERSION;
-    }
-
-    private static void regenerate(Ghost ghost){
-        int baseYUp = lvl.getSpawn(CharacterName.BLINKY).y + 2 * gameUnit;
-        int baseYDown = lvl.getSpawn(CharacterName.BLINKY).y + 4 * gameUnit;
-        if(ghost.getDirection() == Direction.DOWN){
-            if(ghost.getPosition().y >= baseYDown) {
-                ghost.setDirection(Direction.UP);
-                Engines.moveGameObjectByOneStep(ghost, Direction.UP, 3);
-            }
-            Engines.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
-        }
-        if(ghost.getDirection() == Direction.UP){
-            if(ghost.getPosition().y <= baseYUp) {
-                ghost.setDirection(Direction.DOWN);
-                Engines.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
-            }
-            Engines.moveGameObjectByOneStep(ghost, Direction.UP, 3);
-        }
-
     }
 }
 
