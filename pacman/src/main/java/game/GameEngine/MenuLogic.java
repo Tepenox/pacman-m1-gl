@@ -38,43 +38,12 @@ public class MenuLogic extends JFrame {
             if(lvl <= numberOfLvl) {
                 startGame(lvl + 1, scoreObtained);
             }else {
-                writeNewScore();
-                //TODO : save scoreObtained
+                showMenu();
             }
         }
         if(!hasWon){
             showMenu();
         }
-    }
-
-    private void writeNewScore() {
-        try {
-            ArrayList<HighScore> list = readFile();
-        } catch (IOException e) {
-            System.err.println("Couldn't Find score.text to save HighScore");
-            System.exit(-1);
-        }
-    }
-
-    private static class HighScore{
-        public int score;
-        public String str;
-    }
-
-    private ArrayList<HighScore> readFile() throws IOException {
-        ArrayList<HighScore> result = new ArrayList<>();
-        Reader reader = new FileReader(String.valueOf(getClass().getResource("/scores.text")));
-        BufferedReader br = new BufferedReader(reader);
-        String line;
-        while((line = br.readLine())!= null) {
-            String[] str = line.split(" ");
-            HighScore hs = new HighScore();
-            hs.score = Integer.parseInt(str[1]);
-            hs.str = line;
-            result.add(hs);
-        }
-        br.close();
-        return result;
     }
 
     //============================================Content setter================================================
@@ -87,7 +56,7 @@ public class MenuLogic extends JFrame {
 
     public void startGame(int level, int startScore){
         removeOldContent();
-        content = GameLogic.createGame(this,level,startScore);
+        content = GameLogic.createGame(this,level,startScore,3);
         showNewContent();
     }
 

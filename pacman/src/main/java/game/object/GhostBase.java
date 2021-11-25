@@ -2,13 +2,10 @@ package game.object;
 
 import game.GameEngine.Engines;
 import game.GameEngine.GameLogic;
-import game.GameUtility.CharacterName;
 import game.character.Ghosts.Ghost;
 import game.character.Ghosts.GhostState;
 import utility.Direction;
 import utility.Vector2;
-
-import java.sql.Time;
 import java.util.*;
 
 public class GhostBase {

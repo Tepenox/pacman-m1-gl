@@ -11,15 +11,13 @@ import utility.Direction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class PacManGamePanel extends JPanel implements ActionListener {
 
     Image hearthImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
-    private String messageMiddleScreen = "Ready !!!";
+    private String messageMiddleScreen = "";
+    private PacManKeyListener listener;
 
 
     public PacManGamePanel() {
@@ -29,7 +27,15 @@ public class PacManGamePanel extends JPanel implements ActionListener {
     }
 
     public void addInputListener(){
-        this.addKeyListener(new MyKeyAdapter());
+        removeListener();
+        listener = new PacManKeyListener();
+        this.addKeyListener(listener);
+    }
+
+    public void removeListener(){
+        if(listener != null){
+            this.removeKeyListener(listener);
+        }
     }
 
     @Override
@@ -84,7 +90,11 @@ public class PacManGamePanel extends JPanel implements ActionListener {
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Arial", Font.BOLD, 30));
         FontMetrics metrics3 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Press Space to restart", (GameLogic.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, GameLogic.screenHeight/ 2 + metrics2.getHeight()/2);
+        graphics.drawString("Press Space to restart ", (GameLogic.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, GameLogic.screenHeight/ 2 + metrics2.getHeight()/2);
+        graphics.setFont(new Font("Arial", Font.BOLD, 30));
+        FontMetrics metrics4 = getFontMetrics(graphics.getFont());
+        graphics.drawString("Press Enter to return to menu", (GameLogic.screenWidth-metrics4.stringWidth("Press Enter to return to menu"))/2, 2*GameLogic.screenHeight/ 3);
+
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
@@ -151,7 +161,7 @@ public class PacManGamePanel extends JPanel implements ActionListener {
     }
 
 
-    class MyKeyAdapter extends KeyAdapter {
+    static class PacManKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
@@ -161,14 +171,20 @@ public class PacManGamePanel extends JPanel implements ActionListener {
                 case KeyEvent.VK_DOWN -> GameLogic.setPacmanDir(Direction.DOWN);
                 case KeyEvent.VK_SPACE -> {
                     if (GameLogic.gameState.equals(GameState.OVER)) {
-                        GameLogic.startTheGame();
+                        GameLogic.getMenuLogic().startGame(1,0);
+                    }}
+                case KeyEvent.VK_ENTER -> {
+                    if (GameLogic.gameState.equals(GameState.OVER)) {
+                        GameLogic.getMenuLogic().levelEnded(GameLogic.lvl.getLevelNumber(),false,0);
                     }}
                 case KeyEvent.VK_M -> {
                     GameLogic.wonLevel();
                 }
+                case KeyEvent.VK_L -> {
+                    GameLogic.pacMan.useLife();
+                }
             }
         }
-//    }
     }
 
 }

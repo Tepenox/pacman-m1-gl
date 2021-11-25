@@ -30,21 +30,19 @@ public class GameLogic {
     public static Level lvl;
     public static PacManGamePanel pacManGamePanel;
     public static GhostState ghostPhase;
-    public static java.util.Timer ghostPhaseTimer;
-    public static int numberOfPhaseLeft;
     public static long startTime;
     public static GhostBase ghostBase;
     public static int eatenGhostInARow;
+    public static int ghostValue;
 
 
-    public static PacManGamePanel createGame(MenuLogic gamef, int lvlNumber, int startScore) {
-        menuLogic = gamef;
-        screenWidth = gamef.screenWidth;
-        screenHeight = gamef.screenHeight;
-        gameDelay = gamef.gameDelay;
-        gameUnit = gamef.gameUnit;
+    public static PacManGamePanel createGame(MenuLogic menuLogic, int lvlNumber, int startScore, int life) {
+        GameLogic.menuLogic = menuLogic;
+        screenWidth = menuLogic.screenWidth;
+        screenHeight = menuLogic.screenHeight;
+        gameDelay = menuLogic.gameDelay;
+        gameUnit = menuLogic.gameUnit;
         score = startScore;
-        timer = null;
         ghosts = null;
         gameState = null;
         pacMan = null;
@@ -52,19 +50,24 @@ public class GameLogic {
         lvl = new Level(lvlNumber,gameUnit);
         ghostBase = new GhostBase(lvl.getSpawn(CharacterName.BLINKY));
         pacManGamePanel = null;
-        ghostPhase = GhostState.CHASING;
-        ghostPhaseTimer = null;
-        numberOfPhaseLeft = 7;
         startTime = System.currentTimeMillis();
         PacManGamePanel gp = new PacManGamePanel();
         pacManGamePanel = gp;
         eatenGhostInARow = 0;
-        startTheGame();
+        ghostValue = 200;
+        startTheGame(life);
         return gp;
     }
 
-    public static void startTheGame() {
-        createGameCharacters(lvl, 3);
+    public static MenuLogic getMenuLogic() {
+        return menuLogic;
+    }
+
+    public static void startTheGame(int lives) {
+        pacManGamePanel.removeListener();
+        AutoChangeGhostsState.stop();
+        createGameCharacters(lvl, lives);
+        pacManGamePanel.setMessageMiddleScreen("Ready !!!");
         GameLogic.gameState = GameState.STARTING;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -82,15 +85,20 @@ public class GameLogic {
         pacManGamePanel.addInputListener();
         GameLogic.gameState = GameState.RUNNING;
         pacManGamePanel.setMessageMiddleScreen("");
-        timer = null;
+        ghostPhase = GhostState.DISPERSION;
+        if(timer != null){
+            timer.stop();
+            timer = null;
+        }
         timer = new Timer(GameLogic.gameDelay, pacManGamePanel);
         timer.start();
-        AutoChangeGhostsState.createPhaseTimer(6000);
+        AutoChangeGhostsState.start();
         ghostBase.startRegenTimer();
     }
 
     public static void actionPerformed() {
         if (gameState.equals(GameState.RUNNING)) {
+            checkCollWithGhost();
             moveThePacman();
             moveTheGhost();
         }
@@ -110,7 +118,7 @@ public class GameLogic {
                 break;
             }
             Engines.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
-            checkPacmanCollisions();
+            checkPacmanEatAndTeleport();
             totalDist -= distToTravel;
         }
     }
@@ -175,8 +183,7 @@ public class GameLogic {
         }
     }
 
-    private static void checkPacmanCollisions() {
-        checkCollWithGhost();
+    private static void checkPacmanEatAndTeleport() {
         if (pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0) {
             int positionX = pacMan.getPosition().x / GameLogic.gameUnit;
             int positionY = pacMan.getPosition().y / GameLogic.gameUnit;
@@ -192,11 +199,17 @@ public class GameLogic {
         if (ghostTouching != null){
             if(ghostTouching.state == GhostState.CHASING || ghostTouching.state == GhostState.DISPERSION){
                 if(pacMan.useLife()){
-                    createGameCharacters(lvl,pacMan.getLives());
-                }else gameState = GameState.OVER;
+                    System.out.println("Ghost killed Pacman");
+                    startTheGame(pacMan.getLives());
+                }else looseLevel();
             }else if(ghostTouching.state == GhostState.FRIGHTENED || ghostTouching.state == GhostState.TWINKLING){
                 eatenGhostInARow++;
-                score += Math.pow(200,eatenGhostInARow);
+                score += ghostValue;
+                ghostValue *= 2;
+                if(eatenGhostInARow >= 4){
+                    eatenGhostInARow = 0;
+                    ghostValue = 200;
+                }
                 ghostTouching.setState(GhostState.EATEN);
             }
         }
@@ -214,7 +227,6 @@ public class GameLogic {
             score += point;
             if (ID == 3 || ID == 2)
                 lvl.removePacGomme(x, y, -1);
-            System.out.println("SCORE: " + score);
             if (GameLogic.hasEatenAllThePacGomme())
                 wonLevel();
             if(ID == 3)
@@ -226,10 +238,12 @@ public class GameLogic {
         return lvl.getPacGommeCount() == 0;
     }
 
-
     public static void wonLevel() {
-        timer.stop();   //remove the Action listener on GamePanel, so that it reset correctly on new game
-        menuLogic.startGame(lvl.getLevelNumber()+1,score);
+        menuLogic.levelEnded(lvl.getLevelNumber(),true, score);
+    }
+
+    public static void looseLevel() {
+        gameState = GameState.OVER;
     }
 
     private static void superPacGommeEffect() {
@@ -291,7 +305,6 @@ public class GameLogic {
     public static Ghost pacManIsInCollisionWithGhost() {
         for (Ghost ghost : ghosts) {
             if (Engines.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit/2, gameUnit/2, gameUnit/2, gameUnit/2)) {
-                System.out.println("Ghost killed Pacman");
                 return ghost;
             }
         }
