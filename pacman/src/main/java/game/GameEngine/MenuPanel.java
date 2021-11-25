@@ -1,11 +1,10 @@
 package game.GameEngine;
 
-import engines.GraphicEngine;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class MenuPanel extends JPanel implements ActionListener {
 

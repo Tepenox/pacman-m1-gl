@@ -19,6 +19,15 @@ public class GamePanel extends JPanel implements ActionListener {
     Image hearthImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
     private String messageMiddleScreen = "";
     private PacManKeyListener listener;
+    private Color[] colors = {
+            new Color(0, 60, 255),
+            new Color(129, 147, 10),
+            new Color(137, 14, 159),
+            new Color(91, 150, 74),
+            new Color(27, 143, 3),
+            new Color(164, 10, 10),
+            new Color(99, 154, 2),
+            new Color(1, 40, 217),};
 
 
     public GamePanel() {
@@ -89,10 +98,11 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void drawMaze(Graphics graphics, int unitSize, int[][] maze) {
+        Color color = colors[GameLogic.lvl.getLevelNumber()-1];
         for (int i = 0; i < maze.length; i++)
             for (int j = 0; j < maze[0].length; j++) {
                 if (maze[i][j] == Wall.ID)
-                    Engines.fillRect((Graphics2D)graphics,j* unitSize,i* unitSize, unitSize,Color.BLUE);
+                    Engines.fillRect((Graphics2D)graphics,j* unitSize,i* unitSize, unitSize,color);
                 if (maze[i][j] == PinkWall.ID)
                     Engines.fillRect((Graphics2D)graphics,j* unitSize,i* unitSize, unitSize,Color.PINK);
                 if (maze[i][j] == PacGomme.ID)

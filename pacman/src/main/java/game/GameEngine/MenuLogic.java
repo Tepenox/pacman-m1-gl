@@ -9,7 +9,7 @@ public class MenuLogic extends JFrame {
     public final int gameDelay = 30;
     public final int gameUnit = 30;
 
-    private final int numberOfLvl = 3;
+    private final int numberOfLvl = 8;
 
     private JPanel content;
 
@@ -28,7 +28,7 @@ public class MenuLogic extends JFrame {
 
     public void levelEnded(int lvl, Boolean hasWon, int scoreObtained){
         if(hasWon){
-            if(lvl <= numberOfLvl) {
+            if(lvl < numberOfLvl) {
                 startGame(lvl + 1, scoreObtained);
             }else {
                 showMenu();
