@@ -1,9 +1,14 @@
 package game.levels;
 
+import game.GameEngine.GameLogic;
 import game.GameUtility.CharacterName;
+import game.object.fruits.Fruit;
 import utility.Vector2;
 
+import javax.swing.*;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Level {
     private final Vector2 blinkySide;     //top-right of maze
@@ -18,6 +23,8 @@ public class Level {
     private Vector2 pacManSpawn = null;
     private Vector2 fruitSpawn = null;
 
+    private Fruit levelFruit;
+
     private int pacGommeCount = 0;
     private int[][] mazeArray;
     private int gameUnit;
@@ -25,9 +32,24 @@ public class Level {
     private int mazeHeight;
     private int levelNumber;
 
+
+    public static Map<Integer, Fruit> levelToFruit;
+
+    static{
+        levelToFruit = new HashMap<>();
+        levelToFruit.put(1,new Fruit("cherry",100,new ImageIcon(Level.class.getResource("/Fruits/cherry.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+        levelToFruit.put(2,new Fruit("strawberry",300,new ImageIcon(Level.class.getResource("/Fruits/strawberry.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+        levelToFruit.put(3,new Fruit("orange",500,new ImageIcon(Level.class.getResource("/Fruits/orange.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+        levelToFruit.put(4,new Fruit("apple",700,new ImageIcon(Level.class.getResource("/Fruits/apple.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+        levelToFruit.put(5,new Fruit("melon",1000,new ImageIcon(Level.class.getResource("/Fruits/melon.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+        levelToFruit.put(6,new Fruit("grape",2000,new ImageIcon(Level.class.getResource("/Fruits/grape.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+        levelToFruit.put(7,new Fruit("bell",3000,new ImageIcon(Level.class.getResource("/Fruits/bell.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+        levelToFruit.put(8,new Fruit("key",5000,new ImageIcon(Level.class.getResource("/Fruits/key.png")).getImage(),new Vector2(14 * GameLogic.gameUnit -GameLogic.gameUnit /2 ,17 * GameLogic.gameUnit)));
+    }
     public Level(int level, int gameUnit){
         this.levelNumber = level;
         this.gameUnit = gameUnit;
+        this.levelFruit = levelToFruit.get(levelNumber);
         try {fillMaze(level);} catch (IOException e) {
             System.out.println("fileNotFound");
         }

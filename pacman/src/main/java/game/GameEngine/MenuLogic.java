@@ -15,8 +15,8 @@ public class MenuLogic extends JFrame {
 
     public MenuLogic(){
         showMenu();
-        Engines.createFrame(this,"Pacman");
-        Engines.setSize(this, screenWidth+10, screenHeight+10);
+        EnginesCalller.createFrame(this,"Pacman");
+        EnginesCalller.setSize(this, screenWidth+10, screenHeight+10);
 
     }
 
@@ -49,7 +49,7 @@ public class MenuLogic extends JFrame {
 
     public void startGame(int level, int startScore){
         removeOldContent();
-        content = GameLogic.createGame(this,level,startScore,3);
+        content = GameLogic.createLevel(this,level,startScore,3);
         showNewContent();
     }
 

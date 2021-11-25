@@ -25,7 +25,7 @@ public class Blinky extends Ghost{
     }
 
     @Override
-    public Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos){
+    public Vector2 calculateTarget(PacMan pacman, Level level, Vector2 blinkyPos){
         return pacman.getPosition();
     }
 

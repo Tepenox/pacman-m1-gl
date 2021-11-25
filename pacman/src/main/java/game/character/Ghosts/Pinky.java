@@ -1,6 +1,6 @@
 package game.character.Ghosts;
 
-import game.GameEngine.Engines;
+import game.GameEngine.EnginesCalller;
 import game.GameUtility.CharacterName;
 import game.character.PacMan;
 import game.levels.Level;
@@ -26,7 +26,7 @@ public class Pinky extends Ghost {
     }
 
     @Override
-    public Vector2 calculateTarget(PacMan pacman, Level level,Vector2 blinkyPos){
-        return Vector2.add(pacman.getPosition(), Engines.getVectorFromDir(pacman.getDirection(),level.getGameUnit()*3));
+    public Vector2 calculateTarget(PacMan pacman, Level level, Vector2 blinkyPos){
+        return Vector2.add(pacman.getPosition(), EnginesCalller.getVectorFromDir(pacman.getDirection(), level.getGameUnit()*3));
     }
 }

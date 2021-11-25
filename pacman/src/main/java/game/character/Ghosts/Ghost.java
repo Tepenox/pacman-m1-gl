@@ -1,6 +1,6 @@
 package game.character.Ghosts;
 
-import game.GameEngine.Engines;
+import game.GameEngine.EnginesCalller;
 import game.GameUtility.CharacterName;
 import game.GameEngine.GameLogic;
 import utility.GameObject;
@@ -72,7 +72,7 @@ public abstract class Ghost extends Character {
 
     private void initFrightenedBehaviour(){
         setSprite(new ImageIcon(getClass().getResource("/VulnerableGhost/vulnerable1.gif")).getImage());
-        this.setDirection(Engines.getDirFromVector(Engines.getVectorFromDir(this.getDirection(),1).multiply(-1)));
+        this.setDirection(EnginesCalller.getDirFromVector(EnginesCalller.getVectorFromDir(this.getDirection(),1).multiply(-1)));
         this.setSpeed(frightenedSpeed);
     }
 
@@ -92,20 +92,20 @@ public abstract class Ghost extends Character {
             return;
         }
         Vector2 targetPos = this.getPosition();
-        Direction oppositeOfCurrentDirection = Engines.getDirFromVector(Engines.getVectorFromDir(this.getDirection(),1).multiply(-1));
+        Direction oppositeOfCurrentDirection = EnginesCalller.getDirFromVector(EnginesCalller.getVectorFromDir(this.getDirection(),1).multiply(-1));
         directions.remove(oppositeOfCurrentDirection);
         if(this.state == GhostState.CHASING){
-            targetPos = calculateTarget(GameLogic.pacMan,level,blinky.getPosition());
-            this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
+            targetPos = calculateTarget(GameLogic.pacMan, level,blinky.getPosition());
+            this.setDirection(EnginesCalller.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
         }else if(this.state == GhostState.DISPERSION) {
             targetPos = level.getSide(this.name);
-            this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
+            this.setDirection(EnginesCalller.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
         }else if(this.state == GhostState.FRIGHTENED || this.state == GhostState.TWINKLING){
             targetPos = GameLogic.pacMan.getPosition();
-            this.setDirection(Engines.getDirIncreasingDist(this,targetPos,directions,this.getSpeed()));
+            this.setDirection(EnginesCalller.getDirIncreasingDist(this,targetPos,directions,this.getSpeed()));
         }else if(this.state == GhostState.EATEN){
             targetPos = GameLogic.ghostBase.getBaseEntry();
-            this.setDirection(Engines.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
+            this.setDirection(EnginesCalller.getDirReducingDist(this,targetPos,directions,this.getSpeed()));
         }
         this.target = targetPos; //debugging
     }

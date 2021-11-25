@@ -6,6 +6,7 @@ import game.character.PacMan;
 import game.levels.Level;
 import game.object.*;
 import game.GameUtility.CharacterName;
+import game.object.fruits.Fruit;
 import utility.Direction;
 import game.GameUtility.GameState;
 import utility.Vector2;
@@ -14,6 +15,7 @@ import utility.GameObject;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 public class GameLogic {
     private static MenuLogic menuLogic;
@@ -24,6 +26,7 @@ public class GameLogic {
     public static int score;
     public static Timer timer;
     public static List<Ghost> ghosts;
+    public static Fruit fruit;
     public static GameState gameState;
     public static PacMan pacMan;
     public static Blinky blinky;
@@ -34,9 +37,10 @@ public class GameLogic {
     public static GhostBase ghostBase;
     public static int eatenGhostInARow;
     public static int ghostValue;
+    public static boolean hasEatenFruitLevel = false;
 
 
-    public static GamePanel createGame(MenuLogic menuLogic, int lvlNumber, int startScore, int life) {
+    public static GamePanel createLevel(MenuLogic menuLogic, int lvlNumber, int startScore, int life) {
         GameLogic.menuLogic = menuLogic;
         screenWidth = menuLogic.screenWidth;
         screenHeight = menuLogic.screenHeight;
@@ -47,7 +51,8 @@ public class GameLogic {
         gameState = null;
         pacMan = null;
         blinky = null;
-        lvl = new Level(lvlNumber,gameUnit);
+        fruit = null;
+        lvl = new Level(lvlNumber, gameUnit);
         ghostBase = new GhostBase(lvl.getSpawn(CharacterName.BLINKY));
         gamePanel = null;
         startTime = System.currentTimeMillis();
@@ -55,7 +60,8 @@ public class GameLogic {
         gamePanel = gp;
         eatenGhostInARow = 0;
         ghostValue = 200;
-        startTheGame(life);
+
+        startTheLevel(life);
         return gp;
     }
 
@@ -63,30 +69,34 @@ public class GameLogic {
         return menuLogic;
     }
 
-    public static void startTheGame(int lives) {
+    public static void startTheLevel(int lives) {
         gamePanel.removeListener();
         AutoChangeGhostsState.stop();
         createGameCharacters(lvl, lives);
+        if (!hasEatenFruitLevel){
+            createFruit(lvl.getLevelNumber());
+        }
+
         gamePanel.setMessageMiddleScreen("Ready !!!");
         GameLogic.gameState = GameState.STARTING;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        runTheGame();
+                        runTheLevel();
                     }
                 },
                 5000
         );
     }
 
-    public static void runTheGame(){
+    public static void runTheLevel() {
         setPacmanDir(Direction.LEFT);
         gamePanel.addInputListener();
         GameLogic.gameState = GameState.RUNNING;
         gamePanel.setMessageMiddleScreen("");
         ghostPhase = GhostState.DISPERSION;
-        if(timer != null){
+        if (timer != null) {
             timer.stop();
             timer = null;
         }
@@ -109,37 +119,37 @@ public class GameLogic {
         if (pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0) {
             int positionX = pacMan.getPosition().x / GameLogic.gameUnit;
             int positionY = pacMan.getPosition().y / GameLogic.gameUnit;
-            checkPacmanCanChangeDir(positionX,positionY);
+            checkPacmanCanChangeDir(positionX, positionY);
         }
-        while (totalDist > 0 && pacMan.getDirection() != Direction.NEUTRAL){
-            int distToTravel = progressiveMovement(pacMan, Engines.getVectorFromDir(pacMan.getDirection(),1),totalDist);
-            if(distToTravel == 0){
+        while (totalDist > 0 && pacMan.getDirection() != Direction.NEUTRAL) {
+            int distToTravel = progressiveMovement(pacMan, EnginesCalller.getVectorFromDir(pacMan.getDirection(), 1), totalDist);
+            if (distToTravel == 0) {
                 pacMan.setDirection(Direction.NEUTRAL);
                 break;
             }
-            Engines.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
+            EnginesCalller.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
             checkPacmanEatAndTeleport();
             totalDist -= distToTravel;
         }
     }
 
-    private static int progressiveMovement(GameObject go, Vector2 dir, int amount){ //give a dist to travel (in pixel) till it reach a %gameUnit==0
-        if(go.getPosition().x % gameUnit == 0 && go.getPosition().y % gameUnit == 0){
-            return Math.min(gameUnit,amount);
+    private static int progressiveMovement(GameObject go, Vector2 dir, int amount) { //give a dist to travel (in pixel) till it reach a %gameUnit==0
+        if (go.getPosition().x % gameUnit == 0 && go.getPosition().y % gameUnit == 0) {
+            return Math.min(gameUnit, amount);
         }
-        if(dir.x != 0 && dir.y == 0){//horizontal mov
+        if (dir.x != 0 && dir.y == 0) {//horizontal mov
             int distBeforeGameUnitMultiple;
-            if(dir.x > 0){
+            if (dir.x > 0) {
                 distBeforeGameUnitMultiple = gameUnit - go.getPosition().x % gameUnit;
-            }else distBeforeGameUnitMultiple = go.getPosition().x % gameUnit;
-            return Math.min(distBeforeGameUnitMultiple,amount);
+            } else distBeforeGameUnitMultiple = go.getPosition().x % gameUnit;
+            return Math.min(distBeforeGameUnitMultiple, amount);
         }
-        if(dir.x == 0 && dir.y != 0){//vertical mov
+        if (dir.x == 0 && dir.y != 0) {//vertical mov
             int distBeforeGameUnitMultiple;
-            if(dir.y > 0){
+            if (dir.y > 0) {
                 distBeforeGameUnitMultiple = gameUnit - go.getPosition().y % gameUnit;
-            }else distBeforeGameUnitMultiple = go.getPosition().y % gameUnit;
-            return Math.min(distBeforeGameUnitMultiple,amount);
+            } else distBeforeGameUnitMultiple = go.getPosition().y % gameUnit;
+            return Math.min(distBeforeGameUnitMultiple, amount);
         }
         return 0;//case of neutral mov
     }
@@ -151,11 +161,11 @@ public class GameLogic {
             }
             int totalDist = ghost.getSpeed();
             while (totalDist > 0) {
-                int distToTravel = progressiveMovement(ghost, Engines.getVectorFromDir(ghost.getDirection(), 1), totalDist);
+                int distToTravel = progressiveMovement(ghost, EnginesCalller.getVectorFromDir(ghost.getDirection(), 1), totalDist);
                 if (distToTravel == 0) break;
-                Engines.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
+                EnginesCalller.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
                 checkGhostCollisions(ghost);
-                if(ghost.state == GhostState.EATEN && checkGhostCloseBase(ghost) < 10) {
+                if (ghost.state == GhostState.EATEN && checkGhostCloseBase(ghost) < 10) {
                     ghostBase.addGhostApproxPos(ghost);
                     break;
                 }
@@ -166,14 +176,14 @@ public class GameLogic {
     }
 
     private static int checkGhostCloseBase(Ghost ghost) {
-        return (int)Engines.calculateDist(ghost.getPosition(),ghostBase.getBaseEntry());
+        return (int) EnginesCalller.calculateDist(ghost.getPosition(), ghostBase.getBaseEntry());
     }
 
-    private static void checkGhostCollisions(Ghost ghost){
+    private static void checkGhostCollisions(Ghost ghost) {
         if (ghost.getPosition().x % gameUnit == 0 && ghost.getPosition().y % gameUnit == 0) {
             int positionX = ghost.getPosition().x / GameLogic.gameUnit;
             int positionY = ghost.getPosition().y / GameLogic.gameUnit;
-            checkTeleportOtherSide(ghost,positionX,positionY);
+            checkTeleportOtherSide(ghost, positionX, positionY);
             List<Direction> directions = new ArrayList<>();
             for (Direction dir : Direction.values()) {
                 if (dir == Direction.NEUTRAL) continue;
@@ -187,26 +197,26 @@ public class GameLogic {
         if (pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0) {
             int positionX = pacMan.getPosition().x / GameLogic.gameUnit;
             int positionY = pacMan.getPosition().y / GameLogic.gameUnit;
-            checkTeleportOtherSide(pacMan,positionX,positionY);
+            checkTeleportOtherSide(pacMan, positionX, positionY);
             checkPacManEating(PacGomme.ID, PacGomme.point, positionX, positionY);
             checkPacManEating(SuperPacGomme.ID, SuperPacGomme.point, positionX, positionY);
-            checkPacmanCanChangeDir(positionX,positionY);
+            checkPacmanCanChangeDir(positionX, positionY);
         }
     }
 
     private static void checkCollWithGhost() {
         Ghost ghostTouching = pacManIsInCollisionWithGhost();
-        if (ghostTouching != null){
-            if(ghostTouching.state == GhostState.CHASING || ghostTouching.state == GhostState.DISPERSION){
-                if(pacMan.useLife()){
+        if (ghostTouching != null) {
+            if (ghostTouching.state == GhostState.CHASING || ghostTouching.state == GhostState.DISPERSION) {
+                if (pacMan.useLife()) {
                     System.out.println("Ghost killed Pacman");
-                    startTheGame(pacMan.getLives());
-                }else looseLevel();
-            }else if(ghostTouching.state == GhostState.FRIGHTENED || ghostTouching.state == GhostState.TWINKLING){
+                    startTheLevel(pacMan.getLives());
+                } else looseLevel();
+            } else if (ghostTouching.state == GhostState.FRIGHTENED || ghostTouching.state == GhostState.TWINKLING) {
                 eatenGhostInARow++;
                 score += ghostValue;
                 ghostValue *= 2;
-                if(eatenGhostInARow >= 4){
+                if (eatenGhostInARow >= 4) {
                     eatenGhostInARow = 0;
                     ghostValue = 200;
                 }
@@ -215,7 +225,7 @@ public class GameLogic {
         }
     }
 
-    private static void checkPacmanCanChangeDir(int positionX,int positionY) {
+    private static void checkPacmanCanChangeDir(int positionX, int positionY) {
         if (pacMan.nextDir != null && !checkWall(pacMan.nextDir, positionX, positionY))
             pacMan.setDirection(pacMan.nextDir);
         if (checkWall(pacMan.getDirection(), positionX, positionY))
@@ -229,8 +239,14 @@ public class GameLogic {
                 lvl.removePacGomme(x, y, -1);
             if (GameLogic.hasEatenAllThePacGomme())
                 wonLevel();
-            if(ID == 3)
+            if (ID == 3)
                 superPacGommeEffect();
+        }
+        if (pacmanIsInCollisionWithFruit()) {
+            score = score + fruit.points;
+            fruit = null;
+            hasEatenFruitLevel = true;
+
         }
     }
 
@@ -239,16 +255,19 @@ public class GameLogic {
     }
 
     public static void wonLevel() {
-        menuLogic.levelEnded(lvl.getLevelNumber(),true, score);
+        hasEatenFruitLevel = false;
+        menuLogic.levelEnded(lvl.getLevelNumber(), true, score);
     }
 
     public static void looseLevel() {
+        hasEatenFruitLevel = false;
         gameState = GameState.OVER;
+
     }
 
     private static void superPacGommeEffect() {
-        for (Ghost ghost:ghosts) {
-            if(ghost.state != GhostState.REGENERATING)
+        for (Ghost ghost : ghosts) {
+            if (ghost.state != GhostState.REGENERATING)
                 ghost.setState(GhostState.FRIGHTENED);
         }
 
@@ -256,8 +275,8 @@ public class GameLogic {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        for (Ghost ghost:ghosts) {
-                            if(ghost.state == GhostState.FRIGHTENED)
+                        for (Ghost ghost : ghosts) {
+                            if (ghost.state == GhostState.FRIGHTENED)
                                 ghost.setState(GhostState.TWINKLING);
                         }
                     }
@@ -268,8 +287,8 @@ public class GameLogic {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        for (Ghost ghost:ghosts) {
-                            if(ghost.state != GhostState.REGENERATING)
+                        for (Ghost ghost : ghosts) {
+                            if (ghost.state != GhostState.REGENERATING)
                                 ghost.setState(ghostPhase);
                         }
                         eatenGhostInARow = 0;
@@ -286,39 +305,48 @@ public class GameLogic {
             c.setPosition(new Vector2(0, c.getPosition().y));
         }
         if (posY == 0 && c.getDirection().equals(Direction.UP)) {//Todo : make a getter x and y in level
-            c.setPosition(new Vector2(c.getPosition().x,(GameLogic.lvl.getMazeHeight() - 1) * gameUnit));
+            c.setPosition(new Vector2(c.getPosition().x, (GameLogic.lvl.getMazeHeight() - 1) * gameUnit));
         } else if (posY == (GameLogic.lvl.getMazeHeight() - 1) && c.getDirection().equals(Direction.DOWN)) {
-            c.setPosition(new Vector2(c.getPosition().x,0));
+            c.setPosition(new Vector2(c.getPosition().x, 0));
         }
     }
 
     private static boolean checkWall(Direction direction, int positionX, int positionY) {
         try {
-            Vector2 dir = Engines.getVectorFromDir(direction,1);
+            Vector2 dir = EnginesCalller.getVectorFromDir(direction, 1);
             int ID = GameLogic.lvl.getLevelArray()[positionY + dir.y][positionX + dir.x];
             return ID == Wall.ID || ID == PinkWall.ID;
-        }catch (ArrayIndexOutOfBoundsException e){                  //used when the Object reached Limit of maze array (ex : when reaching tunnel on side)
+        } catch (ArrayIndexOutOfBoundsException e) {                  //used when the Object reached Limit of maze array (ex : when reaching tunnel on side)
             return false;
         }
     }
 
     public static Ghost pacManIsInCollisionWithGhost() {
         for (Ghost ghost : ghosts) {
-            if (Engines.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit/2, gameUnit/2, gameUnit/2, gameUnit/2)) {
+            if (EnginesCalller.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit / 2, gameUnit / 2, gameUnit / 2, gameUnit / 2)) {
                 return ghost;
             }
         }
         return null;
     }
 
-    public static void setPacmanDir(Direction dir) {
-        if(pacMan.getDirection() == Direction.NEUTRAL) {
-            pacMan.setDirection(dir);
-            pacMan.nextDir = null;
-        }else pacMan.nextDir = dir;
+    public static boolean pacmanIsInCollisionWithFruit() {
+        if (fruit != null)
+            return EnginesCalller.isInCollision(fruit.position.x, fruit.position.y
+                    , pacMan.getPosition().x, pacMan.getPosition().y, gameUnit,
+                    gameUnit, gameUnit, gameUnit);
+
+        return false;
     }
 
-    public static void createGameCharacters(Level level, int livesOfPacMan){
+    public static void setPacmanDir(Direction dir) {
+        if (pacMan.getDirection() == Direction.NEUTRAL) {
+            pacMan.setDirection(dir);
+            pacMan.nextDir = null;
+        } else pacMan.nextDir = dir;
+    }
+
+    public static void createGameCharacters(Level level, int livesOfPacMan) {
         pacMan = new PacMan(level.getSpawn(CharacterName.PACMAN), livesOfPacMan);
         pacMan.setDirection(Direction.NEUTRAL);
         ghosts = new ArrayList<>();
@@ -330,5 +358,11 @@ public class GameLogic {
         ghosts.add(blinky);
         ghostPhase = GhostState.DISPERSION;
     }
+
+    public static void createFruit(Integer lvlNumber) {
+        fruit = Level.levelToFruit.get(lvlNumber);
+    }
+
 }
+
 

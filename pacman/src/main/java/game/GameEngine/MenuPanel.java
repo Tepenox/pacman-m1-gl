@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class MenuPanel extends JPanel implements ActionListener {
 
@@ -17,23 +16,23 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     public MenuPanel(int screenWidth, int screenHeight, MenuLogic frame) {
         this.frame = frame;
-        Engines.setBorder(this,BorderFactory.createLineBorder(Color.GRAY,2));
-        Engines.panelWithLayout(this,new BorderLayout());
-        Engines.fillBorderLayout(this,
-                Engines.panelWithImg(titleImg,screenWidth,screenHeight/4),
+        EnginesCalller.setBorder(this,BorderFactory.createLineBorder(Color.GRAY,2));
+        EnginesCalller.panelWithLayout(this,new BorderLayout());
+        EnginesCalller.fillBorderLayout(this,
+                EnginesCalller.panelWithImg(titleImg,screenWidth,screenHeight/4),
                 mainContent(),
-                Engines.emptyPanel(null,1,screenHeight/6),
-                Engines.emptyPanel(null,screenWidth/4,1),
-                Engines.emptyPanel(null,screenWidth/4,1));
-        Engines.setSize(this,screenWidth,screenHeight);
+                EnginesCalller.emptyPanel(null,1,screenHeight/6),
+                EnginesCalller.emptyPanel(null,screenWidth/4,1),
+                EnginesCalller.emptyPanel(null,screenWidth/4,1));
+        EnginesCalller.setSize(this,screenWidth,screenHeight);
     }
 
     private JPanel mainContent() {
-        JPanel mainPanel = Engines.panelWithLayout(null,new GridLayout(3,1,50,100));
+        JPanel mainPanel = EnginesCalller.panelWithLayout(null,new GridLayout(3,1,50,100));
 
-        mainPanel.add(buttonStart = Engines.simpleButton("Start",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
-        mainPanel.add(buttonScore = Engines.simpleButton("Score",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
-        mainPanel.add(buttonExit = Engines.simpleButton("Exit",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
+        mainPanel.add(buttonStart = EnginesCalller.simpleButton("Start",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
+        mainPanel.add(buttonScore = EnginesCalller.simpleButton("Score",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
+        mainPanel.add(buttonExit = EnginesCalller.simpleButton("Exit",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
         return mainPanel;
     }
 
