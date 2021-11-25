@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(GameLogic.screenWidth, GameLogic.screenHeight));
+        Engines.emptyPanel(this,GameLogic.screenWidth,GameLogic.screenHeight);
         this.setBackground(Color.black);
         this.setFocusable(true);
     }

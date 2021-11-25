@@ -1,10 +1,8 @@
 package game.GameEngine;
 
+import engines.GraphicEngine;
+
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,78 +18,33 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     public MenuPanel(int screenWidth, int screenHeight, MenuLogic frame) {
         this.frame = frame;
-        this.setBackground(Color.black);
-        Border border = BorderFactory.createLineBorder(Color.GRAY,2);
-        this.setBorder(border);
-        this.setLayout(new BorderLayout());
-
-        this.add(titlePanel(screenWidth,screenHeight/4),BorderLayout.NORTH);
-        this.add(emptyPanel(screenWidth/4,1),BorderLayout.EAST);
-        this.add(emptyPanel(screenWidth/4,1),BorderLayout.WEST);
-        this.add(emptyPanel(1,screenHeight/6),BorderLayout.SOUTH);
-        this.add(mainContent(),BorderLayout.CENTER);
+        Engines.setBorder(this,BorderFactory.createLineBorder(Color.GRAY,2));
+        Engines.panelWithLayout(this,new BorderLayout());
+        Engines.fillBorderLayout(this,
+                Engines.panelWithImg(titleImg,screenWidth,screenHeight/4),
+                mainContent(),
+                Engines.emptyPanel(null,1,screenHeight/6),
+                Engines.emptyPanel(null,screenWidth/4,1),
+                Engines.emptyPanel(null,screenWidth/4,1));
         Engines.setSize(this,screenWidth,screenHeight);
     }
 
     private JPanel mainContent() {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setBackground(Color.BLACK);
-        mainPanel.setLayout(new GridLayout(3,1,50,100));
+        JPanel mainPanel = Engines.panelWithLayout(null,new GridLayout(3,1,50,100));
 
-        buttonStart = new JButton("Start");
-        buttonStart.setFont(new Font("Arial", Font.BOLD, 60));
-        buttonStart.addActionListener(this);
-        buttonStart.setForeground(Color.WHITE);
-        buttonStart.setBackground(Color.BLACK);
-        buttonStart.setBorderPainted(false);
-        buttonStart.setFocusable(false);
-
-        buttonExit = new JButton("Exit");
-        buttonExit.setFont(new Font("Arial", Font.BOLD, 60));
-        buttonExit.addActionListener(this);
-        buttonExit.setForeground(Color.WHITE);
-        buttonExit.setBackground(Color.BLACK);
-        buttonExit.setBorderPainted(false);
-        buttonExit.setFocusable(false);
-
-        buttonScore = new JButton("Score");
-        buttonScore.setFont(new Font("Arial", Font.BOLD, 60));
-        buttonScore.setForeground(Color.WHITE);
-        buttonScore.setBackground(Color.BLACK);
-        buttonScore.setBorderPainted(false);
-        buttonScore.setFocusable(false);
-
-        mainPanel.add(buttonStart);
-        mainPanel.add(buttonScore);
-        mainPanel.add(buttonExit);
+        mainPanel.add(buttonStart = Engines.simpleButton("Start",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
+        mainPanel.add(buttonScore = Engines.simpleButton("Score",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
+        mainPanel.add(buttonExit = Engines.simpleButton("Exit",new Font("Arial", Font.BOLD, 60),Color.WHITE,Color.BLACK,this));
         return mainPanel;
-    }
-
-    private JPanel titlePanel(int width, int height) {
-        JPanel result = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(titleImg, width/4, height/4,width/2,height/2, null);
-            }
-        };
-        result.setBackground(Color.BLACK);
-        result.setPreferredSize(new Dimension(width,height));
-        return result;
-    }
-
-    private JPanel emptyPanel(int width, int height) {
-        JPanel result = new JPanel();
-        result.setBackground(Color.black);
-        result.setPreferredSize(new Dimension(width, height));
-        result.setOpaque(true);
-        return result;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == buttonStart){
             this.frame.startGame(1,0);
+        }
+        if(e.getSource() == buttonScore){
+            System.out.println("Sorry, Score Board is not yet implemented");
         }
         if(e.getSource() == buttonExit){
             System.exit(0);

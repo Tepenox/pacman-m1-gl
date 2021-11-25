@@ -10,7 +10,9 @@ import utility.GameObject;
 import utility.Vector2;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class Engines {
@@ -21,6 +23,26 @@ public class Engines {
         return CoreKernel.createFrame(frame, gameTitle);
     }
 
+    public static JPanel emptyPanel(JPanel jPanel, int width, int height) {
+        return CoreKernel.emptyPanel(jPanel,width,height);
+    }
+
+    public static JPanel panelWithImg(Image img, int width, int height){
+        return CoreKernel.panelWithImg(img,width,height);
+    }
+
+    public static JPanel panelWithLayout(JPanel jPanel, LayoutManager layout){
+        return CoreKernel.panelWithLayout(jPanel,layout);
+    }
+
+    public static void fillBorderLayout(JPanel objToFill, JComponent north, JComponent center, JComponent south, JComponent east, JComponent west){
+        CoreKernel.fillBorderLayout(objToFill, north, center, south, east, west);
+    }
+
+    public static void setBorder(JPanel jPanel, Border border){
+        CoreKernel.setBorder(jPanel,border);
+    }
+
     public static void setSize(JFrame jFrame, int width, int height){
         CoreKernel.setSize(jFrame, width, height);
     }
@@ -29,11 +51,15 @@ public class Engines {
         CoreKernel.setSize(jPanel, width, height);
     }
 
-    public static void drawImage(JPanel jPanel, Graphics2D g2d, Image img, int x, int y,int widthAndHeight) {
+    public static JButton simpleButton(String str, Font font, Color foreground, Color backGround, ActionListener l){
+        return CoreKernel.simpleButton(str, font, foreground, backGround, l);
+    }
+
+    public static void drawImage(JComponent jPanel, Graphics2D g2d, Image img, int x, int y,int widthAndHeight) {
         CoreKernel.drawImage(jPanel, g2d, img, x,y,widthAndHeight);
     }
 
-    public static void drawGameObject(JPanel jPanel, Graphics2D g2d, GameObject go, int widthAndHeight) {
+    public static void drawGameObject(JComponent jPanel, Graphics2D g2d, GameObject go, int widthAndHeight) {
         CoreKernel.drawGameObject(jPanel,g2d,go,widthAndHeight);
     }
 
@@ -49,7 +75,7 @@ public class Engines {
         CoreKernel.drawLine(g2d,x1, y1, x2, y2);
     }
 
-    public static void drawString(Graphics2D g2d, JPanel panel, String string, int x, int y, boolean isCentered, Font font, Color color){
+    public static void drawString(Graphics2D g2d, JComponent panel, String string, int x, int y, boolean isCentered, Font font, Color color){
         CoreKernel.drawString(g2d, panel, string, x, y, isCentered, font, color);
     }
 
