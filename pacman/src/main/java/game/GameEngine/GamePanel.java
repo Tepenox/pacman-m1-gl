@@ -1,5 +1,6 @@
 package game.GameEngine;
 
+import engines.GraphicEngine;
 import game.GameUtility.GameState;
 import game.VisualDebugger;
 import game.character.Ghosts.Ghost;
@@ -13,14 +14,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PacManGamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener {
 
     Image hearthImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
     private String messageMiddleScreen = "";
     private PacManKeyListener listener;
 
 
-    public PacManGamePanel() {
+    public GamePanel() {
         this.setPreferredSize(new Dimension(GameLogic.screenWidth, GameLogic.screenHeight));
         this.setBackground(Color.black);
         this.setFocusable(true);
@@ -73,27 +74,17 @@ public class PacManGamePanel extends JPanel implements ActionListener {
     }
 
     private void drawMsg(Graphics graphics) {
-        FontMetrics metrics1 = getFontMetrics(graphics.getFont());
-        graphics.drawString(messageMiddleScreen,(GameLogic.screenWidth - (metrics1.stringWidth(messageMiddleScreen))) / 2, GameLogic.lvl.getFruitSpawn().y + 2* GameLogic.gameUnit/3);
+        int x = GameLogic.lvl.getFruitSpawn().x;
+        int y = GameLogic.lvl.getFruitSpawn().y + ((2 * GameLogic.gameUnit)/3);
+        Engines.drawString((Graphics2D) graphics,this,messageMiddleScreen,x,y,false,new Font("Arial", Font.BOLD, 20),Color.yellow);
     }
 
 
     private void drawGameOver(Graphics graphics) {
-        graphics.setColor(Color.red);
-        graphics.setFont(new Font("Arial", Font.BOLD, 40));
-        FontMetrics metrics1 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Score: " + GameLogic.score, (GameLogic.screenWidth - metrics1.stringWidth("Score: " + GameLogic.score)) / 2, graphics.getFont().getSize());
-        graphics.setColor(Color.red);
-        graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
-        FontMetrics metrics2 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Game Over", (GameLogic.screenWidth - metrics2.stringWidth("Game Over")) / 2, GameLogic.screenHeight/ 2);
-        graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("Arial", Font.BOLD, 30));
-        FontMetrics metrics3 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Press Space to restart ", (GameLogic.screenWidth - metrics3.stringWidth("Press Space to restart")) / 2, GameLogic.screenHeight/ 2 + metrics2.getHeight()/2);
-        graphics.setFont(new Font("Arial", Font.BOLD, 30));
-        FontMetrics metrics4 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Press Enter to return to menu", (GameLogic.screenWidth-metrics4.stringWidth("Press Enter to return to menu"))/2, 2*GameLogic.screenHeight/ 3);
+        Engines.drawString((Graphics2D) graphics,this,"Score: " + GameLogic.score,GameLogic.screenWidth / 2,60,true,new Font("Arial", Font.BOLD, 40),Color.red);
+        Engines.drawString((Graphics2D) graphics,this,"Game Over",GameLogic.screenWidth / 2,GameLogic.screenHeight/ 2,true,new Font("Ink Free", Font.BOLD, 75),Color.red);
+        Engines.drawString((Graphics2D) graphics,this,"Press Space to restart ",GameLogic.screenWidth / 2,(GameLogic.screenHeight/ 2) + (GameLogic.gameUnit*2),true,new Font("Arial", Font.BOLD, 30),Color.white);
+        Engines.drawString((Graphics2D) graphics,this,"Press Enter to return to menu",GameLogic.screenWidth / 2,((2*GameLogic.screenHeight)/ 3),true,new Font("Arial", Font.BOLD, 30),Color.white);
 
     }
 
@@ -135,29 +126,26 @@ public class PacManGamePanel extends JPanel implements ActionListener {
     }
 
     public void drawTimer (Graphics graphics){
-        graphics.setColor(Color.red);
-        graphics.setFont(new Font("Arial", Font.BOLD, 20));
-        FontMetrics metrics1 = getFontMetrics(graphics.getFont());
         long endTime= System.currentTimeMillis();
         long time = (endTime - GameLogic.startTime);
         int minutes = (int)time / (60 * 1000);
         int seconds = ((int)time / 1000) % 60;
         String str = String.format("%d:%02d", minutes, seconds);
-        graphics.drawString ( str, GameLogic.screenWidth - metrics1.stringWidth(str) - 3* GameLogic.gameUnit, GameLogic.screenHeight - 5* GameLogic.gameUnit/4 );
+        int x = GameLogic.screenWidth - 3 * GameLogic.gameUnit;
+        int y = GameLogic.screenHeight - 5* GameLogic.gameUnit/4;
+        Engines.drawString((Graphics2D) graphics,this,str,x,y,true,new Font("Arial", Font.BOLD, 20),Color.red);
     }
 
     public void drawScore(Graphics graphics){
-        graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("Arial", Font.BOLD, 20));
-        FontMetrics metrics = getFontMetrics(graphics.getFont());
-        graphics.drawString("score:" + GameLogic.score, GameLogic.screenWidth-(GameLogic.screenWidth/2 - metrics.stringWidth("score:"+ GameLogic.score)), GameLogic.screenHeight - 5* GameLogic.gameUnit/4);
+        int x = GameLogic.screenWidth - GameLogic.screenWidth/2;
+        int y = GameLogic.screenHeight - 5* GameLogic.gameUnit/4;
+        Engines.drawString((Graphics2D) graphics,this,"score:" + GameLogic.score,x,y,true,new Font("Arial", Font.BOLD, 20),Color.WHITE);
     }
 
     public void drawLevelCounter(Graphics graphics){
-        graphics.setColor(Color.yellow);
-        graphics.setFont(new Font("Arial", Font.BOLD, 20));
-        FontMetrics metrics = getFontMetrics(graphics.getFont());
-        graphics.drawString("lvl:" + GameLogic.lvl.getLevelNumber(), GameLogic.screenWidth - metrics.stringWidth("lvl:" + GameLogic.lvl.getLevelNumber()) - GameLogic.gameUnit , GameLogic.screenHeight - 5* GameLogic.gameUnit/4);
+        int x = GameLogic.screenWidth - GameLogic.gameUnit ;
+        int y = GameLogic.screenHeight - 5* GameLogic.gameUnit/4;
+        Engines.drawString((Graphics2D) graphics,this,"lvl:" + GameLogic.lvl.getLevelNumber(),x,y,true,new Font("Arial", Font.BOLD, 20),Color.yellow);
     }
 
 
@@ -177,12 +165,8 @@ public class PacManGamePanel extends JPanel implements ActionListener {
                     if (GameLogic.gameState.equals(GameState.OVER)) {
                         GameLogic.getMenuLogic().levelEnded(GameLogic.lvl.getLevelNumber(),false,0);
                     }}
-                case KeyEvent.VK_M -> {
-                    GameLogic.wonLevel();
-                }
-                case KeyEvent.VK_L -> {
-                    GameLogic.pacMan.useLife();
-                }
+                case KeyEvent.VK_M -> GameLogic.wonLevel();
+                case KeyEvent.VK_L -> GameLogic.pacMan.useLife();
             }
         }
     }

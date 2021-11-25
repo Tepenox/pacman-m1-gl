@@ -17,6 +17,10 @@ public class Engines {
 
     //==================================================Graphic======================================
 
+    public static JFrame createFrame(JFrame frame, String gameTitle) {
+        return CoreKernel.createFrame(frame, gameTitle);
+    }
+
     public static void setSize(JFrame jFrame, int width, int height){
         CoreKernel.setSize(jFrame, width, height);
     }
@@ -45,8 +49,8 @@ public class Engines {
         CoreKernel.drawLine(g2d,x1, y1, x2, y2);
     }
 
-    public static JFrame createFrame(JFrame frame, String gameTitle) {
-        return CoreKernel.createFrame(frame, gameTitle);
+    public static void drawString(Graphics2D g2d, JPanel panel, String string, int x, int y, boolean isCentered, Font font, Color color){
+        CoreKernel.drawString(g2d, panel, string, x, y, isCentered, font, color);
     }
 
     //==================================================Physics======================================

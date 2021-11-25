@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PacManGameMenu extends JPanel implements ActionListener {
+public class MenuPanel extends JPanel implements ActionListener {
 
     private JButton buttonStart;
     private JButton buttonScore;
@@ -18,7 +18,7 @@ public class PacManGameMenu extends JPanel implements ActionListener {
     private final MenuLogic frame;
     private Image titleImg = new ImageIcon(getClass().getResource("/Menu/titleSprite.png")).getImage();
 
-    public PacManGameMenu(int screenWidth, int screenHeight, MenuLogic frame) {
+    public MenuPanel(int screenWidth, int screenHeight, MenuLogic frame) {
         this.frame = frame;
         this.setBackground(Color.black);
         Border border = BorderFactory.createLineBorder(Color.GRAY,2);

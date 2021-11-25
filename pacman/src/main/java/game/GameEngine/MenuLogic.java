@@ -1,13 +1,6 @@
 package game.GameEngine;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MenuLogic extends JFrame {
 
@@ -50,7 +43,7 @@ public class MenuLogic extends JFrame {
 
     private void showMenu() {
         removeOldContent();
-        content = new PacManGameMenu(screenWidth,screenHeight,this);
+        content = new MenuPanel(screenWidth,screenHeight,this);
         showNewContent();
     }
 

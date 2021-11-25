@@ -28,7 +28,7 @@ public class GameLogic {
     public static PacMan pacMan;
     public static Blinky blinky;
     public static Level lvl;
-    public static PacManGamePanel pacManGamePanel;
+    public static GamePanel gamePanel;
     public static GhostState ghostPhase;
     public static long startTime;
     public static GhostBase ghostBase;
@@ -36,7 +36,7 @@ public class GameLogic {
     public static int ghostValue;
 
 
-    public static PacManGamePanel createGame(MenuLogic menuLogic, int lvlNumber, int startScore, int life) {
+    public static GamePanel createGame(MenuLogic menuLogic, int lvlNumber, int startScore, int life) {
         GameLogic.menuLogic = menuLogic;
         screenWidth = menuLogic.screenWidth;
         screenHeight = menuLogic.screenHeight;
@@ -49,10 +49,10 @@ public class GameLogic {
         blinky = null;
         lvl = new Level(lvlNumber,gameUnit);
         ghostBase = new GhostBase(lvl.getSpawn(CharacterName.BLINKY));
-        pacManGamePanel = null;
+        gamePanel = null;
         startTime = System.currentTimeMillis();
-        PacManGamePanel gp = new PacManGamePanel();
-        pacManGamePanel = gp;
+        GamePanel gp = new GamePanel();
+        gamePanel = gp;
         eatenGhostInARow = 0;
         ghostValue = 200;
         startTheGame(life);
@@ -64,10 +64,10 @@ public class GameLogic {
     }
 
     public static void startTheGame(int lives) {
-        pacManGamePanel.removeListener();
+        gamePanel.removeListener();
         AutoChangeGhostsState.stop();
         createGameCharacters(lvl, lives);
-        pacManGamePanel.setMessageMiddleScreen("Ready !!!");
+        gamePanel.setMessageMiddleScreen("Ready !!!");
         GameLogic.gameState = GameState.STARTING;
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
@@ -82,15 +82,15 @@ public class GameLogic {
 
     public static void runTheGame(){
         setPacmanDir(Direction.LEFT);
-        pacManGamePanel.addInputListener();
+        gamePanel.addInputListener();
         GameLogic.gameState = GameState.RUNNING;
-        pacManGamePanel.setMessageMiddleScreen("");
+        gamePanel.setMessageMiddleScreen("");
         ghostPhase = GhostState.DISPERSION;
         if(timer != null){
             timer.stop();
             timer = null;
         }
-        timer = new Timer(GameLogic.gameDelay, pacManGamePanel);
+        timer = new Timer(GameLogic.gameDelay, gamePanel);
         timer.start();
         AutoChangeGhostsState.start();
         ghostBase.startRegenTimer();

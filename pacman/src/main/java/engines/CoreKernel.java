@@ -47,6 +47,10 @@ public class CoreKernel {
         GraphicEngine.drawLine(g2d,x1, y1, x2, y2);
     }
 
+    public static void drawString(Graphics2D g2d, JPanel panel, String string, int x, int y, boolean isCentered, Font font, Color color){
+        GraphicEngine.drawString(g2d, panel, string, x, y, isCentered, font, color);
+    }
+
     //==================================================Physics======================================
 
     public static double calculateDist(Vector2 from, Vector2 to){

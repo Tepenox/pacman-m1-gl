@@ -1,5 +1,6 @@
 package engines;
 
+import game.GameEngine.GameLogic;
 import utility.GameObject;
 
 import javax.swing.*;
@@ -48,6 +49,19 @@ public class GraphicEngine {
 
     protected static void drawLine(Graphics2D g2d, int x1, int y1, int x2, int y2){
         g2d.drawLine(x1, y1, x2, y2);
+    }
+
+    protected static void drawString(Graphics2D g2d, JPanel panel, String string, int x, int y, boolean isCentered, Font font, Color color){
+        Color previousColor = g2d.getColor();
+        Font previousFont = g2d.getFont();
+        g2d.setColor(color);
+        g2d.setFont(font);
+        FontMetrics metrics = panel.getFontMetrics(g2d.getFont());
+        if(isCentered)
+            x -= metrics.stringWidth(string)/2;
+        g2d.drawString(string, x, y);
+        g2d.setColor(previousColor);
+        g2d.setFont(previousFont);
     }
 
 }
