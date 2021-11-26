@@ -83,9 +83,6 @@ public class CoreKernel {
         return PhysicEngine.calculateDist(from,to);
     }
 
-    public static boolean willCollide(int cord1, int cord2, int size1, int size2, int step){
-        return PhysicEngine.willCollide(cord1,cord2,size1,size2,step);
-    }
 
     public static boolean isInCollision(int x1, int y1,int x2,int y2, int width1, int height1,int width2, int height2){
         return PhysicEngine.isInCollision(x1,y1,x2,y2,width1,height1,width2,height2);

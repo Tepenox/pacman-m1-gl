@@ -11,16 +11,16 @@ public class PhysicEngine {
         return Math.sqrt((to.y - from.y) * (to.y - from.y) + (to.x - from.x) * (to.x - from.x));
     }
 
-    protected static boolean willCollide(int cord1, int cord2, int size1, int size2, int step) {
-        if (cord2 > cord1){
-            return (cord2) - (cord1 + size1 + step) < 0;
-        }
-        if(cord2 < cord1){
-            return (cord1 - size1- step) -(cord2+size2)  < 0;
-        }else{
-            return false;
-        }
-    }
+//    protected static boolean willCollide(int cord1, int cord2, int size1, int size2, int step) {
+//        if (cord2 > cord1){
+//            return (cord2) - (cord1 + size1 + step) < 0;
+//        }
+//        if(cord2 < cord1){
+//            return (cord1 - size1- step) -(cord2+size2)  < 0;
+//        }else{
+//            return false;
+//        }
+//    }
 
     protected static boolean isInCollision(int x1, int y1,int x2,int y2, int width1, int height1,int width2, int height2) {
         return x1 < x2 + width2 &&
