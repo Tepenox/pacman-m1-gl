@@ -17,7 +17,7 @@ dependencies {
 }
 jar {
     manifest {
-        attributes 'Main-Class': 'game.GameFrame'
+        attributes 'Main-Class': 'game.GameEngine.MenuLogic'
     }
 }
 
