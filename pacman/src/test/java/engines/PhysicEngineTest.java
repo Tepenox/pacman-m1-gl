@@ -63,8 +63,9 @@ public class PhysicEngineTest {
         Assertions.assertEquals(PhysicEngine.calculateDist(new Vector2(1,1),new Vector2(1,2)), 1);
         Assertions.assertEquals(PhysicEngine.calculateDist(new Vector2(1,1),new Vector2(0,1)), 1);
         Assertions.assertEquals(PhysicEngine.calculateDist(new Vector2(1,1),new Vector2(3,1)), 2);
-
     }
+
+
     @Test
     void testMove() {
 
