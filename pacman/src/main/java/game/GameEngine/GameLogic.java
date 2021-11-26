@@ -37,6 +37,8 @@ public class GameLogic {
     public static GhostBase ghostBase;
     public static int eatenGhostInARow;
     public static int ghostValue;
+    public static boolean fruitAvailableTimeRunOut = false;
+    public static java.util.Timer fruitSpawnerTimer = new java.util.Timer();
     public static boolean hasEatenFruitLevel = false;
 
 
@@ -73,7 +75,7 @@ public class GameLogic {
         gamePanel.removeListener();
         AutoChangeGhostsState.stop();
         createGameCharacters(lvl, lives);
-        if (!hasEatenFruitLevel){
+        if (!hasEatenFruitLevel && !fruitAvailableTimeRunOut){
             createFruit(lvl.getLevelNumber());
         }
 
@@ -255,14 +257,22 @@ public class GameLogic {
     }
 
     public static void wonLevel() {
-        hasEatenFruitLevel = false;
+        resetFruitSpawner();
         menuLogic.levelEnded(lvl.getLevelNumber(), true, score);
     }
 
     public static void looseLevel() {
-        hasEatenFruitLevel = false;
+        resetFruitSpawner();
         gameState = GameState.OVER;
 
+    }
+
+    private static void resetFruitSpawner() {
+        hasEatenFruitLevel = false;
+        fruitAvailableTimeRunOut = false;
+        fruitSpawnerTimer.cancel();
+        fruitSpawnerTimer.purge();
+        fruitSpawnerTimer = new java.util.Timer();
     }
 
     private static void superPacGommeEffect() {
@@ -360,7 +370,27 @@ public class GameLogic {
     }
 
     public static void createFruit(Integer lvlNumber) {
-        fruit = Level.levelToFruit.get(lvlNumber);
+        TimerTask spawn = new TimerTask() {
+            @Override
+            public void run() {
+                fruit = Level.levelToFruit.get(lvlNumber);
+            }
+        };
+
+        TimerTask despawn = new TimerTask() {
+            @Override
+            public void run() {
+                fruit = null;
+                fruitAvailableTimeRunOut = true;
+            }
+        };
+
+        fruitSpawnerTimer.schedule(spawn,10000);
+        fruitSpawnerTimer.schedule(despawn,20000);
+
+
+
+
     }
 
 }
