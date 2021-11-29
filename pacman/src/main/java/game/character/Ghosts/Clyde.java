@@ -1,6 +1,6 @@
 package game.character.Ghosts;
 
-import game.GameEngine.EnginesCalller;
+import game.GameEngine.EnginesCaller;
 import game.character.PacMan;
 import game.levels.Level;
 import game.GameUtility.CharacterName;
@@ -28,7 +28,7 @@ public class Clyde extends Ghost{                       //le fantôme orange.
     @Override
     public Vector2 calculateTarget(PacMan pacman, Level level, Vector2 blinkyPos){
         double distanceToChange = 8.0 * level.getGameUnit();
-        double actualDist = EnginesCalller.calculateDist(this.getPosition(),pacman.getPosition());
+        double actualDist = EnginesCaller.calculateDist(this.getPosition(),pacman.getPosition());
         if(actualDist < distanceToChange){
             return level.getSide(CharacterName.CLYDE);
         }else return pacman.getPosition();

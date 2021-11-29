@@ -1,6 +1,6 @@
 package game.object;
 
-import game.GameEngine.EnginesCalller;
+import game.GameEngine.EnginesCaller;
 import game.GameEngine.GameLogic;
 import game.character.Ghosts.Ghost;
 import game.character.Ghosts.GhostState;
@@ -46,32 +46,32 @@ public class GhostBase {
             if(ghost.getDirection() == Direction.DOWN){
                 if(ghost.getPosition().y >= YDown) {
                     ghost.setDirection(Direction.UP);
-                    EnginesCalller.moveGameObjectByOneStep(ghost, Direction.UP, 3);
+                    EnginesCaller.moveGameObjectByOneStep(ghost, Direction.UP, 3);
                 }
-                EnginesCalller.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
+                EnginesCaller.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
             }
             if(ghost.getDirection() == Direction.UP){
                 if(ghost.getPosition().y <= YUp) {
                     ghost.setDirection(Direction.DOWN);
-                    EnginesCalller.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
+                    EnginesCaller.moveGameObjectByOneStep(ghost, Direction.DOWN, 3);
                 }
-                EnginesCalller.moveGameObjectByOneStep(ghost, Direction.UP, 3);
+                EnginesCaller.moveGameObjectByOneStep(ghost, Direction.UP, 3);
             }
         }
         if(ghostExiting != null){
             if(ghostExiting.getPosition().x > baseEntry.x){
                 ghostExiting.setDirection(Direction.LEFT);
-                EnginesCalller.moveGameObjectByOneStep(ghostExiting, Direction.LEFT, 3);
+                EnginesCaller.moveGameObjectByOneStep(ghostExiting, Direction.LEFT, 3);
                 return;
             }
             if(ghostExiting.getPosition().x < baseEntry.x){
                 ghostExiting.setDirection(Direction.RIGHT);
-                EnginesCalller.moveGameObjectByOneStep(ghostExiting, Direction.RIGHT, 3);
+                EnginesCaller.moveGameObjectByOneStep(ghostExiting, Direction.RIGHT, 3);
                 return;
             }
             if(ghostExiting.getPosition().y > baseEntry.y){
                 ghostExiting.setDirection(Direction.UP);
-                EnginesCalller.moveGameObjectByOneStep(ghostExiting, Direction.UP, 3);
+                EnginesCaller.moveGameObjectByOneStep(ghostExiting, Direction.UP, 3);
                 return;
             }
             if(ghostExiting.getPosition().y <= baseEntry.y){
@@ -104,7 +104,7 @@ public class GhostBase {
     }
 
     public void addGhostApproxPos(Ghost ghost){
-        EnginesCalller.move(ghost, baseEntry.x, baseEntry.y);
+        EnginesCaller.move(ghost, baseEntry.x, baseEntry.y);
         addGhostToBase(ghost);
     }
 

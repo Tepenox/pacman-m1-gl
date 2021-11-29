@@ -1,6 +1,6 @@
 package game.character;
 
-import game.GameEngine.EnginesCalller;
+import game.GameEngine.EnginesCaller;
 import game.GameUtility.CharacterName;
 import utility.GameObject;
 import utility.Direction;
@@ -39,7 +39,7 @@ public abstract class Character extends GameObject{
     }
 
     public Vector2 getDirectionAsVector(){
-        return EnginesCalller.getVectorFromDir(this.direction,this.speed);
+        return EnginesCaller.getVectorFromDir(this.direction,this.speed);
 }
 
     public Vector2 getPosition() {

@@ -161,14 +161,14 @@ public class GameLogic {
     public static void moveThePacman() {
         int totalDist = pacMan.getSpeed();
         while (totalDist > 0 && pacMan.getDirection() != Direction.NEUTRAL) {
-            int distToTravel = progressiveMovement(pacMan, EnginesCalller.getVectorFromDir(pacMan.getDirection(), 1), totalDist);
+            int distToTravel = progressiveMovement(pacMan, EnginesCaller.getVectorFromDir(pacMan.getDirection(), 1), totalDist);
             if (distToTravel == 0) {
                 pacMan.setDirection(Direction.NEUTRAL);
                 System.err.println("There was an error when moving PacMan");
                 break;
             }
-            EnginesCalller.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
-            checkPacmanEatAndTeleport();
+            EnginesCaller.moveGameObjectByOneStep(pacMan, pacMan.getDirection(), distToTravel);
+            checkPacmanUtility();
             totalDist -= distToTravel;
         }
     }
@@ -203,9 +203,9 @@ public class GameLogic {
             }
             int totalDist = ghost.getSpeed();
             while (totalDist > 0) {
-                int distToTravel = progressiveMovement(ghost, EnginesCalller.getVectorFromDir(ghost.getDirection(), 1), totalDist);
+                int distToTravel = progressiveMovement(ghost, EnginesCaller.getVectorFromDir(ghost.getDirection(), 1), totalDist);
                 if (distToTravel == 0) break;
-                EnginesCalller.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
+                EnginesCaller.moveGameObjectByOneStep(ghost, ghost.getDirection(), distToTravel);
                 checkGhostCollisions(ghost);
                 if (ghost.state == GhostState.EATEN && checkGhostCloseBase(ghost) < 10) {
                     ghostBase.addGhostApproxPos(ghost);
@@ -218,7 +218,7 @@ public class GameLogic {
     }
 
     private static int checkGhostCloseBase(Ghost ghost) {
-        return (int) EnginesCalller.calculateDist(ghost.getPosition(), ghostBase.getBaseEntry());
+        return (int) EnginesCaller.calculateDist(ghost.getPosition(), ghostBase.getBaseEntry());
     }
 
     //======================================================= Collisions =============================================
@@ -260,7 +260,7 @@ public class GameLogic {
 
     private static boolean checkWall(Direction direction, int positionX, int positionY) {
         try {
-            Vector2 dir = EnginesCalller.getVectorFromDir(direction, 1);
+            Vector2 dir = EnginesCaller.getVectorFromDir(direction, 1);
             int ID = GameLogic.lvl.getLevelArray()[positionY + dir.y][positionX + dir.x];
             return ID == Wall.ID || ID == PinkWall.ID;
         } catch (ArrayIndexOutOfBoundsException e) {                  //used when the Object reached Limit of maze array (ex : when reaching tunnel on side)
@@ -270,7 +270,7 @@ public class GameLogic {
 
     public static Ghost pacManIsInCollisionWithGhost() {
         for (Ghost ghost : ghosts) {
-            if (EnginesCalller.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit / 2, gameUnit / 2, gameUnit / 2, gameUnit / 2)) {
+            if (EnginesCaller.isInCollision(ghost.getPosition().x, ghost.getPosition().y, pacMan.getPosition().x, pacMan.getPosition().y, gameUnit / 2, gameUnit / 2, gameUnit / 2, gameUnit / 2)) {
                 return ghost;
             }
         }
@@ -279,7 +279,7 @@ public class GameLogic {
 
     public static boolean pacmanIsInCollisionWithFruit() {
         if (fruit != null)
-            return EnginesCalller.isInCollision(fruit.position.x, fruit.position.y
+            return EnginesCaller.isInCollision(fruit.position.x, fruit.position.y
                     , pacMan.getPosition().x, pacMan.getPosition().y, gameUnit,
                     gameUnit, gameUnit, gameUnit);
 
@@ -288,7 +288,7 @@ public class GameLogic {
 
     //======================================================= PacMan Utility =============================================
 
-    private static void checkPacmanEatAndTeleport() {
+    private static void checkPacmanUtility() {
         if (pacMan.getPosition().x % gameUnit == 0 && pacMan.getPosition().y % gameUnit == 0) {
             int positionX = pacMan.getPosition().x / GameLogic.gameUnit;
             int positionY = pacMan.getPosition().y / GameLogic.gameUnit;

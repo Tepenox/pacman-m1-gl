@@ -15,8 +15,8 @@ public class MenuLogic extends JFrame {
 
     public MenuLogic(){
         showMenu();
-        EnginesCalller.createFrame(this,"Pacman");
-        EnginesCalller.setSize(this, screenWidth+10, screenHeight+10);
+        EnginesCaller.createFrame(this,"Pacman");
+        EnginesCaller.setSize(this, screenWidth+10, screenHeight+10);
 
     }
 
