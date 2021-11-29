@@ -382,12 +382,16 @@ public class GameLogic {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        SoundEngine.stopSfx("/sounds/power_pellet.wav");
-                        SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
-
+                        int ghostScared = 0;
                         for (Ghost ghost : ghosts) {
-                            if (ghost.state != GhostState.REGENERATING)
+                            if (ghost.state == GhostState.TWINKLING)
                                 ghost.setState(ghostPhase);
+                            if(ghost.state == GhostState.TWINKLING || ghost.state == GhostState.FRIGHTENED)
+                                ghostScared++;
+                        }
+                        if(ghostScared == 0){
+                            SoundEngine.stopSfx("/sounds/power_pellet.wav");
+                            SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
                         }
                         eatenGhostInARow = 0;
                     }
