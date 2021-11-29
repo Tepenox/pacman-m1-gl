@@ -1,5 +1,6 @@
 package game.GameEngine;
 
+import engines.SoundEngine;
 import game.AutoChangeGhostsState;
 import game.character.Character;
 import game.character.Ghosts.*;
@@ -46,6 +47,7 @@ public class GameLogic {
     //======================================================= Game Initialiser =======================================================
 
     public static GamePanel createLevel(MenuLogic menuLogic, int lvlNumber, int startScore, int life) {
+        SoundEngine.stopAllActiveSounds();
         GameLogic.menuLogic = menuLogic;
         screenWidth = menuLogic.screenWidth;
         screenHeight = menuLogic.screenHeight;
@@ -65,12 +67,13 @@ public class GameLogic {
         gamePanel = gp;
         eatenGhostInARow = 0;
         ghostValue = 200;
-
         startTheLevel(life);
         return gp;
     }
 
     public static void startTheLevel(int lives) {
+        SoundEngine.stopAllActiveSounds();
+        SoundEngine.playSfx("/sounds/game_start.wav");
         gamePanel.removeListener();
         AutoChangeGhostsState.stop();
         createGameCharacters(lvl, lives);
@@ -131,6 +134,7 @@ public class GameLogic {
     //======================================================= Game Launcher =======================================================
 
     public static void runTheLevel() {
+        SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
         setPacmanDir(Direction.LEFT);
         gamePanel.addInputListener();
         GameLogic.gameState = GameState.RUNNING;
@@ -254,6 +258,7 @@ public class GameLogic {
                     eatenGhostInARow = 0;
                     ghostValue = 200;
                 }
+                SoundEngine.playSfx("/sounds/retreating.wav");
                 ghostTouching.setState(GhostState.EATEN);
             }
         }
@@ -318,8 +323,12 @@ public class GameLogic {
     private static void checkPacManEating(int ID, int point, int x, int y) {
         if (GameLogic.lvl.getLevelArray()[y][x] == ID) {
             score += point;
-            if (ID == 3 || ID == 2)
+            if (ID == 3 || ID == 2){
                 lvl.removePacGomme(x, y, -1);
+
+                SoundEngine.playSfx("/sounds/munch_1.wav");
+            }
+
             if (GameLogic.hasEatenAllThePacGomme())
                 wonLevel();
             if (ID == 3)
@@ -329,6 +338,8 @@ public class GameLogic {
             score = score + fruit.points;
             fruit = null;
             hasEatenFruitLevel = true;
+            SoundEngine.playSfx("/sounds/eat_fruit.wav");
+
 
         }
     }
@@ -347,6 +358,8 @@ public class GameLogic {
     }
 
     private static void superPacGommeEffect() {
+        SoundEngine.stopSfx("/sounds/siren_1.wav");
+        SoundEngine.playSfxOnLoop("/sounds/power_pellet.wav");
         for (Ghost ghost : ghosts) {
             if (ghost.state != GhostState.REGENERATING)
                 ghost.setState(GhostState.FRIGHTENED);
@@ -368,6 +381,9 @@ public class GameLogic {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
+                        SoundEngine.stopSfx("/sounds/power_pellet.wav");
+                        SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
+
                         for (Ghost ghost : ghosts) {
                             if (ghost.state != GhostState.REGENERATING)
                                 ghost.setState(ghostPhase);
@@ -391,6 +407,8 @@ public class GameLogic {
     }
 
     public static void looseLevel() {
+        SoundEngine.stopAllActiveSounds();
+        SoundEngine.playSfx("/sounds/death_1.wav");
         resetFruitSpawner();
         gameState = GameState.OVER;
 
