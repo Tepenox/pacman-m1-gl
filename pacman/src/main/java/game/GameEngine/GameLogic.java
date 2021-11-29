@@ -37,6 +37,8 @@ public class GameLogic {
     public static GhostState ghostPhase;
     public static long startTime;
     public static GhostBase ghostBase;
+    private static java.util.Timer frightenedTimer;
+    private static java.util.Timer twinklingTimer;
     public static int eatenGhostInARow;
     public static int ghostValue;
     public static boolean fruitAvailableTimeRunOut = false;
@@ -65,6 +67,9 @@ public class GameLogic {
         startTime = System.currentTimeMillis();
         GamePanel gp = new GamePanel();
         gamePanel = gp;
+        cancelGhostTimer();
+        frightenedTimer = null;
+        twinklingTimer = null;
         eatenGhostInARow = 0;
         ghostValue = 200;
         startTheLevel(life);
@@ -359,6 +364,7 @@ public class GameLogic {
     }
 
     private static void superPacGommeEffect() {
+        cancelGhostTimer();
         SoundEngine.stopSfx("/sounds/siren_1.wav");
         SoundEngine.playSfxOnLoop("/sounds/power_pellet.wav");
         for (Ghost ghost : ghosts) {
@@ -366,7 +372,8 @@ public class GameLogic {
                 ghost.setState(GhostState.FRIGHTENED);
         }
 
-        new java.util.Timer().schedule(
+        frightenedTimer = new java.util.Timer();
+        frightenedTimer.schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
@@ -378,22 +385,38 @@ public class GameLogic {
                 },
                 6000
         );
-        new java.util.Timer().schedule(
+        twinklingTimer = new java.util.Timer();
+        twinklingTimer.schedule(
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        SoundEngine.stopSfx("/sounds/power_pellet.wav");
-                        SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
-
+                        int ghostScared = 0;
                         for (Ghost ghost : ghosts) {
-                            if (ghost.state != GhostState.REGENERATING)
+                            if (ghost.state == GhostState.TWINKLING)
                                 ghost.setState(ghostPhase);
+                            if(ghost.state == GhostState.TWINKLING || ghost.state == GhostState.FRIGHTENED)
+                                ghostScared++;
+                        }
+                        if(ghostScared == 0){
+                            SoundEngine.stopSfx("/sounds/power_pellet.wav");
+                            SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
                         }
                         eatenGhostInARow = 0;
                     }
                 },
                 10000
         );
+    }
+
+    private static void cancelGhostTimer(){
+        if(frightenedTimer != null){
+            frightenedTimer.cancel();
+            frightenedTimer.purge();
+        }
+        if(twinklingTimer != null){
+            twinklingTimer.cancel();
+            twinklingTimer.purge();
+        }
     }
 
     //======================================================= Win Condition And Process =============================================
