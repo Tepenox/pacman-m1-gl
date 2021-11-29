@@ -1,5 +1,6 @@
 package game.GameEngine;
 
+import game.AutoChangeGhostsState;
 import game.character.Character;
 import game.character.Ghosts.*;
 import game.character.PacMan;

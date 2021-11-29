@@ -1,12 +1,13 @@
-package game.GameEngine;
+package game;
 
+import game.GameEngine.GameLogic;
 import game.character.Ghosts.Ghost;
 import game.character.Ghosts.GhostState;
 
 import java.util.TimerTask;
 import java.util.Timer;
 
-class AutoChangeGhostsState{
+public class AutoChangeGhostsState{
 
     private static int numberOfPhaseLeft;
     private static java.util.Timer ghostPhaseTimer;
@@ -25,7 +26,7 @@ class AutoChangeGhostsState{
 
             @Override
             public void run() {
-                if(numberOfPhaseLeft >= 0){
+                if(numberOfPhaseLeft <= 0){
                     GameLogic.ghostPhase = GhostState.CHASING;
                     stop();
                 }
