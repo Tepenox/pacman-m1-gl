@@ -326,7 +326,7 @@ public class GameLogic {
             if (ID == 3 || ID == 2){
                 lvl.removePacGomme(x, y, -1);
 
-                SoundEngine.playSfx("/sounds/munch_1.wav");
+//                    SoundEngine.playSfx("/sounds/munch_1.wav");
             }
 
             if (GameLogic.hasEatenAllThePacGomme())
@@ -338,7 +338,8 @@ public class GameLogic {
             score = score + fruit.points;
             fruit = null;
             hasEatenFruitLevel = true;
-            SoundEngine.playSfx("/sounds/eat_fruit.wav");
+                SoundEngine.playSfx("/sounds/eat_fruit.wav");
+
 
 
         }
@@ -411,6 +412,8 @@ public class GameLogic {
         SoundEngine.playSfx("/sounds/death_1.wav");
         resetFruitSpawner();
         gameState = GameState.OVER;
+        SoundEngine.stopAllActiveSounds();
+
 
     }
 
