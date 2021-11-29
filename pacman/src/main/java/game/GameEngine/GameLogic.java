@@ -403,6 +403,7 @@ public class GameLogic {
     }
 
     public static void wonLevel() {
+        SoundEngine.stopAllActiveSounds();
         resetFruitSpawner();
         menuLogic.levelEnded(lvl.getLevelNumber(), true, score);
     }
@@ -412,7 +413,7 @@ public class GameLogic {
         SoundEngine.playSfx("/sounds/death_1.wav");
         resetFruitSpawner();
         gameState = GameState.OVER;
-        SoundEngine.stopAllActiveSounds();
+//        SoundEngine.stopAllActiveSounds();
 
 
     }
