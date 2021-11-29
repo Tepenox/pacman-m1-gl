@@ -175,11 +175,11 @@ public class GamePanel extends JPanel implements ActionListener {
                 case KeyEvent.VK_DOWN -> GameLogic.setPacmanDir(Direction.DOWN);
                 case KeyEvent.VK_SPACE -> {
                     if (GameLogic.gameState.equals(GameState.OVER)) {
-                        GameLogic.getMenuLogic().startGame(1,0);
+                        GameLogic.menuLogic.startGame(1,0);
                     }}
                 case KeyEvent.VK_ENTER -> {
                     if (GameLogic.gameState.equals(GameState.OVER)) {
-                        GameLogic.getMenuLogic().levelEnded(GameLogic.lvl.getLevelNumber(),false,0);
+                        GameLogic.menuLogic.levelEnded(GameLogic.lvl.getLevelNumber(),false,0);
                     }}
                 case KeyEvent.VK_M -> GameLogic.wonLevel();
                 case KeyEvent.VK_L -> GameLogic.pacMan.useLife();

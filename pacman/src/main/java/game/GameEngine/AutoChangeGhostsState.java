@@ -25,6 +25,10 @@ class AutoChangeGhostsState{
 
             @Override
             public void run() {
+                if(numberOfPhaseLeft >= 0){
+                    GameLogic.ghostPhase = GhostState.CHASING;
+                    stop();
+                }
                 long now = System.currentTimeMillis();
                 if(GameLogic.ghostPhase == GhostState.CHASING && now-lastTime >= chaseTime){
                     numberOfPhaseLeft--;
