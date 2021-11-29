@@ -29,10 +29,10 @@ public class SfxPlayer {
     public void restart() throws IOException, LineUnavailableException,
             UnsupportedAudioFileException
     {
-        clip.stop();
-        clip.close();
-        audioStream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(path));
-        clip.open(audioStream);
+//        clip.stop();
+//        clip.close();
+//        audioStream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(path));
+//        clip.open(audioStream);
         clip.setMicrosecondPosition(0);
         clip.start();
     }
@@ -40,10 +40,10 @@ public class SfxPlayer {
     public void restartOnLoop() throws IOException, LineUnavailableException,
             UnsupportedAudioFileException
     {
-        clip.stop();
-        clip.close();
-        audioStream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(path));
-        clip.open(audioStream);
+//        clip.stop();
+//        clip.close();
+//        audioStream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(path));
+//        clip.open(audioStream);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.setMicrosecondPosition(0);
         clip.start();
@@ -59,7 +59,7 @@ public class SfxPlayer {
             IOException, LineUnavailableException {
 
         clip.stop();
-        clip.close();
+//        clip.close();
 
 
 

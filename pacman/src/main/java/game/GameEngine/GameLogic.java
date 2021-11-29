@@ -326,7 +326,7 @@ public class GameLogic {
             if (ID == 3 || ID == 2){
                 lvl.removePacGomme(x, y, -1);
 
-//                    SoundEngine.playSfx("/sounds/munch_1.wav");
+                    SoundEngine.playSfx("/sounds/munch_1.wav");
             }
 
             if (GameLogic.hasEatenAllThePacGomme())
