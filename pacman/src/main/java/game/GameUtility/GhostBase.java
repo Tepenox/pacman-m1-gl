@@ -1,9 +1,9 @@
-package game.levels;
+package game.GameUtility;
 
 import game.GameEngine.EnginesCaller;
 import game.GameEngine.GameLogic;
-import game.character.Ghosts.Ghost;
-import game.character.Ghosts.GhostState;
+import game.GameObject.character.Ghosts.Ghost;
+import game.GameObject.character.Ghosts.GhostState;
 import utility.Direction;
 import utility.Vector2;
 import java.util.*;

@@ -1,9 +1,7 @@
-package game.object;
+package game.GameObject.object;
 
 import utility.GameObject;
 import utility.Vector2;
-
-import java.awt.*;
 
 public class SuperPacGomme extends GameObject {
     public static final int ID = 3;

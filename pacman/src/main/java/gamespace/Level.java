@@ -1,8 +1,8 @@
-package game.levels;
+package gamespace;
 
 import game.GameEngine.GameLogic;
 import game.GameUtility.CharacterName;
-import game.object.fruits.Fruit;
+import game.GameObject.object.Fruit;
 import utility.Vector2;
 
 import javax.swing.*;

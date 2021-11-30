@@ -1,13 +1,13 @@
-package game;
+package utility;
 
 import game.GameEngine.GameLogic;
-import game.character.Ghosts.Ghost;
-import game.character.Ghosts.GhostState;
+import game.GameObject.character.Ghosts.Ghost;
+import game.GameObject.character.Ghosts.GhostState;
 
 import java.util.TimerTask;
 import java.util.Timer;
 
-public class AutoChangeGhostsState{
+public class GhostStateManager {
 
     private static int numberOfPhaseLeft;
     private static java.util.Timer ghostPhaseTimer;

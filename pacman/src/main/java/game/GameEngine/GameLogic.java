@@ -1,15 +1,14 @@
 package game.GameEngine;
 
-import engines.CoreKernel;
-import game.AutoChangeGhostsState;
-import game.character.Character;
-import game.character.Ghosts.*;
-import game.character.PacMan;
-import game.levels.GhostBase;
-import game.levels.Level;
-import game.object.*;
+import utility.GhostStateManager;
+import game.GameObject.character.Character;
+import game.GameObject.character.Ghosts.*;
+import game.GameObject.character.PacMan;
+import game.GameUtility.GhostBase;
+import gamespace.Level;
+import game.GameObject.object.*;
 import game.GameUtility.CharacterName;
-import game.object.fruits.Fruit;
+import game.GameObject.object.Fruit;
 import utility.Direction;
 import game.GameUtility.GameState;
 import utility.Vector2;
@@ -81,7 +80,7 @@ public class GameLogic {
         EnginesCaller.stopAllActiveSounds();
         EnginesCaller.playSfx("/sounds/game_start.wav");
         gamePanel.removeListener();
-        AutoChangeGhostsState.stop();
+        GhostStateManager.stop();
         createGameCharacters(lvl, lives);
         if (!hasEatenFruitLevel && !fruitAvailableTimeRunOut){
             createFruit(lvl.getLevelNumber());
@@ -152,7 +151,7 @@ public class GameLogic {
         }
         timer = new Timer(GameLogic.gameDelay, gamePanel);
         timer.start();
-        AutoChangeGhostsState.start();
+        GhostStateManager.start();
         ghostBase.startRegenTimer();
     }
 

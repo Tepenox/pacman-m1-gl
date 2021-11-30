@@ -1,8 +1,8 @@
-package game.character.Ghosts;
+package game.GameObject.character.Ghosts;
 
 import game.GameUtility.CharacterName;
-import game.character.PacMan;
-import game.levels.Level;
+import game.GameObject.character.PacMan;
+import gamespace.Level;
 import utility.Direction;
 import utility.Vector2;
 

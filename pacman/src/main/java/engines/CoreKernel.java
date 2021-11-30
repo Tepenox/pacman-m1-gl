@@ -1,18 +1,14 @@
 package engines;
 
-import game.character.Character;
+import game.GameObject.character.Character;
 import utility.Direction;
 import utility.GameObject;
-import utility.SfxPlayer;
 import utility.Vector2;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.List;
 
 public class CoreKernel {

@@ -1,12 +1,12 @@
 package game.GameEngine;
 
 import game.GameUtility.GameState;
-import game.VisualDebugger;
-import game.character.Ghosts.Ghost;
-import game.object.PacGomme;
-import game.object.PinkWall;
-import game.object.SuperPacGomme;
-import game.object.Wall;
+import game.GameUtility.VisualDebugger;
+import game.GameObject.character.Ghosts.Ghost;
+import game.GameObject.object.PacGomme;
+import game.GameObject.object.PinkWall;
+import game.GameObject.object.SuperPacGomme;
+import game.GameObject.object.Wall;
 import utility.Direction;
 
 import javax.swing.*;

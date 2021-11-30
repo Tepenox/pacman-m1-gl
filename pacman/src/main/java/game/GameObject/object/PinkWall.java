@@ -1,4 +1,4 @@
-package game.object;
+package game.GameObject.object;
 
 import utility.GameObject;
 import utility.Vector2;

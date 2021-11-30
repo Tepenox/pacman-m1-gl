@@ -1,6 +1,5 @@
 package engines;
 
-import game.character.Character;
 import utility.Direction;
 import utility.GameObject;
 import utility.Vector2;

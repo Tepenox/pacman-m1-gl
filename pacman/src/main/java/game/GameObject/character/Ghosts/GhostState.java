@@ -1,4 +1,4 @@
-package game.character.Ghosts;
+package game.GameObject.character.Ghosts;
 
 public enum GhostState {
     FRIGHTENED,TWINKLING,                   //eatable and don't kill Pacman

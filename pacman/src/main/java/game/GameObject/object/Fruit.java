@@ -1,5 +1,4 @@
-package game.object.fruits;
-import game.GameEngine.GameLogic;
+package game.GameObject.object;
 import utility.GameObject;
 import utility.Vector2;
 

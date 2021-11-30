@@ -1,8 +1,8 @@
-package game;
+package game.GameUtility;
 
 import game.GameEngine.EnginesCaller;
 import game.GameEngine.GameLogic;
-import game.character.Ghosts.*;
+import game.GameObject.character.Ghosts.*;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package game.character;
+package game.GameObject.character;
 
 import game.GameUtility.CharacterName;
 import utility.GameObject;

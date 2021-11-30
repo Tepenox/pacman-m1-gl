@@ -1,7 +1,7 @@
 package game.GameEngine;
 
 import engines.*;
-import game.character.Character;
+import game.GameObject.character.Character;
 import utility.Direction;
 import utility.GameObject;
 import utility.Vector2;
