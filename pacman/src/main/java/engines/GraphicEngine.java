@@ -6,7 +6,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class GraphicEngine {
+class GraphicEngine {
 
 
     protected static JFrame createFrame(JFrame frame, String title){

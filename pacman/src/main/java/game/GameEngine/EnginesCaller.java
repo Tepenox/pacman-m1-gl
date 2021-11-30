@@ -1,9 +1,6 @@
 package game.GameEngine;
 
-import engines.CoreKernel;
-import engines.GraphicEngine;
-import engines.IAEngine;
-import engines.PhysicEngine;
+import engines.*;
 import game.character.Character;
 import utility.Direction;
 import utility.GameObject;
@@ -114,5 +111,21 @@ public class EnginesCaller {
 
     public static Direction getDirIncreasingDist(GameObject from, Vector2 to, List<Direction> directions, int step){
         return CoreKernel.getDirIncreasingDist(from,to,directions,step);
+    }
+
+    //==================================================SoundEngine======================================
+    public static void playSfx(String path) {
+        CoreKernel.playSfx(path);
+    }
+
+    public static void playSfxOnLoop(String path) {
+        CoreKernel.playSfxOnLoop(path);
+    }
+
+    public static void stopAllActiveSounds(){
+        CoreKernel.stopAllActiveSounds();
+    }
+    public static void stopSfx(String path){
+        CoreKernel.stopSfx(path);
     }
 }

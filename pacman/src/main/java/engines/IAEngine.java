@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class IAEngine {
+class IAEngine {
     protected static Direction getDirReducingDist(GameObject from, Vector2 to, List<Direction> directions, int step){
         List<Double> listOfDist = new ArrayList<>();
         int indexOfBest = 0;

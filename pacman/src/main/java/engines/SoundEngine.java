@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SoundEngine {
+class SoundEngine {
 
     private static Map<String, SfxPlayer> activeSounds = new HashMap<>();
 

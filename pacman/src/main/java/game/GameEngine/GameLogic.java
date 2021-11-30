@@ -1,10 +1,11 @@
 package game.GameEngine;
 
-import engines.SoundEngine;
+import engines.CoreKernel;
 import game.AutoChangeGhostsState;
 import game.character.Character;
 import game.character.Ghosts.*;
 import game.character.PacMan;
+import game.levels.GhostBase;
 import game.levels.Level;
 import game.object.*;
 import game.GameUtility.CharacterName;
@@ -49,7 +50,7 @@ public class GameLogic {
     //======================================================= Game Initialiser =======================================================
 
     public static GamePanel createLevel(MenuLogic menuLogic, int lvlNumber, int startScore, int life) {
-        SoundEngine.stopAllActiveSounds();
+        EnginesCaller.stopAllActiveSounds();
         GameLogic.menuLogic = menuLogic;
         screenWidth = menuLogic.screenWidth;
         screenHeight = menuLogic.screenHeight;
@@ -77,8 +78,8 @@ public class GameLogic {
     }
 
     public static void startTheLevel(int lives) {
-        SoundEngine.stopAllActiveSounds();
-        SoundEngine.playSfx("/sounds/game_start.wav");
+        EnginesCaller.stopAllActiveSounds();
+        EnginesCaller.playSfx("/sounds/game_start.wav");
         gamePanel.removeListener();
         AutoChangeGhostsState.stop();
         createGameCharacters(lvl, lives);
@@ -139,7 +140,7 @@ public class GameLogic {
     //======================================================= Game Launcher =======================================================
 
     public static void runTheLevel() {
-        SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
+        EnginesCaller.playSfxOnLoop("/sounds/siren_1.wav");
         setPacmanDir(Direction.LEFT);
         gamePanel.addInputListener();
         GameLogic.gameState = GameState.RUNNING;
@@ -263,7 +264,7 @@ public class GameLogic {
                     eatenGhostInARow = 0;
                     ghostValue = 200;
                 }
-                SoundEngine.playSfx("/sounds/retreating.wav");
+                EnginesCaller.playSfx("/sounds/retreating.wav");
                 ghostTouching.setState(GhostState.EATEN);
             }
         }
@@ -290,7 +291,7 @@ public class GameLogic {
 
     public static boolean pacmanIsInCollisionWithFruit() {
         if (fruit != null)
-            return EnginesCaller.isInCollision(fruit.position.x, fruit.position.y
+            return EnginesCaller.isInCollision(fruit.getPosition().x, fruit.getPosition().y
                     , pacMan.getPosition().x, pacMan.getPosition().y, gameUnit,
                     gameUnit, gameUnit, gameUnit);
 
@@ -331,7 +332,7 @@ public class GameLogic {
             if (ID == 3 || ID == 2){
                 lvl.removePacGomme(x, y, -1);
 
-                    SoundEngine.playSfx("/sounds/munch_1.wav");
+                EnginesCaller.playSfx("/sounds/munch_1.wav");
             }
 
             if (GameLogic.hasEatenAllThePacGomme())
@@ -343,7 +344,7 @@ public class GameLogic {
             score = score + fruit.points;
             fruit = null;
             hasEatenFruitLevel = true;
-                SoundEngine.playSfx("/sounds/eat_fruit.wav");
+            EnginesCaller.playSfx("/sounds/eat_fruit.wav");
 
 
 
@@ -365,8 +366,8 @@ public class GameLogic {
 
     private static void superPacGommeEffect() {
         cancelGhostTimer();
-        SoundEngine.stopSfx("/sounds/siren_1.wav");
-        SoundEngine.playSfxOnLoop("/sounds/power_pellet.wav");
+        EnginesCaller.stopSfx("/sounds/siren_1.wav");
+        EnginesCaller.playSfxOnLoop("/sounds/power_pellet.wav");
         for (Ghost ghost : ghosts) {
             if (ghost.state != GhostState.REGENERATING)
                 ghost.setState(GhostState.FRIGHTENED);
@@ -398,8 +399,8 @@ public class GameLogic {
                                 ghostScared++;
                         }
                         if(ghostScared == 0){
-                            SoundEngine.stopSfx("/sounds/power_pellet.wav");
-                            SoundEngine.playSfxOnLoop("/sounds/siren_1.wav");
+                            EnginesCaller.stopSfx("/sounds/power_pellet.wav");
+                            EnginesCaller.playSfxOnLoop("/sounds/siren_1.wav");
                         }
                         eatenGhostInARow = 0;
                     }
@@ -426,14 +427,14 @@ public class GameLogic {
     }
 
     public static void wonLevel() {
-        SoundEngine.stopAllActiveSounds();
+        EnginesCaller.stopAllActiveSounds();
         resetFruitSpawner();
         menuLogic.levelEnded(lvl.getLevelNumber(), true, score);
     }
 
     public static void looseLevel() {
-        SoundEngine.stopAllActiveSounds();
-        SoundEngine.playSfx("/sounds/death_1.wav");
+        EnginesCaller.stopAllActiveSounds();
+        EnginesCaller.playSfx("/sounds/death_1.wav");
         resetFruitSpawner();
         gameState = GameState.OVER;
 //        SoundEngine.stopAllActiveSounds();

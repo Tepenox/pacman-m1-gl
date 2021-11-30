@@ -1,19 +1,20 @@
 package game.object.fruits;
+import game.GameEngine.GameLogic;
+import utility.GameObject;
 import utility.Vector2;
 
 import java.awt.*;
 
-public class Fruit {
+public class Fruit  extends GameObject {
     public String name;
     public int points;
     public Image sprite;
-    public Vector2 position;
 
     public Fruit (String name,int points, Image sprite, Vector2 position){
+        super(8,position);
         this.name = name ;
         this.points = points;
         this.sprite = sprite;
-        this.position = position;
     }
 
 }

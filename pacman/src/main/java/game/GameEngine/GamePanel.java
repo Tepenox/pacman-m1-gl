@@ -160,7 +160,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void drawFruit(Graphics graphics){
         if (GameLogic.fruit != null){
-            EnginesCaller.drawImage(this,(Graphics2D) graphics,GameLogic.fruit.sprite,GameLogic.fruit.position.x,GameLogic.fruit.position.y,GameLogic.gameUnit);
+            EnginesCaller.drawImage(this,(Graphics2D) graphics,GameLogic.fruit.sprite,GameLogic.fruit.getPosition().x,GameLogic.fruit.getPosition().y,GameLogic.gameUnit);
         }
     }
 

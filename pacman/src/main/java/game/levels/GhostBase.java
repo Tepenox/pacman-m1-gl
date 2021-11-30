@@ -1,4 +1,4 @@
-package game.object;
+package game.levels;
 
 import game.GameEngine.EnginesCaller;
 import game.GameEngine.GameLogic;
