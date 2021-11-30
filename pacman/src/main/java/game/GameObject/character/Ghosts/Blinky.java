@@ -2,7 +2,7 @@ package game.GameObject.character.Ghosts;
 
 import game.GameUtility.CharacterName;
 import game.GameObject.character.PacMan;
-import gamespace.Level;
+import game.gamespace.Level;
 import utility.Direction;
 import utility.Vector2;
 

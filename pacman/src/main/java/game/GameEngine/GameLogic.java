@@ -5,7 +5,7 @@ import game.GameObject.character.Character;
 import game.GameObject.character.Ghosts.*;
 import game.GameObject.character.PacMan;
 import game.GameUtility.GhostBase;
-import gamespace.Level;
+import game.gamespace.Level;
 import game.GameObject.object.*;
 import game.GameUtility.CharacterName;
 import game.GameObject.object.Fruit;

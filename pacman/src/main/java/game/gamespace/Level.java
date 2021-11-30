@@ -1,4 +1,4 @@
-package gamespace;
+package game.gamespace;
 
 import game.GameEngine.GameLogic;
 import game.GameUtility.CharacterName;
