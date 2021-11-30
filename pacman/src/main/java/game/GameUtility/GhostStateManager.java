@@ -1,4 +1,4 @@
-package utility;
+package game.GameUtility;
 
 import game.GameEngine.GameLogic;
 import game.GameObject.character.Ghosts.Ghost;

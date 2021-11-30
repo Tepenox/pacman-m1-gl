@@ -1,6 +1,6 @@
 package game.GameEngine;
 
-import utility.GhostStateManager;
+import game.GameUtility.GhostStateManager;
 import game.GameObject.character.Character;
 import game.GameObject.character.Ghosts.*;
 import game.GameObject.character.PacMan;
