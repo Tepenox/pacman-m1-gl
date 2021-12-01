@@ -73,7 +73,7 @@ public class GamePanel extends JPanel {
             drawScore(graphics);
             drawLevelCounter(graphics);
             drawFruit(graphics);
-            VisualDebugger.draw(this,graphics);
+            //VisualDebugger.draw(this,graphics);
             drawMsg(graphics);
         }else if (GameLogic.gameState.equals(GameState.OVER)) {// TODO not using graphics engine  add methode text
             drawGameOver(graphics);
