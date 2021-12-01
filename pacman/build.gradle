@@ -9,6 +9,8 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'application'
+mainClassName = "game.GameEngine.MenuLogic"
 
 
 dependencies {
