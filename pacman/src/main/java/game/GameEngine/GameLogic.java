@@ -15,11 +15,13 @@ import utility.Vector2;
 import utility.GameObject;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
-public class GameLogic {
+public class GameLogic{
     public static MenuLogic menuLogic;
     public static int screenWidth;
     public static int screenHeight;
@@ -149,7 +151,7 @@ public class GameLogic {
             timer.stop();
             timer = null;
         }
-        timer = new Timer(GameLogic.gameDelay, gamePanel);
+        timer = new Timer(GameLogic.gameDelay,new GameLoop());
         timer.start();
         GhostStateManager.start();
         ghostBase.startRegenTimer();
@@ -157,12 +159,16 @@ public class GameLogic {
 
     //======================================================= Game Execution on each Frame =============================================
 
-    public static void actionPerformed() {
-        if (gameState.equals(GameState.RUNNING)) {
-            checkCollWithGhost();
-            checkPacmanCanChangeDir();
-            moveThePacman();
-            moveTheGhost();
+    static class GameLoop implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gamePanel.actionPerformed(e);
+            if (gameState.equals(GameState.RUNNING)) {
+                checkCollWithGhost();
+                checkPacmanCanChangeDir();
+                moveThePacman();
+                moveTheGhost();
+            }
         }
     }
 
@@ -457,7 +463,6 @@ public class GameLogic {
             pacMan.nextDir = null;
         } else pacMan.nextDir = dir;
     }
-
 }
 
 

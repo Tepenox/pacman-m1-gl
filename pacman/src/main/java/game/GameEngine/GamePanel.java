@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel {
 
     Image hearthImage = new ImageIcon(getClass().getResource("/heart.png")).getImage();
     private String messageMiddleScreen = "";
@@ -53,9 +53,7 @@ public class GamePanel extends JPanel implements ActionListener {
         draw(g);
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
-        GameLogic.actionPerformed();
         repaint();
     }
 
