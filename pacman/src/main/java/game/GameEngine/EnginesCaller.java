@@ -92,8 +92,8 @@ public class EnginesCaller {
         CoreKernel.move(gameObject,x,y);
     }
 
-    public static void moveGameObjectByOneStep(Character character, Direction direction, int step){
-        CoreKernel.moveGameObjectByOneStep(character,direction,step);
+    public static void moveGameObjectByOneStep(GameObject go, Direction direction, int step){
+        CoreKernel.moveGameObjectByOneStep(go,direction,step);
     }
 
     public static Vector2 getVectorFromDir(Direction direction, int amplitude){

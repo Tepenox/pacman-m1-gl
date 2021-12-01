@@ -92,8 +92,8 @@ public class CoreKernel {
         PhysicEngine.move(gameObject, x, y);
     }
 
-    public static void moveGameObjectByOneStep(Character character, Direction direction, int step) {
-        PhysicEngine.moveGameObjectByOneStep(character, direction, step);
+    public static void moveGameObjectByOneStep(GameObject go, Direction direction, int step) {
+        PhysicEngine.moveGameObjectByOneStep(go, direction, step);
     }
 
     public static Vector2 getVectorFromDir(Direction direction, int amplitude) {
