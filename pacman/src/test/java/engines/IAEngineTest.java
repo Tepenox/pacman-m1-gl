@@ -9,7 +9,7 @@ import utility.Vector2;
 
 import java.util.List;
 
-public class AIEngineTest {
+public class IAEngineTest {
 
     GameObject gameObject;
 
