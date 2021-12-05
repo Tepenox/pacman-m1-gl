@@ -25,6 +25,9 @@ Vous pouvez tester le jeu:
 2. avec le menu gradle sur tasks> application > run.
 3. avec le fichier jar pacman-0.9.jar (situé en même niveau que REDME.md). Note (les sons ne sont pas disponible dans le jar à cause d'un bug)
 
+### Librairies utilisées
+Les libraires utilisées dans le projet sont SWING et JUNIT (gradle)
+
 ## les contrôles 
 - Vous utilisez les flèches du clavier pour déplacer PAC-MAN.
 - la touche M pour passer au niveau suivant.
