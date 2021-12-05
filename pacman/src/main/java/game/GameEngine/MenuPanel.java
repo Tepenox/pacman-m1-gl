@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuPanel extends MenuLogic implements ActionListener {
+public class MenuPanel extends JPanel implements ActionListener {
 
     private JButton buttonStart;
     private JButton buttonScore;

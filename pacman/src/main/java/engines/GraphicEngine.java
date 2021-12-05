@@ -211,7 +211,7 @@ class GraphicEngine {
     }
 
     /**
-     * dessinger un string sur Graphics
+     * dessiner un string sur Graphics
      * @param g2d graphics
      * @param panel panel
      * @param string string à dessiner
