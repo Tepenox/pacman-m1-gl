@@ -9,12 +9,12 @@ import java.util.List;
 
 class IAEngine {
     /**
-     * retourne la direction qui va mettre un gameObject plus proche a une postion donné
-     * @param gameObject gameobject
-     * @param to postion
-     * @param directions les directions possible
-     * @param step talle de pas pas
-     * @return direction a suivre pour s approcher a postion
+     * retourne la direction qui va mettre un gameObject plus proche à une position donnée
+     * @param gameObject gameObject
+     * @param to position
+     * @param directions les directions possibles
+     * @param step taille de pas
+     * @return direction à suivre pour s'approcher de la position
      */
     protected static Direction getDirReducingDist(GameObject gameObject, Vector2 to, List<Direction> directions, int step){
         List<Double> listOfDist = new ArrayList<>();
@@ -27,12 +27,12 @@ class IAEngine {
         return directions.get(indexOfBest);
     }
     /**
-     * retourne la direction qui va mettre un gameObject plus loin a une postion donné
-     * @param gameObject gameobject
-     * @param to postion
-     * @param directions les directions possible
-     * @param step talle de pas pas
-     * @return direction a suivre pour s eloigner a postion
+     * retourne la direction qui va mettre un gameObject plus loin à une position donnée
+     * @param gameObject gameObject
+     * @param to position
+     * @param directions les directions possibles
+     * @param step taille de pas
+     * @return direction à suivre pour s'éloigner de la position
      */
     protected static Direction getDirIncreasingDist(GameObject gameObject, Vector2 to, List<Direction> directions, int step){
         List<Double> listOfDist = new ArrayList<>();

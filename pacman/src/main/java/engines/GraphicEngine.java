@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 class GraphicEngine {
     /**
      * initialisation d'un frame pour un jeu
-     * @param frame frame a initialisé
+     * @param frame frame à initialiser
      * @param title titre de frame
-     * @return instance de frame initialisé
+     * @return instance de frame initialisée
      */
 
     protected static JFrame createFrame(JFrame frame, String title){
@@ -25,11 +25,11 @@ class GraphicEngine {
     }
 
     /**
-     * initilisation d un panel vide pour un jeu
-     * @param jPanel panel a initialisé
-     * @param width largeur de panel
-     * @param height hauteur de panel
-     * @return instance de jpan initialisé
+     * initilisation d'un panel vide pour un jeu
+     * @param jPanel panel à initialiser
+     * @param width largeur du panel
+     * @param height hauteur du panel
+     * @return instance de jPanel initialisée
      */
 
     protected static JPanel emptyPanel(JPanel jPanel, int width, int height) {
@@ -42,8 +42,8 @@ class GraphicEngine {
     }
 
     /**
-     * creation d'un panel avec une image
-     * @param img image a utilisé dans le panel
+     * création d'un panel avec une image
+     * @param img image à utiliser dans le panel
      * @param width largeur d'image en panel
      * @param height hauteur d'image en panel
      * @return
@@ -62,9 +62,9 @@ class GraphicEngine {
     }
 
     /**
-     * creation de panel avec un layout si Jpanel passé est nul
+     * création de panel avec un layout si Jpanel passé en paramètre est nul
      * si non ajoute d un layout sur le JPanel passé
-     * @param jPanel panel a modifier
+     * @param jPanel panel à modifier
      * @param layout layout manager
      * @return japnel crée ou modifié
      */
@@ -77,7 +77,7 @@ class GraphicEngine {
     }
 
     /**
-     * ajoutes des borders layouts pour un panel
+     * ajout des borders layouts pour un panel
      * @param objToFill object panel
      * @param north component de bord layout north
      * @param center component de bord layout center
@@ -94,7 +94,7 @@ class GraphicEngine {
     }
 
     /**
-     * ajoutes d un border pour un panel
+     * ajout d'un border pour un panel
      * @param jPanel panel
      * @param border border
      */
@@ -125,13 +125,13 @@ class GraphicEngine {
     }
 
     /**
-     * creation d un button
-     * @param str texte du button
-     * @param font font du texte
+     * création d'un button
+     * @param str texte du bouton
+     * @param font police du texte
      * @param foreground couleur de police
-     * @param backGround couleur d'arriere plan
-     * @param l action a effectuer
-     * @return le button crée
+     * @param backGround couleur d'arrière plan
+     * @param l action à effectuer
+     * @return le bouton crée
      */
     protected static JButton simpleButton(String str, Font font, Color foreground, Color backGround, ActionListener l){
         JButton btn = new JButton(str);
@@ -149,7 +149,7 @@ class GraphicEngine {
      * dessiner une image sur un panel
      * @param jPanel panel
      * @param g2d graphics de panel
-     * @param img image a dessiner
+     * @param img image à dessiner
      * @param x position x d'image
      * @param y position y d'image
      * @param widthAndHeight hauteur et largeur d'image.
@@ -160,10 +160,10 @@ class GraphicEngine {
     }
 
     /**
-     * dessiner un game object sur un panel
+     * dessiner un gameObject sur un panel
      * @param jPanel  panel
-     * @param g2d graphics de panel
-     * @param go gameobject
+     * @param g2d Graphics de panel
+     * @param go gameObject
      * @param widthAndHeight hauteur et largeur
      */
 
@@ -172,7 +172,7 @@ class GraphicEngine {
     }
 
     /**
-     * dessiner un rectangle sur graphics
+     * dessiner un rectangle sur Graphics
      * @param g2d graphics
      * @param x postion x
      * @param y postion y
@@ -185,7 +185,7 @@ class GraphicEngine {
     }
 
     /**
-     * dessiner une cercle sur graphics
+     * dessiner une cercle sur Graphics
      * @param g2d graphics
      * @param x postion x
      * @param y postion y
@@ -199,7 +199,7 @@ class GraphicEngine {
     }
 
     /**
-     * dessiner une ligne sur graphics
+     * dessiner une ligne sur Graphics
      * @param g2d graphics
      * @param x1 position de depart x
      * @param y1 position de depart y
@@ -211,14 +211,14 @@ class GraphicEngine {
     }
 
     /**
-     * dessinger un string sur graphics
+     * dessinger un string sur Graphics
      * @param g2d graphics
      * @param panel panel
-     * @param string string a dessiner
+     * @param string string à dessiner
      * @param x postion x
      * @param y positon y
      * @param isCentered centré
-     * @param font font utilisé
+     * @param font police utilisée
      * @param color couleur
      */
     protected static void drawString(Graphics2D g2d, JComponent panel, String string, int x, int y, boolean isCentered, Font font, Color color){
