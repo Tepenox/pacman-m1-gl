@@ -12,8 +12,8 @@ class SoundEngine {
     private static Map<String, SfxPlayer> activeSounds = new HashMap<>();
 
     /**
-     * jouer un effet sonore depuis d'un fichier wav pour une seul repition
-     * si l effet sonore est deja active, il sera desactivé et rejoué
+     * joue un effet sonore depuis un fichier wav pour une seule répétition
+     * si l effet sonore est déjà actif, il sera désactivé et rejoué
      * @param path path de fichier
      */
     public static void playSfx(String path) {
@@ -33,8 +33,8 @@ class SoundEngine {
         }
     }
     /**
-     * jouer un effet sonore depuis d'un fichier wav en boucle
-     * si l effet sonore est deja active, il sera desactivé et rejoué
+     * joue un effet sonore depuis un fichier wav en boucle
+     * si l'effet sonore est déjà actif, il sera désactivé et rejoué
      * @param path path de fichier
      */
 
@@ -56,7 +56,7 @@ class SoundEngine {
     }
 
     /**
-     * arreter tous les effets sonore0 active
+     * arrête tout les effets sonores actifs
      */
 
     public static void stopAllActiveSounds(){
@@ -74,7 +74,7 @@ class SoundEngine {
         activeSounds = new HashMap<>();
     }
     /**
-     * arreter un effet sonore specifique
+     * arrête un effet sonore spécifique
      */
     public static void stopSfx(String path){
         if (activeSounds.containsKey(path)){
