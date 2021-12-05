@@ -7,8 +7,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * moteur son
+ */
 class SoundEngine {
 
+    /**
+     * les paths des sons actifs et leur SfxPlayer
+     */
     private static Map<String, SfxPlayer> activeSounds = new HashMap<>();
 
     /**
@@ -75,6 +81,7 @@ class SoundEngine {
     }
     /**
      * arrête un effet sonore spécifique
+     * @param path path d'effet sonore à arrêter
      */
     public static void stopSfx(String path){
         if (activeSounds.containsKey(path)){

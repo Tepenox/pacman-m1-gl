@@ -5,7 +5,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
+/**
+ * moteur graphique
+ */
 class GraphicEngine {
     /**
      * initialisation d'un frame pour un jeu
@@ -46,7 +48,7 @@ class GraphicEngine {
      * @param img image à utiliser dans le panel
      * @param width largeur d'image en panel
      * @param height hauteur d'image en panel
-     * @return
+     * @return retourne un panel avec une image
      */
     protected static JPanel panelWithImg(Image img, int width, int height){
         JPanel result = new JPanel() {

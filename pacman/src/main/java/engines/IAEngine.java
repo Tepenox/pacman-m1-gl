@@ -6,7 +6,9 @@ import utility.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * moteur Intelligence artificiel
+ */
 class IAEngine {
     /**
      * retourne la direction qui va mettre un gameObject plus proche à une position donnée
